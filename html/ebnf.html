@@ -1,0 +1,243 @@
+<HTML>
+<HEAD>
+<TITLE>EBNF Syntax: EBNF Tool</TITLE>
+<STYLE TYPE="text/css">
+body {
+  font-family:Helvetica,Helv;
+}
+table.data {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.data th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: lightgray;
+}
+table.data td {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+}
+</STYLE></HEAD>
+<BODY>
+<H1>EBNF Syntax: EBNF Tool</H1><TABLE><TBODY><TR><TD><A HREF="#toc_prod">Syntax Productions</A></TD></TR><TR><TD><A HREF="#toc_variants">Variants</A></TD></TR><TR><TD><A HREF="#toc_term">Terminals</A></TD></TR><TR><TD><A HREF="#toc_lit">Literals</A></TD></TR><TR><TD><A HREF="#toc_xref">Production Cross Reference</A></TD></TR></TBODY></TABLE><HR WIDTH="100%">
+<H2><A NAME="toc_prod">Syntax Productions</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TD>A</TD>
+ <TD>B</TD>
+ <TD>C</TD>
+ <TD>D</TD>
+ <TH><A HREF="#expr">E</A></TH>
+ <TH><A HREF="#factor">F</A></TH>
+ <TD>G</TD>
+ <TD>H</TD>
+ <TD>I</TD>
+ <TD>J</TD>
+ <TD>K</TD>
+ <TH><A HREF="#lhs">L</A></TH>
+ <TD>M</TD>
+ <TD>N</TD>
+ <TD>O</TD>
+ <TH><A HREF="#prod">P</A></TH>
+ <TD>Q</TD>
+ <TD>R</TD>
+ <TD>S</TD>
+ <TH><A HREF="#term">T</A></TH>
+ <TD>U</TD>
+ <TD>V</TD>
+ <TD>W</TD>
+ <TD>X</TD>
+ <TD>Y</TD>
+ <TD>Z</TD>
+ </TR>
+</THEAD>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<TBODY>
+<TR><TH><A NAME="xref_file" HREF="#file">Start Symbol (file)</TH></TR>
+</TBODY>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>Production</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A HREF="#xref_expr" NAME="expr">expr</A></TD>
+ <TD> <A HREF="#term">term</A> { <B><CODE>&quot;|&quot;</CODE></B> <A HREF="#term">term</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_factor" NAME="factor">factor</A></TD>
+ <TD><UL>
+<LI> <B><CODE>TERMINAL</CODE></B></LI>
+<LI> <B><CODE>LITERAL</CODE></B></LI>
+<LI> [ <B><CODE>'&lt;'</CODE></B> <B><CODE>ATTR</CODE></B> <B><CODE>'&gt;'</CODE></B> ] <B><CODE>NAME</CODE></B></LI>
+<LI> <B><CODE>&quot;[&quot;</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;]&quot;</CODE></B></LI>
+<LI> <B><CODE>&quot;{&quot;</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;}&quot;</CODE></B></LI>
+<LI> <B><CODE>&quot;(&quot;</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;)&quot;</CODE></B></LI>
+<LI> ( <B><CODE>&quot;(+&quot;</CODE></B> <B><CODE>NAME</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;)&quot;</CODE></B> )<SUP>(<A HREF="#variant_V2">Syntax 2.0...</A>)</SUP></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_file" NAME="file">file</A></TD>
+ <TD> { <A HREF="#prod">prod</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_lhs" NAME="lhs">lhs</A></TD>
+ <TD> <B><CODE>NAME</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_prod" NAME="prod">prod</A></TD>
+ <TD> <A HREF="#lhs">lhs</A> <B><CODE>&quot;:&quot;</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;.&quot;</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_term" NAME="term">term</A></TD>
+ <TD> <A HREF="#factor">factor</A> { <A HREF="#factor">factor</A> }</TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_variants">Variants</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Variant</TH>
+ <TH>Used in</TH>
+<TH>Variant Expressions</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TH NOWRAP=1 VALIGN=TOP ROWSPAN=1>
+<A NAME="variant_V2">Syntax 2.0...</A></TH><TD><A HREF="#factor">factor</A>
+</TD><TD>...  <B><CODE>&quot;(+&quot;</CODE></B> <B><CODE>NAME</CODE></B> <A HREF="#expr">expr</A> <B><CODE>&quot;)&quot;</CODE></B> ...
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_term">Terminals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Terminal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>ATTR</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>LITERAL</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>NAME</CODE>
+</TD><TD><A HREF="#factor">factor</A> /
+<A HREF="#lhs">lhs</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>TERMINAL</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_lit">Literals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Literal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>(</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>(+</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>)</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.</CODE>
+</TD><TD><A HREF="#prod">prod</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:</CODE>
+</TD><TD><A HREF="#prod">prod</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>[</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>]</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>{</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>|</CODE>
+</TD><TD><A HREF="#expr">expr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>}</CODE>
+</TD><TD><A HREF="#factor">factor</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_xref">Production Cross Reference</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Production</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_expr" HREF="#expr">expr</A></TD><TD><A HREF="#factor">factor</A> /
+<A HREF="#prod">prod</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_factor" HREF="#factor">factor</A></TD><TD><A HREF="#term">term</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_file" HREF="#file">file</A></TD><TD>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_lhs" HREF="#lhs">lhs</A></TD><TD><A HREF="#prod">prod</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_prod" HREF="#prod">prod</A></TD><TD><A HREF="#file">file</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_term" HREF="#term">term</A></TD><TD><A HREF="#expr">expr</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR>
+<FONT SIZE=-2>Created with ebnf2html.pl (<a href="mailto:andreas.gieriet@externsoft.ch?subject=Request:%20EBNF%20Tools">andreas.gieriet@externsoft.ch</a>)</Font>
+</BODY>
+</HTML>

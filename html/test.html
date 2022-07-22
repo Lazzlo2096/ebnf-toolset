@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<TITLE>EBNF Syntax - Lookahead-1 Ambiguity Annotation</TITLE>
+</HEAD>
+<BODY>
+<H1>EBNF Syntax - Lookahead-1 Ambiguity Annotation</H1><TABLE><TBODY><TR><TD><A HREF="#toc_prod">Syntax Productions</A></TD></TR><TR><TD><A HREF="#toc_term">Terminals</A></TD></TR><TR><TD><A HREF="#toc_lit">Literals</A></TD></TR><TR><TD><A HREF="#toc_xref">Production Cross Reference</A></TD></TR><TR><TD><A HREF="#toc_first">Lookahead-1 Parser First Token</A></TD></TR><TR><TD><A HREF="#toc_amb">Lookahead-1 Parser Ambiguities</A></TD></TR></TBODY></TABLE><HR WIDTH="100%">
+<H2><A NAME="toc_prod">Syntax Productions</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH><A HREF="#aaa">A</A></TH>
+ <TH><A HREF="#bbb">B</A></TH>
+ <TH><A HREF="#ccc">C</A></TH>
+ <TH><A HREF="#ddd">D</A></TH>
+ <TH>E</TH>
+ <TH>F</TH>
+ <TH>G</TH>
+ <TH>H</TH>
+ <TH>I</TH>
+ <TH>J</TH>
+ <TH>K</TH>
+ <TH>L</TH>
+ <TH>M</TH>
+ <TH>N</TH>
+ <TH>O</TH>
+ <TH><A HREF="#ppp">P</A></TH>
+ <TH>Q</TH>
+ <TH>R</TH>
+ <TH>S</TH>
+ <TH>T</TH>
+ <TH>U</TH>
+ <TH>V</TH>
+ <TH>W</TH>
+ <TH>X</TH>
+ <TH>Y</TH>
+ <TH>Z</TH>
+ </TR>
+</THEAD>
+</TABLE>
+<P>Start symbol = <A NAME="xref_ppp" HREF="#ppp">ppp</A><P><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>Production</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A HREF="#xref_aaa" NAME="aaa">aaa</A></TD>
+ <TD> { <A HREF="#ccc">ccc</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_bbb" NAME="bbb">bbb</A></TD>
+ <TD> <B><CODE>B</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_ccc" NAME="ccc">ccc</A></TD>
+ <TD><UL>
+<LI> <B><CODE>C</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> ( <A HREF="#ppp">ppp</A><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT> |  <B><CODE>E</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT> )<FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_ddd" NAME="ddd">ddd</A> <I>(not used)</I></TD>
+ <TD> <B><CODE>D</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_ppp" NAME="ppp">ppp</A></TD>
+ <TD> <A HREF="#aaa">aaa</A><FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT> ( <A HREF="#bbb">bbb</A> |  <B><CODE>D</CODE></B> )<FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_term">Terminals</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Terminal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<PRE>B</PRE>
+</TD><TD><A HREF="#bbb">bbb</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<PRE>C</PRE>
+</TD><TD><A HREF="#ccc">ccc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<PRE>D</PRE>
+</TD><TD><A HREF="#ddd">ddd</A> /
+<A HREF="#ppp">ppp</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<PRE>E</PRE>
+</TD><TD><A HREF="#ccc">ccc</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_lit">Literals</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Literal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_xref">Production Cross Reference</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Production</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_aaa" HREF="#aaa">aaa</A></TD><TD><A HREF="#ppp">ppp</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_bbb" HREF="#bbb">bbb</A></TD><TD><A HREF="#ppp">ppp</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_ccc" HREF="#ccc">ccc</A></TD><TD><A HREF="#aaa">aaa</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_ppp" HREF="#ppp">ppp</A></TD><TD><A HREF="#ccc">ccc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_ddd" HREF="#ddd">ddd</A></TD><TD><I>Not used in any production</I></TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_first">Lookahead-1 Parser First Token</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH><A HREF="#first_aaa">A</A></TH>
+ <TH><A HREF="#first_bbb">B</A></TH>
+ <TH><A HREF="#first_ccc">C</A></TH>
+ <TH><A HREF="#first_ddd">D</A></TH>
+ <TH>E</TH>
+ <TH>F</TH>
+ <TH>G</TH>
+ <TH>H</TH>
+ <TH>I</TH>
+ <TH>J</TH>
+ <TH>K</TH>
+ <TH>L</TH>
+ <TH>M</TH>
+ <TH>N</TH>
+ <TH>O</TH>
+ <TH><A HREF="#first_ppp">P</A></TH>
+ <TH>Q</TH>
+ <TH>R</TH>
+ <TH>S</TH>
+ <TH>T</TH>
+ <TH>U</TH>
+ <TH>V</TH>
+ <TH>W</TH>
+ <TH>X</TH>
+ <TH>Y</TH>
+ <TH>Z</TH>
+ </TR>
+</THEAD>
+</TABLE>
+<P>Start symbol = <A HREF="#first_ppp">ppp</A><P><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>First Tokens</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A NAME="first_aaa" HREF="#aaa">aaa</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>B</CODE></B><BR>
+<B><CODE>C</CODE></B><BR>
+<B><CODE>D</CODE></B><BR>
+<B><CODE>E</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_bbb" HREF="#bbb">bbb</A></TD>
+ <TD><B><CODE>B</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_ccc" HREF="#ccc">ccc</A></TD>
+ <TD><B><CODE>B</CODE></B><BR>
+<B><CODE>C</CODE></B><BR>
+<B><CODE>D</CODE></B><BR>
+<B><CODE>E</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_ddd" HREF="#ddd">ddd</A></TD>
+ <TD><B><CODE>D</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_ppp" HREF="#ppp">ppp</A></TD>
+ <TD><B><CODE>B</CODE></B><BR>
+<B><CODE>C</CODE></B><BR>
+<B><CODE>D</CODE></B><BR>
+<B><CODE>E</CODE></B></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_amb">Lookahead-1 Parser Ambiguities</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Ref</TH>
+ <TH>Production</TH>
+ <TH>Ambiguous<BR>Literals/Terminals</TH>
+<TH>Can't decide between the following</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="1" HREF="#ref_1">#1</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_ccc" HREF="#ccc">ccc</A></TD>
+<TD VALIGN=TOP><B><CODE>C</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <B><CODE>C</CODE></B></LI>
+<LI> ( <A HREF="#ppp">ppp</A> |  <B><CODE>E</CODE></B> )</LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="2" HREF="#ref_2">#2</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_ccc" HREF="#ccc">ccc</A></TD>
+<TD VALIGN=TOP><B><CODE>E</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <B><CODE>E</CODE></B></LI>
+<LI> <A HREF="#ppp">ppp</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="3" HREF="#ref_3">#3</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_ppp" HREF="#ppp">ppp</A></TD>
+<TD VALIGN=TOP><B><CODE>B</CODE></B><BR>
+<B><CODE>D</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> ( <A HREF="#bbb">bbb</A> |  <B><CODE>D</CODE></B> )</LI>
+<LI> <A HREF="#aaa">aaa</A></LI>
+</UL>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<HR>
+<FONT SIZE=-2>Created with ebnf2annot.pl (<a href="mailto:andreas.gieriet@externsoft.ch?subject=Request:%20EBNF%20Tools">andreas.gieriet@externsoft.ch</a>)</Font>
+</BODY>
+</HTML>

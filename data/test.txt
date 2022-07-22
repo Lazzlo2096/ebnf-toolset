@@ -1,0 +1,5 @@
+ppp : aaa (bbb | D).
+aaa : { ccc } .
+ccc : C | (ppp | E).
+bbb : B .
+ddd : D .

@@ -1,0 +1,4051 @@
+<HTML>
+<HEAD>
+<TITLE>EBNF Syntax: MSIL</TITLE>
+<STYLE TYPE="text/css">
+body {
+  font-family:Helvetica,Helv;
+}
+table.data {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.data th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: lightgray;
+}
+table.data td {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+}
+</STYLE></HEAD>
+<BODY>
+<H1>EBNF Syntax: MSIL</H1><TABLE><TBODY><TR><TD><A HREF="#toc_prod">Syntax Productions</A></TD></TR><TR><TD><A HREF="#toc_variants">Variants</A></TD></TR><TR><TD><A HREF="#toc_term">Terminals</A></TD></TR><TR><TD><A HREF="#toc_lit">Literals</A></TD></TR><TR><TD><A HREF="#toc_xref">Production Cross Reference</A></TD></TR><TR><TD><A HREF="#toc_first">Lookahead-1 Parser First Token</A></TD></TR><TR><TD><A HREF="#toc_amb">Lookahead-1 Parser Ambiguities</A></TD></TR></TBODY></TABLE><HR WIDTH="100%">
+<H2><A NAME="toc_prod">Syntax Productions</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH><A HREF="#arrayvalue">A</A></TH>
+ <TH><A HREF="#base_id">B</A></TH>
+ <TH><A HREF="#call_conv">C</A></TH>
+ <TH><A HREF="#data_body">D</A></TH>
+ <TH><A HREF="#event_attr">E</A></TH>
+ <TH><A HREF="#field_attr">F</A></TH>
+ <TD>G</TD>
+ <TH><A HREF="#handler_block">H</A></TH>
+ <TH><A HREF="#id">I</A></TH>
+ <TD>J</TD>
+ <TD>K</TD>
+ <TH><A HREF="#label">L</A></TH>
+ <TH><A HREF="#manifestres_attr">M</A></TH>
+ <TH><A HREF="#name_value_pair">N</A></TH>
+ <TH><A HREF="#owner_type">O</A></TH>
+ <TH><A HREF="#param_attr">P</A></TH>
+ <TH><A HREF="#qstring">Q</A></TH>
+ <TH><A HREF="#repeat_opt">R</A></TH>
+ <TH><A HREF="#scope_block">S</A></TH>
+ <TH><A HREF="#truefalse">T</A></TH>
+ <TH><A HREF="#unmanaged_kind">U</A></TH>
+ <TH><A HREF="#va_spec">V</A></TH>
+ <TD>W</TD>
+ <TD>X</TD>
+ <TD>Y</TD>
+ <TD>Z</TD>
+ </TR>
+</THEAD>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<TBODY>
+<TR><TH><A NAME="xref_syntax" HREF="#syntax">Start Symbol (syntax)</TH></TR>
+</TBODY>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>Production</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A HREF="#xref_arrayvalue" NAME="arrayvalue">arrayvalue</A></TD>
+ <TD> <B><CODE>'('</CODE></B> <A HREF="#bytes">bytes</A> <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_asm_or_ref_decl" NAME="asm_or_ref_decl">asm_or_ref_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.publickey'</CODE></B> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+<LI> <B><CODE>'.ver'</CODE></B> <A HREF="#int32">int32</A> <B><CODE>':'</CODE></B> <A HREF="#int32">int32</A> <B><CODE>':'</CODE></B> <A HREF="#int32">int32</A> <B><CODE>':'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.locale'</CODE></B> <A HREF="#local_spec">local_spec</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assembly_attr" NAME="assembly_attr">assembly_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'noappdomain'</CODE></B></LI>
+<LI> <B><CODE>'noprocess'</CODE></B></LI>
+<LI> <B><CODE>'nomachine'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assembly_decl" NAME="assembly_decl">assembly_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.hash'</CODE></B> <B><CODE>'algorithm'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <A HREF="#sec_decl">sec_decl</A></LI>
+<LI> <A HREF="#asm_or_ref_decl">asm_or_ref_decl</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assembly_decls" NAME="assembly_decls">assembly_decls</A></TD>
+ <TD> { <A HREF="#assembly_decl">assembly_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assembly_head" NAME="assembly_head">assembly_head</A></TD>
+ <TD> <B><CODE>'.assembly'</CODE></B> { <A HREF="#assembly_attr">assembly_attr</A> } <A HREF="#comp_name">comp_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assemblyref_decl" NAME="assemblyref_decl">assemblyref_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.hash'</CODE></B> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+<LI> <B><CODE>'.publickeytoken'</CODE></B> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+<LI> <A HREF="#asm_or_ref_decl">asm_or_ref_decl</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assemblyref_decls" NAME="assemblyref_decls">assemblyref_decls</A></TD>
+ <TD> { <A HREF="#assemblyref_decl">assemblyref_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assemblyref_head" NAME="assemblyref_head">assemblyref_head</A></TD>
+ <TD> <B><CODE>'.assembly'</CODE></B> <B><CODE>'extern'</CODE></B> <A HREF="#comp_name">comp_name</A> [ <B><CODE>'as'</CODE></B> <A HREF="#comp_name">comp_name</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_at_opt" NAME="at_opt">at_opt</A></TD>
+ <TD> <B><CODE>'at'</CODE></B> <A HREF="#id">id</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_base_id" NAME="base_id">base_id</A></TD>
+ <TD> <B><CODE>C_STYLE_IDENTIFIER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_bound" NAME="bound">bound</A></TD>
+ <TD> [ <A HREF="#int32">int32</A> ] [ <B><CODE>'...'</CODE></B> [ <A HREF="#int32">int32</A> ] ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_bounds" NAME="bounds">bounds</A></TD>
+ <TD> <A HREF="#bound">bound</A> { <B><CODE>','</CODE></B> <A HREF="#bound">bound</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_bytes" NAME="bytes">bytes</A></TD>
+ <TD> { <A HREF="#hexbyte">hexbyte</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_call_conv" NAME="call_conv">call_conv</A></TD>
+ <TD> { <B><CODE>'instance'</CODE></B> |  <B><CODE>'explicit'</CODE></B> } [ <A HREF="#call_kind">call_kind</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_call_kind" NAME="call_kind">call_kind</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'default'</CODE></B></LI>
+<LI> <B><CODE>'vararg'</CODE></B></LI>
+<LI> <B><CODE>'unmanaged'</CODE></B> <A HREF="#unmanaged_kind">unmanaged_kind</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_cavalue" NAME="cavalue">cavalue</A></TD>
+ <TD><UL>
+<LI> <A HREF="#truefalse">truefalse</A></LI>
+<LI> <A HREF="#int32">int32</A> <B><CODE>'('</CODE></B> <A HREF="#int32">int32</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#comp_qstring">comp_qstring</A></LI>
+<LI> <A HREF="#class_ref">class_ref</A> <B><CODE>'('</CODE></B> [ <A HREF="#va_spec">va_spec</A> ] <A HREF="#int32">int32</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_attr" NAME="class_attr">class_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'nested'</CODE></B> <A HREF="#nested_access">nested_access</A></LI>
+<LI> <B><CODE>'value'</CODE></B></LI>
+<LI> <B><CODE>'enum'</CODE></B></LI>
+<LI> <B><CODE>'interface'</CODE></B></LI>
+<LI> <B><CODE>'sealed'</CODE></B></LI>
+<LI> <B><CODE>'abstract'</CODE></B></LI>
+<LI> <B><CODE>'auto'</CODE></B></LI>
+<LI> <B><CODE>'sequential'</CODE></B></LI>
+<LI> <B><CODE>'explicit'</CODE></B></LI>
+<LI> <B><CODE>'ansi'</CODE></B></LI>
+<LI> <B><CODE>'unicode'</CODE></B></LI>
+<LI> <B><CODE>'autochar'</CODE></B></LI>
+<LI> <B><CODE>'import'</CODE></B></LI>
+<LI> <B><CODE>'serializable'</CODE></B></LI>
+<LI> <B><CODE>'beforefieldinit'</CODE></B></LI>
+<LI> <B><CODE>'specialname'</CODE></B></LI>
+<LI> <B><CODE>'rtspecialname'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_decl" NAME="class_decl">class_decl</A></TD>
+ <TD><UL>
+<LI> <A HREF="#method_head">method_head</A> <B><CODE>'{'</CODE></B> <A HREF="#method_decls">method_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#class_head">class_head</A> <B><CODE>'{'</CODE></B> <A HREF="#class_decls">class_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#event_head">event_head</A> <B><CODE>'{'</CODE></B> <A HREF="#event_decls">event_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#property_head">property_head</A> <B><CODE>'{'</CODE></B> <A HREF="#property_decls">property_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#field_decl">field_decl</A></LI>
+<LI> <A HREF="#data_decl">data_decl</A></LI>
+<LI> <A HREF="#sec_decl">sec_decl</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+<LI> <A HREF="#language_decl">language_decl</A></LI>
+<LI> <A HREF="#extsource_spec">extsource_spec</A></LI>
+<LI> <B><CODE>'.size'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.pack'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.override'</CODE></B> <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> <A HREF="#method_name">method_name</A> <B><CODE>'with'</CODE></B> <A HREF="#call_conv">call_conv</A> <A HREF="#type">type</A> <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> <A HREF="#method_name">method_name</A> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_decls" NAME="class_decls">class_decls</A></TD>
+ <TD> { <A HREF="#class_decl">class_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_head" NAME="class_head">class_head</A></TD>
+ <TD> <B><CODE>'.class'</CODE></B> { <A HREF="#class_attr">class_attr</A> } <A HREF="#id">id</A> [ <A HREF="#extends_clause">extends_clause</A> ] [ <A HREF="#impl_clause">impl_clause</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_ref" NAME="class_ref">class_ref</A></TD>
+ <TD><UL>
+<LI> <A HREF="#slashed_name">slashed_name</A></LI>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#class_ref_prefix">class_ref_prefix</A> <B><CODE>']'</CODE></B> <A HREF="#slashed_name">slashed_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_ref_prefix" NAME="class_ref_prefix">class_ref_prefix</A></TD>
+ <TD> [ <B><CODE>'.module'</CODE></B> ] <A HREF="#comp_name">comp_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_comp_name" NAME="comp_name">comp_name</A></TD>
+ <TD> <A HREF="#id">id</A> { <B><CODE>'.'</CODE></B> <A HREF="#id">id</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_comp_qstring" NAME="comp_qstring">comp_qstring</A></TD>
+ <TD> <A HREF="#qstring">qstring</A> { <B><CODE>'+'</CODE></B> <A HREF="#qstring">qstring</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_custom_type" NAME="custom_type">custom_type</A></TD>
+ <TD> <A HREF="#call_conv">call_conv</A> <A HREF="#type">type</A> [ <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> ] <B><CODE>'.ctor'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_customattr_decl" NAME="customattr_decl">customattr_decl</A></TD>
+ <TD> <B><CODE>'.custom'</CODE></B> [ <B><CODE>'('</CODE></B> <A HREF="#owner_type">owner_type</A> <B><CODE>')'</CODE></B> ] <A HREF="#custom_type">custom_type</A> [ <B><CODE>'='</CODE></B> <A HREF="#string_or_bytes">string_or_bytes</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_data_body" NAME="data_body">data_body</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'{'</CODE></B> <A HREF="#data_items">data_items</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#data_item">data_item</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_data_decl" NAME="data_decl">data_decl</A></TD>
+ <TD> <A HREF="#data_head">data_head</A> <A HREF="#data_body">data_body</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_data_head" NAME="data_head">data_head</A></TD>
+ <TD> <B><CODE>'.data'</CODE></B> [ <B><CODE>'tls'</CODE></B> ] [ <A HREF="#id">id</A> <B><CODE>'='</CODE></B> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_data_item" NAME="data_item">data_item</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'char'</CODE></B> <B><CODE>'*'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#comp_qstring">comp_qstring</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#id">id</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'bytearray'</CODE></B> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+<LI> <A HREF="#sized_float">sized_float</A> [ <B><CODE>'('</CODE></B> <A HREF="#float64">float64</A> <B><CODE>')'</CODE></B> ] [ <A HREF="#repeat_opt">repeat_opt</A> ]</LI>
+<LI> <A HREF="#sized_int">sized_int</A> [ <B><CODE>'('</CODE></B> <A HREF="#int64">int64</A> <B><CODE>')'</CODE></B> ] [ <A HREF="#repeat_opt">repeat_opt</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_data_items" NAME="data_items">data_items</A></TD>
+ <TD> <A HREF="#data_item">data_item</A> { <B><CODE>','</CODE></B> <A HREF="#data_item">data_item</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decl" NAME="decl">decl</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_head">class_head</A> <B><CODE>'{'</CODE></B> <A HREF="#class_decls">class_decls</A> <B><CODE>'}'</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></LI>
+<LI> <A HREF="#namespace_head">namespace_head</A> <B><CODE>'{'</CODE></B> <A HREF="#decls">decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#method_head">method_head</A> <B><CODE>'{'</CODE></B> <A HREF="#method_decls">method_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#assembly_head">assembly_head</A> <B><CODE>'{'</CODE></B> <A HREF="#assembly_decls">assembly_decls</A> <B><CODE>'}'</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT></LI>
+<LI> <A HREF="#assemblyref_head">assemblyref_head</A> <B><CODE>'{'</CODE></B> <A HREF="#assemblyref_decls">assemblyref_decls</A> <B><CODE>'}'</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT></LI>
+<LI> <A HREF="#exptype_head">exptype_head</A> <B><CODE>'{'</CODE></B> <A HREF="#exptype_decls">exptype_decls</A> <B><CODE>'}'</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></LI>
+<LI> <A HREF="#manifestres_head">manifestres_head</A> <B><CODE>'{'</CODE></B> <A HREF="#manifestres_decls">manifestres_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#field_decl">field_decl</A></LI>
+<LI> <A HREF="#data_decl">data_decl</A></LI>
+<LI> <A HREF="#vtfixup_decl">vtfixup_decl</A></LI>
+<LI> <A HREF="#file_decl">file_decl</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <A HREF="#module_head">module_head</A></LI>
+<LI> <A HREF="#sec_decl">sec_decl</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+<LI> <A HREF="#language_decl">language_decl</A></LI>
+<LI> <A HREF="#extsource_spec">extsource_spec</A></LI>
+<LI> <B><CODE>'.subsystem'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.corflags'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.file'</CODE></B> <B><CODE>'alignment'</CODE></B> <A HREF="#int32">int32</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'.imagebase'</CODE></B> <A HREF="#int64">int64</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decls" NAME="decls">decls</A></TD>
+ <TD> { <A HREF="#decl">decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_event_attr" NAME="event_attr">event_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'rtspecialname'</CODE></B></LI>
+<LI> <B><CODE>'specialname'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_event_decl" NAME="event_decl">event_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.addon'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'.removeon'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'.fire'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'.other'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+<LI> <A HREF="#language_decl">language_decl</A></LI>
+<LI> <A HREF="#extsource_spec">extsource_spec</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_event_decls" NAME="event_decls">event_decls</A></TD>
+ <TD> { <A HREF="#event_decl">event_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_event_head" NAME="event_head">event_head</A></TD>
+ <TD> <B><CODE>'.event'</CODE></B> { <A HREF="#event_attr">event_attr</A> } [ <A HREF="#type_spec">type_spec</A> ] <A HREF="#id">id</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_expt_attr" NAME="expt_attr">expt_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'nested'</CODE></B> <A HREF="#nested_access">nested_access</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exptype_decl" NAME="exptype_decl">exptype_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.file'</CODE></B> <A HREF="#comp_name">comp_name</A></LI>
+<LI> <B><CODE>'.class'</CODE></B> <A HREF="#exptype_spec">exptype_spec</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exptype_decls" NAME="exptype_decls">exptype_decls</A></TD>
+ <TD> { <A HREF="#exptype_decl">exptype_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exptype_head" NAME="exptype_head">exptype_head</A></TD>
+ <TD> <B><CODE>'.class'</CODE></B> <B><CODE>'extern'</CODE></B> { <A HREF="#expt_attr">expt_attr</A> } <A HREF="#comp_name">comp_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exptype_spec" NAME="exptype_spec">exptype_spec</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'extern'</CODE></B> <A HREF="#comp_name">comp_name</A></LI>
+<LI> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_extends_clause" NAME="extends_clause">extends_clause</A></TD>
+ <TD> <B><CODE>'extends'</CODE></B> <A HREF="#class_ref">class_ref</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_extsource_spec" NAME="extsource_spec">extsource_spec</A></TD>
+ <TD> <B><CODE>'.line'</CODE></B> <A HREF="#int32">int32</A> [ <B><CODE>':'</CODE></B> <A HREF="#int32">int32</A> ] [ <A HREF="#sqstring">sqstring</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_field_attr" NAME="field_attr">field_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'family'</CODE></B></LI>
+<LI> <B><CODE>'assembly'</CODE></B></LI>
+<LI> <B><CODE>'famandassem'</CODE></B></LI>
+<LI> <B><CODE>'famorassem'</CODE></B></LI>
+<LI> <B><CODE>'privatescope'</CODE></B></LI>
+<LI> <B><CODE>'static'</CODE></B></LI>
+<LI> <B><CODE>'initonly'</CODE></B></LI>
+<LI> <B><CODE>'rtspecialname'</CODE></B></LI>
+<LI> <B><CODE>'specialname'</CODE></B></LI>
+<LI> <A HREF="#marshal_spec">marshal_spec</A></LI>
+<LI> <B><CODE>'literal'</CODE></B></LI>
+<LI> <B><CODE>'notserialized'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_field_decl" NAME="field_decl">field_decl</A></TD>
+ <TD> <B><CODE>'.field'</CODE></B> [ <A HREF="#repeat_opt">repeat_opt</A> ] { <A HREF="#field_attr">field_attr</A> } <A HREF="#type">type</A> <A HREF="#id">id</A> [ <A HREF="#at_opt">at_opt</A> ] [ <A HREF="#init_opt">init_opt</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_field_init" NAME="field_init">field_init</A></TD>
+ <TD><UL>
+<LI> <A HREF="#sized_float">sized_float</A> <B><CODE>'('</CODE></B> <A HREF="#num64">num64</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#sized_int">sized_int</A> <B><CODE>'('</CODE></B> <A HREF="#int64">int64</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'char'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#int64">int64</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'bool'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#truefalse">truefalse</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#comp_qstring">comp_qstring</A></LI>
+<LI> <B><CODE>'bytearray'</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+<LI> <B><CODE>'nullref'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_file_attr" NAME="file_attr">file_attr</A></TD>
+ <TD> <B><CODE>'nometadata'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_file_decl" NAME="file_decl">file_decl</A></TD>
+ <TD> <B><CODE>'.file'</CODE></B> { <A HREF="#file_attr">file_attr</A> } <A HREF="#comp_name">comp_name</A> [ <A HREF="#file_entry">file_entry</A> ] [ <B><CODE>'.hash'</CODE></B> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A> [ <A HREF="#file_entry">file_entry</A> ] ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_file_entry" NAME="file_entry">file_entry</A></TD>
+ <TD> <B><CODE>'.entrypoint'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_filter_clause" NAME="filter_clause">filter_clause</A></TD>
+ <TD> <B><CODE>'filter'</CODE></B> <A HREF="#filter_spec">filter_spec</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_filter_spec" NAME="filter_spec">filter_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#scope_block">scope_block</A></LI>
+<LI> <A HREF="#id">id</A></LI>
+<LI> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_fixed_spec" NAME="fixed_spec">fixed_spec</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'sysstring'</CODE></B></LI>
+<LI> <B><CODE>'array'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_float64" NAME="float64">float64</A></TD>
+ <TD><UL>
+<LI> <A HREF="#float64bit">float64bit</A></LI>
+<LI> <B><CODE>'float32'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#int32">int32</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'float64'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#int64">int64</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_float64bit" NAME="float64bit">float64bit</A></TD>
+ <TD> <B><CODE>C_STYLE_FLOATING_POINT_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_handler_block" NAME="handler_block">handler_block</A></TD>
+ <TD><UL>
+<LI> <A HREF="#scope_block">scope_block</A></LI>
+<LI> <B><CODE>'handler'</CODE></B> <A HREF="#handler_spec">handler_spec</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_handler_spec" NAME="handler_spec">handler_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#id">id</A> <B><CODE>'to'</CODE></B> <A HREF="#id">id</A></LI>
+<LI> <A HREF="#int32">int32</A> <B><CODE>'to'</CODE></B> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexbyte" NAME="hexbyte">hexbyte</A></TD>
+ <TD> <A HREF="#hexdigit">hexdigit</A> <A HREF="#hexdigit">hexdigit</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexdigit" NAME="hexdigit">hexdigit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+<LI> <B><CODE>'8'</CODE></B></LI>
+<LI> <B><CODE>'9'</CODE></B></LI>
+<LI> <B><CODE>'a'</CODE></B></LI>
+<LI> <B><CODE>'b'</CODE></B></LI>
+<LI> <B><CODE>'c'</CODE></B></LI>
+<LI> <B><CODE>'d'</CODE></B></LI>
+<LI> <B><CODE>'e'</CODE></B></LI>
+<LI> <B><CODE>'f'</CODE></B></LI>
+<LI> <B><CODE>'A'</CODE></B></LI>
+<LI> <B><CODE>'B'</CODE></B></LI>
+<LI> <B><CODE>'C'</CODE></B></LI>
+<LI> <B><CODE>'D'</CODE></B></LI>
+<LI> <B><CODE>'E'</CODE></B></LI>
+<LI> <B><CODE>'F'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_id" NAME="id">id</A></TD>
+ <TD><UL>
+<LI> <A HREF="#base_id">base_id</A></LI>
+<LI> <A HREF="#sqstring">sqstring</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_impl_attr" NAME="impl_attr">impl_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'native'</CODE></B></LI>
+<LI> <B><CODE>'cil'</CODE></B></LI>
+<LI> <B><CODE>'optil'</CODE></B></LI>
+<LI> <B><CODE>'managed'</CODE></B></LI>
+<LI> <B><CODE>'unmanaged'</CODE></B></LI>
+<LI> <B><CODE>'forwardref'</CODE></B></LI>
+<LI> <B><CODE>'preservesig'</CODE></B></LI>
+<LI> <B><CODE>'runtime'</CODE></B></LI>
+<LI> <B><CODE>'internalcall'</CODE></B></LI>
+<LI> <B><CODE>'synchronized'</CODE></B></LI>
+<LI> <B><CODE>'noinlining'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_impl_clause" NAME="impl_clause">impl_clause</A></TD>
+ <TD> <B><CODE>'implements'</CODE></B> <A HREF="#class_ref">class_ref</A> { <B><CODE>','</CODE></B> <A HREF="#class_ref">class_ref</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_init_opt" NAME="init_opt">init_opt</A></TD>
+ <TD> <B><CODE>'='</CODE></B> <A HREF="#field_init">field_init</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_instr" NAME="instr">instr</A></TD>
+ <TD> <B><CODE>INSTR</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_int" NAME="int">int</A></TD>
+ <TD><UL>
+<LI> <A HREF="#sized_int">sized_int</A></LI>
+<LI> <B><CODE>'int'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_int32" NAME="int32">int32</A></TD>
+ <TD> <A HREF="#int64bit">int64bit</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_int64" NAME="int64">int64</A></TD>
+ <TD> <A HREF="#int64bit">int64bit</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_int64bit" NAME="int64bit">int64bit</A></TD>
+ <TD> <B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_label" NAME="label">label</A></TD>
+ <TD><UL>
+<LI> <A HREF="#id">id</A></LI>
+<LI> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_labels" NAME="labels">labels</A> <I>(not used)</I></TD>
+ <TD> <A HREF="#label">label</A> { <B><CODE>','</CODE></B> <A HREF="#label">label</A> } [ <B><CODE>','</CODE></B> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_language_decl" NAME="language_decl">language_decl</A></TD>
+ <TD> <B><CODE>'.language'</CODE></B> <A HREF="#sqstring">sqstring</A> [ <B><CODE>','</CODE></B> <A HREF="#sqstring">sqstring</A> [ <B><CODE>','</CODE></B> <A HREF="#sqstring">sqstring</A> ] ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_local_spec" NAME="local_spec">local_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#comp_qstring">comp_qstring</A></LI>
+<LI> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_manifestres_attr" NAME="manifestres_attr">manifestres_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'private'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_manifestres_decl" NAME="manifestres_decl">manifestres_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.file'</CODE></B> <A HREF="#comp_name">comp_name</A> <B><CODE>'at'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.assembly'</CODE></B> <B><CODE>'extern'</CODE></B> <A HREF="#comp_name">comp_name</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_manifestres_decls" NAME="manifestres_decls">manifestres_decls</A></TD>
+ <TD> { <A HREF="#manifestres_decl">manifestres_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_manifestres_head" NAME="manifestres_head">manifestres_head</A></TD>
+ <TD> <B><CODE>'.mresource'</CODE></B> { <A HREF="#manifestres_attr">manifestres_attr</A> } <A HREF="#comp_name">comp_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_marshal_spec" NAME="marshal_spec">marshal_spec</A></TD>
+ <TD> <B><CODE>'marshal'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#native_type">native_type</A> <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_member_ref" NAME="member_ref">member_ref</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'method'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'field'</CODE></B> <A HREF="#type">type</A> [ <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> ] <A HREF="#id">id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_attr" NAME="method_attr">method_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'static'</CODE></B></LI>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'family'</CODE></B></LI>
+<LI> <B><CODE>'assembly'</CODE></B></LI>
+<LI> <B><CODE>'famandassem'</CODE></B></LI>
+<LI> <B><CODE>'famorassem'</CODE></B></LI>
+<LI> <B><CODE>'privatescope'</CODE></B></LI>
+<LI> <B><CODE>'final'</CODE></B></LI>
+<LI> <B><CODE>'virtual'</CODE></B></LI>
+<LI> <B><CODE>'abstract'</CODE></B></LI>
+<LI> <B><CODE>'hidebysig'</CODE></B></LI>
+<LI> <B><CODE>'newslot'</CODE></B></LI>
+<LI> <B><CODE>'reqsecobj'</CODE></B></LI>
+<LI> <B><CODE>'specialname'</CODE></B></LI>
+<LI> <B><CODE>'rtspecialname'</CODE></B></LI>
+<LI> <B><CODE>'unmanagedexp'</CODE></B></LI>
+<LI> <B><CODE>'pinvokeimpl'</CODE></B> <B><CODE>'('</CODE></B> [ <A HREF="#comp_qstring">comp_qstring</A> [ <B><CODE>'as'</CODE></B> <A HREF="#comp_qstring">comp_qstring</A> ] ] { <A HREF="#pinv_attr">pinv_attr</A> } <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_decl" NAME="method_decl">method_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.emitbyte'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.maxstack'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.locals'</CODE></B> [ <B><CODE>'init'</CODE></B> ] <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'.entrypoint'</CODE></B></LI>
+<LI> <B><CODE>'.zeroinit'</CODE></B></LI>
+<LI> <B><CODE>'.export'</CODE></B> <B><CODE>'['</CODE></B> <A HREF="#int32">int32</A> <B><CODE>']'</CODE></B> [ <B><CODE>'as'</CODE></B> <A HREF="#id">id</A> ]</LI>
+<LI> <B><CODE>'.vtentry'</CODE></B> <A HREF="#int32">int32</A> <B><CODE>':'</CODE></B> <A HREF="#int32">int32</A></LI>
+<LI> <B><CODE>'.override'</CODE></B> <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> <A HREF="#method_name">method_name</A></LI>
+<LI> <B><CODE>'.param'</CODE></B> <B><CODE>'['</CODE></B> <A HREF="#int32">int32</A> <B><CODE>']'</CODE></B> [ <A HREF="#init_opt">init_opt</A> ]</LI>
+<LI> <A HREF="#sec_decl">sec_decl</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+<LI> <A HREF="#data_decl">data_decl</A></LI>
+<LI> <A HREF="#language_decl">language_decl</A></LI>
+<LI> <A HREF="#extsource_spec">extsource_spec</A></LI>
+<LI> <A HREF="#scope_block">scope_block</A></LI>
+<LI> <A HREF="#seh_block">seh_block</A></LI>
+<LI> <A HREF="#instr">instr</A></LI>
+<LI> <A HREF="#id">id</A> <B><CODE>':'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_decls" NAME="method_decls">method_decls</A></TD>
+ <TD> { <A HREF="#method_decl">method_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_head" NAME="method_head">method_head</A></TD>
+ <TD> <B><CODE>'.method'</CODE></B> { <A HREF="#method_attr">method_attr</A> } <A HREF="#call_conv">call_conv</A> { <A HREF="#param_attr">param_attr</A> } <A HREF="#type">type</A> [ <A HREF="#marshal_spec">marshal_spec</A> ] <A HREF="#method_name">method_name</A> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B> { <A HREF="#impl_attr">impl_attr</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_name" NAME="method_name">method_name</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.ctor'</CODE></B></LI>
+<LI> <B><CODE>'.cctor'</CODE></B></LI>
+<LI> <A HREF="#comp_name">comp_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_method_ref" NAME="method_ref">method_ref</A></TD>
+ <TD> <A HREF="#call_conv">call_conv</A> <A HREF="#type">type</A> [ <A HREF="#type_spec">type_spec</A> <B><CODE>'::'</CODE></B> ] <A HREF="#method_name">method_name</A> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_module_head" NAME="module_head">module_head</A></TD>
+ <TD> <B><CODE>'.module'</CODE></B> [ [ <B><CODE>'extern'</CODE></B> ] <A HREF="#comp_name">comp_name</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_name_value_pair" NAME="name_value_pair">name_value_pair</A></TD>
+ <TD> <A HREF="#comp_qstring">comp_qstring</A> <B><CODE>'='</CODE></B> <A HREF="#cavalue">cavalue</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_name_value_pairs" NAME="name_value_pairs">name_value_pairs</A></TD>
+ <TD> <A HREF="#name_value_pair">name_value_pair</A> { <A HREF="#name_value_pair">name_value_pair</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_head" NAME="namespace_head">namespace_head</A></TD>
+ <TD> <B><CODE>'.namespace'</CODE></B> <A HREF="#comp_name">comp_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_native_bound" NAME="native_bound">native_bound</A></TD>
+ <TD> [ <A HREF="#int32">int32</A> ] [ <B><CODE>'+'</CODE></B> [ <A HREF="#int32">int32</A> ] ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_native_prefix" NAME="native_prefix">native_prefix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'custom'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#comp_qstring">comp_qstring</A> <B><CODE>','</CODE></B> <A HREF="#comp_qstring">comp_qstring</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'fixed'</CODE></B> <A HREF="#fixed_spec">fixed_spec</A> <B><CODE>'['</CODE></B> <A HREF="#int32">int32</A> <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'variant'</CODE></B> [ <B><CODE>'bool'</CODE></B> ]</LI>
+<LI> <B><CODE>'error'</CODE></B></LI>
+<LI> <B><CODE>'currency'</CODE></B></LI>
+<LI> <B><CODE>'syschar'</CODE></B></LI>
+<LI> <B><CODE>'void'</CODE></B></LI>
+<LI> <B><CODE>'bool'</CODE></B></LI>
+<LI> <A HREF="#sized_float">sized_float</A></LI>
+<LI> <A HREF="#int">int</A></LI>
+<LI> <B><CODE>'unsigned'</CODE></B> <A HREF="#int">int</A></LI>
+<LI> <B><CODE>'decimal'</CODE></B></LI>
+<LI> <B><CODE>'date'</CODE></B></LI>
+<LI> <B><CODE>'bstr'</CODE></B></LI>
+<LI> <B><CODE>'lpstr'</CODE></B></LI>
+<LI> <B><CODE>'lpwstr'</CODE></B></LI>
+<LI> <B><CODE>'lptstr'</CODE></B></LI>
+<LI> <B><CODE>'objectref'</CODE></B></LI>
+<LI> <B><CODE>'iunknown'</CODE></B></LI>
+<LI> <B><CODE>'idispatch'</CODE></B></LI>
+<LI> <B><CODE>'struct'</CODE></B></LI>
+<LI> <B><CODE>'interface'</CODE></B></LI>
+<LI> <B><CODE>'safearray'</CODE></B> <A HREF="#variant_type">variant_type</A> [ <B><CODE>','</CODE></B> <A HREF="#comp_qstring">comp_qstring</A> ]</LI>
+<LI> <B><CODE>'nested'</CODE></B> <B><CODE>'struct'</CODE></B></LI>
+<LI> <B><CODE>'byvalstr'</CODE></B></LI>
+<LI> <B><CODE>'ansi'</CODE></B> <B><CODE>'bstr'</CODE></B></LI>
+<LI> <B><CODE>'tbstr'</CODE></B></LI>
+<LI> <B><CODE>'method'</CODE></B></LI>
+<LI> <B><CODE>'as'</CODE></B> <B><CODE>'any'</CODE></B></LI>
+<LI> <B><CODE>'lpstruct'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_native_suffix" NAME="native_suffix">native_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#native_bound">native_bound</A> <B><CODE>']'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_native_type" NAME="native_type">native_type</A></TD>
+ <TD> [ <A HREF="#native_prefix">native_prefix</A> { <A HREF="#native_suffix">native_suffix</A> } ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nested_access" NAME="nested_access">nested_access</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'public'</CODE></B></LI>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'family'</CODE></B></LI>
+<LI> <B><CODE>'assembly'</CODE></B></LI>
+<LI> <B><CODE>'famandassem'</CODE></B></LI>
+<LI> <B><CODE>'famorassem'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_num64" NAME="num64">num64</A></TD>
+ <TD><UL>
+<LI> <A HREF="#int64">int64</A></LI>
+<LI> <A HREF="#float64">float64</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_owner_type" NAME="owner_type">owner_type</A></TD>
+ <TD><UL>
+<LI> <A HREF="#type_spec">type_spec</A><FONT COLOR="maron"><SUP>(<A NAME="ref_4" HREF="#4">#4</A>)</SUP></FONT></LI>
+<LI> <A HREF="#member_ref">member_ref</A><FONT COLOR="maron"><SUP>(<A NAME="ref_4" HREF="#4">#4</A>)</SUP></FONT></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_param_attr" NAME="param_attr">param_attr</A></TD>
+ <TD> <B><CODE>'['</CODE></B> <A HREF="#param_spec">param_spec</A> <B><CODE>']'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_param_spec" NAME="param_spec">param_spec</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'in'</CODE></B></LI>
+<LI> <B><CODE>'out'</CODE></B></LI>
+<LI> <B><CODE>'opt'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pinv_attr" NAME="pinv_attr">pinv_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'nomangle'</CODE></B></LI>
+<LI> <B><CODE>'ansi'</CODE></B></LI>
+<LI> <B><CODE>'unicode'</CODE></B></LI>
+<LI> <B><CODE>'autochar'</CODE></B></LI>
+<LI> <B><CODE>'lasterr'</CODE></B></LI>
+<LI> <B><CODE>'winapi'</CODE></B></LI>
+<LI> <A HREF="#unmanaged_kind">unmanaged_kind</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_program" NAME="program">program</A></TD>
+ <TD> <A HREF="#decls">decls</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_property_attr" NAME="property_attr">property_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'rtspecialname'</CODE></B></LI>
+<LI> <B><CODE>'specialname'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_property_decl" NAME="property_decl">property_decl</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'.set'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'.get'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <B><CODE>'.other'</CODE></B> <A HREF="#method_ref">method_ref</A></LI>
+<LI> <A HREF="#customattr_decl">customattr_decl</A></LI>
+<LI> <A HREF="#language_decl">language_decl</A></LI>
+<LI> <A HREF="#extsource_spec">extsource_spec</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_property_decls" NAME="property_decls">property_decls</A></TD>
+ <TD> { <A HREF="#property_decl">property_decl</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_property_head" NAME="property_head">property_head</A></TD>
+ <TD> <B><CODE>'.property'</CODE></B> { <A HREF="#property_attr">property_attr</A> } <A HREF="#type">type</A> <A HREF="#id">id</A> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B> [ <A HREF="#init_opt">init_opt</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_qstring" NAME="qstring">qstring</A></TD>
+ <TD> <B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_repeat_opt" NAME="repeat_opt">repeat_opt</A></TD>
+ <TD> <B><CODE>'['</CODE></B> <A HREF="#int32">int32</A> <B><CODE>']'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_scope_block" NAME="scope_block">scope_block</A></TD>
+ <TD> <B><CODE>'{'</CODE></B> <A HREF="#method_decls">method_decls</A> <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sec_action" NAME="sec_action">sec_action</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'request'</CODE></B></LI>
+<LI> <B><CODE>'demand'</CODE></B></LI>
+<LI> <B><CODE>'assert'</CODE></B></LI>
+<LI> <B><CODE>'deny'</CODE></B></LI>
+<LI> <B><CODE>'permitonly'</CODE></B></LI>
+<LI> <B><CODE>'linkcheck'</CODE></B></LI>
+<LI> <B><CODE>'inheritcheck'</CODE></B></LI>
+<LI> <B><CODE>'reqmin'</CODE></B></LI>
+<LI> <B><CODE>'reqopt'</CODE></B></LI>
+<LI> <B><CODE>'reqrefuse'</CODE></B></LI>
+<LI> <B><CODE>'prejitgrant'</CODE></B></LI>
+<LI> <B><CODE>'prejitdeny'</CODE></B></LI>
+<LI> <B><CODE>'noncasdemand'</CODE></B></LI>
+<LI> <B><CODE>'noncaslinkdemand'</CODE></B></LI>
+<LI> <B><CODE>'noncasinheritance'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sec_decl" NAME="sec_decl">sec_decl</A></TD>
+ <TD> <B><CODE>'.permission'</CODE></B> <A HREF="#sec_action">sec_action</A> <A HREF="#sec_spec">sec_spec</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sec_spec" NAME="sec_spec">sec_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#type_spec">type_spec</A> [ <B><CODE>'('</CODE></B> <A HREF="#name_value_pairs">name_value_pairs</A> <B><CODE>')'</CODE></B> ]</LI>
+<LI> <B><CODE>'='</CODE></B> <A HREF="#arrayvalue">arrayvalue</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_seh_block" NAME="seh_block">seh_block</A></TD>
+ <TD> <A HREF="#try_block">try_block</A> { <A HREF="#seh_clause">seh_clause</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_seh_clause" NAME="seh_clause">seh_clause</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'catch'</CODE></B> <A HREF="#class_ref">class_ref</A> <A HREF="#handler_block">handler_block</A></LI>
+<LI> <B><CODE>'finally'</CODE></B> <A HREF="#handler_block">handler_block</A></LI>
+<LI> <B><CODE>'fault'</CODE></B> <A HREF="#handler_block">handler_block</A></LI>
+<LI> <A HREF="#filter_clause">filter_clause</A> <A HREF="#handler_block">handler_block</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sig_arg" NAME="sig_arg">sig_arg</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'...'</CODE></B></LI>
+<LI> { <A HREF="#param_attr">param_attr</A> } <A HREF="#type">type</A> [ <A HREF="#marshal_spec">marshal_spec</A> ] [ <A HREF="#id">id</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sig_args" NAME="sig_args">sig_args</A></TD>
+ <TD> [ <A HREF="#sig_arg">sig_arg</A> { <B><CODE>','</CODE></B> <A HREF="#sig_arg">sig_arg</A> } ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sized_float" NAME="sized_float">sized_float</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'float32'</CODE></B></LI>
+<LI> <B><CODE>'float64'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sized_int" NAME="sized_int">sized_int</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'int8'</CODE></B></LI>
+<LI> <B><CODE>'int16'</CODE></B></LI>
+<LI> <B><CODE>'int32'</CODE></B></LI>
+<LI> <B><CODE>'int64'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_slashed_name" NAME="slashed_name">slashed_name</A></TD>
+ <TD> <A HREF="#comp_name">comp_name</A> { <B><CODE>'/'</CODE></B> <A HREF="#comp_name">comp_name</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sqstring" NAME="sqstring">sqstring</A></TD>
+ <TD> <B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_string_or_bytes" NAME="string_or_bytes">string_or_bytes</A></TD>
+ <TD><UL>
+<LI> <A HREF="#comp_qstring">comp_qstring</A></LI>
+<LI> <A HREF="#arrayvalue">arrayvalue</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_syntax" NAME="syntax">syntax</A></TD>
+ <TD> <A HREF="#program">program</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_truefalse" NAME="truefalse">truefalse</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'true'</CODE></B></LI>
+<LI> <B><CODE>'false'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_try_block" NAME="try_block">try_block</A></TD>
+ <TD> <B><CODE>'.try'</CODE></B> <A HREF="#try_spec">try_spec</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_try_spec" NAME="try_spec">try_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#scope_block">scope_block</A></LI>
+<LI> <A HREF="#id">id</A> <B><CODE>'to'</CODE></B> <A HREF="#id">id</A></LI>
+<LI> <A HREF="#int32">int32</A> <B><CODE>'to'</CODE></B> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type" NAME="type">type</A></TD>
+ <TD> <A HREF="#type_prefix">type_prefix</A> { <A HREF="#type_suffix">type_suffix</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_prefix" NAME="type_prefix">type_prefix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'class'</CODE></B> <A HREF="#class_ref">class_ref</A></LI>
+<LI> <B><CODE>'object'</CODE></B></LI>
+<LI> <B><CODE>'string'</CODE></B></LI>
+<LI> <B><CODE>'value'</CODE></B> <B><CODE>'class'</CODE></B> <A HREF="#class_ref">class_ref</A></LI>
+<LI> <B><CODE>'valuetype'</CODE></B> <A HREF="#class_ref">class_ref</A></LI>
+<LI> <B><CODE>'method'</CODE></B> <A HREF="#call_conv">call_conv</A> <A HREF="#type">type</A> <B><CODE>'*'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#sig_args">sig_args</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'typedref'</CODE></B></LI>
+<LI> <B><CODE>'char'</CODE></B></LI>
+<LI> <B><CODE>'void'</CODE></B></LI>
+<LI> <B><CODE>'bool'</CODE></B></LI>
+<LI> <A HREF="#sized_float">sized_float</A></LI>
+<LI> <A HREF="#sized_int">sized_int</A></LI>
+<LI> <B><CODE>'unsigned'</CODE></B> <A HREF="#sized_int">sized_int</A></LI>
+<LI> <B><CODE>'native'</CODE></B> [ <B><CODE>'unsigned'</CODE></B> ] <B><CODE>'int'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_spec" NAME="type_spec">type_spec</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_ref">class_ref</A><FONT COLOR="maron"><SUP>(<A NAME="ref_5" HREF="#5">#5</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#class_ref_prefix">class_ref_prefix</A> <B><CODE>']'</CODE></B><FONT COLOR="maron"><SUP>(<A NAME="ref_5" HREF="#5">#5</A>)</SUP></FONT></LI>
+<LI> <A HREF="#type">type</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_suffix" NAME="type_suffix">type_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#bounds">bounds</A> <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'pinned'</CODE></B></LI>
+<LI> <B><CODE>'modreq'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#class_ref">class_ref</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'modopt'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#class_ref">class_ref</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unmanaged_kind" NAME="unmanaged_kind">unmanaged_kind</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'cdecl'</CODE></B></LI>
+<LI> <B><CODE>'stdcall'</CODE></B></LI>
+<LI> <B><CODE>'thiscall'</CODE></B></LI>
+<LI> <B><CODE>'fastcall'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_va_spec" NAME="va_spec">va_spec</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'int8'</CODE></B> <B><CODE>':'</CODE></B></LI>
+<LI> <B><CODE>'int16'</CODE></B> <B><CODE>':'</CODE></B></LI>
+<LI> <B><CODE>'int32'</CODE></B> <B><CODE>':'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_variant_prefix" NAME="variant_prefix">variant_prefix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'null'</CODE></B></LI>
+<LI> <B><CODE>'variant'</CODE></B></LI>
+<LI> <B><CODE>'currency'</CODE></B></LI>
+<LI> <B><CODE>'void'</CODE></B></LI>
+<LI> <B><CODE>'bool'</CODE></B></LI>
+<LI> <A HREF="#sized_float">sized_float</A></LI>
+<LI> <A HREF="#sized_int">sized_int</A></LI>
+<LI> <B><CODE>'unsigned'</CODE></B> <A HREF="#int">int</A></LI>
+<LI> <B><CODE>'decimal'</CODE></B></LI>
+<LI> <B><CODE>'data'</CODE></B></LI>
+<LI> <B><CODE>'bstr'</CODE></B></LI>
+<LI> <B><CODE>'lpstr'</CODE></B></LI>
+<LI> <B><CODE>'lpwstr'</CODE></B></LI>
+<LI> <B><CODE>'iunknown'</CODE></B></LI>
+<LI> <B><CODE>'idispatch'</CODE></B></LI>
+<LI> <B><CODE>'safearray'</CODE></B></LI>
+<LI> <B><CODE>'int'</CODE></B></LI>
+<LI> <B><CODE>'error'</CODE></B></LI>
+<LI> <B><CODE>'hresult'</CODE></B></LI>
+<LI> <B><CODE>'carray'</CODE></B></LI>
+<LI> <B><CODE>'userdefined'</CODE></B></LI>
+<LI> <B><CODE>'record'</CODE></B></LI>
+<LI> <B><CODE>'filetime'</CODE></B></LI>
+<LI> <B><CODE>'blob'</CODE></B></LI>
+<LI> <B><CODE>'stream'</CODE></B></LI>
+<LI> <B><CODE>'storage'</CODE></B></LI>
+<LI> <B><CODE>'streamed_object'</CODE></B></LI>
+<LI> <B><CODE>'stored_object'</CODE></B></LI>
+<LI> <B><CODE>'blob_object'</CODE></B></LI>
+<LI> <B><CODE>'cf'</CODE></B></LI>
+<LI> <B><CODE>'clsid'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_variant_suffix" NAME="variant_suffix">variant_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'['</CODE></B> <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'vector'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_variant_type" NAME="variant_type">variant_type</A></TD>
+ <TD> [ <A HREF="#variant_prefix">variant_prefix</A> { <A HREF="#variant_suffix">variant_suffix</A> } ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_vtfixup_attr" NAME="vtfixup_attr">vtfixup_attr</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'int32'</CODE></B></LI>
+<LI> <B><CODE>'int64'</CODE></B></LI>
+<LI> <B><CODE>'fromunmanagd'</CODE></B></LI>
+<LI> <B><CODE>'callmostderived'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_vtfixup_decl" NAME="vtfixup_decl">vtfixup_decl</A></TD>
+ <TD> <B><CODE>'.vtfixup'</CODE></B> <B><CODE>'['</CODE></B> <A HREF="#int32">int32</A> <B><CODE>']'</CODE></B> { <A HREF="#vtfixup_attr">vtfixup_attr</A> } <B><CODE>'at'</CODE></B> <A HREF="#id">id</A></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_variants">Variants</A></H2>none
+<HR WIDTH="100%">
+<H2><A NAME="toc_term">Terminals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Terminal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE>
+</TD><TD><A HREF="#int64bit">int64bit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C_STYLE_FLOATING_POINT_LITERAL</CODE>
+</TD><TD><A HREF="#float64bit">float64bit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C_STYLE_IDENTIFIER</CODE>
+</TD><TD><A HREF="#base_id">base_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE>
+</TD><TD><A HREF="#qstring">qstring</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE>
+</TD><TD><A HREF="#sqstring">sqstring</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>INSTR</CODE>
+</TD><TD><A HREF="#instr">instr</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_lit">Literals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Literal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;</CODE>
+</TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#type_suffix">type_suffix</A> /
+<A HREF="#variant_suffix">variant_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>(</CODE>
+</TD><TD><A HREF="#arrayvalue">arrayvalue</A> /
+<A HREF="#cavalue">cavalue</A> /
+<A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#customattr_decl">customattr_decl</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#float64">float64</A> /
+<A HREF="#marshal_spec">marshal_spec</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#property_head">property_head</A> /
+<A HREF="#sec_spec">sec_spec</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>)</CODE>
+</TD><TD><A HREF="#arrayvalue">arrayvalue</A> /
+<A HREF="#cavalue">cavalue</A> /
+<A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#customattr_decl">customattr_decl</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#float64">float64</A> /
+<A HREF="#marshal_spec">marshal_spec</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#property_head">property_head</A> /
+<A HREF="#sec_spec">sec_spec</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>*</CODE>
+</TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#native_suffix">native_suffix</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#type_suffix">type_suffix</A> /
+<A HREF="#variant_suffix">variant_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>+</CODE>
+</TD><TD><A HREF="#comp_qstring">comp_qstring</A> /
+<A HREF="#native_bound">native_bound</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>,</CODE>
+</TD><TD><A HREF="#bounds">bounds</A> /
+<A HREF="#data_items">data_items</A> /
+<A HREF="#impl_clause">impl_clause</A> /
+<A HREF="#labels">labels</A> /
+<A HREF="#language_decl">language_decl</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#sig_args">sig_args</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.</CODE>
+</TD><TD><A HREF="#comp_name">comp_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>...</CODE>
+</TD><TD><A HREF="#bound">bound</A> /
+<A HREF="#sig_arg">sig_arg</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.addon</CODE>
+</TD><TD><A HREF="#event_decl">event_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.assembly</CODE>
+</TD><TD><A HREF="#assembly_head">assembly_head</A> /
+<A HREF="#assemblyref_head">assemblyref_head</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.cctor</CODE>
+</TD><TD><A HREF="#method_name">method_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.class</CODE>
+</TD><TD><A HREF="#class_head">class_head</A> /
+<A HREF="#exptype_decl">exptype_decl</A> /
+<A HREF="#exptype_head">exptype_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.corflags</CODE>
+</TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.ctor</CODE>
+</TD><TD><A HREF="#custom_type">custom_type</A> /
+<A HREF="#method_name">method_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.custom</CODE>
+</TD><TD><A HREF="#customattr_decl">customattr_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.data</CODE>
+</TD><TD><A HREF="#data_head">data_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.emitbyte</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.entrypoint</CODE>
+</TD><TD><A HREF="#file_entry">file_entry</A> /
+<A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.event</CODE>
+</TD><TD><A HREF="#event_head">event_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.export</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.field</CODE>
+</TD><TD><A HREF="#field_decl">field_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.file</CODE>
+</TD><TD><A HREF="#decl">decl</A> /
+<A HREF="#exptype_decl">exptype_decl</A> /
+<A HREF="#file_decl">file_decl</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.fire</CODE>
+</TD><TD><A HREF="#event_decl">event_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.get</CODE>
+</TD><TD><A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.hash</CODE>
+</TD><TD><A HREF="#assembly_decl">assembly_decl</A> /
+<A HREF="#assemblyref_decl">assemblyref_decl</A> /
+<A HREF="#file_decl">file_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.imagebase</CODE>
+</TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.language</CODE>
+</TD><TD><A HREF="#language_decl">language_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.line</CODE>
+</TD><TD><A HREF="#extsource_spec">extsource_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.locale</CODE>
+</TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.locals</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.maxstack</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.method</CODE>
+</TD><TD><A HREF="#method_head">method_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.module</CODE>
+</TD><TD><A HREF="#class_ref_prefix">class_ref_prefix</A> /
+<A HREF="#module_head">module_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.mresource</CODE>
+</TD><TD><A HREF="#manifestres_head">manifestres_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.namespace</CODE>
+</TD><TD><A HREF="#namespace_head">namespace_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.other</CODE>
+</TD><TD><A HREF="#event_decl">event_decl</A> /
+<A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.override</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.pack</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.param</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.permission</CODE>
+</TD><TD><A HREF="#sec_decl">sec_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.property</CODE>
+</TD><TD><A HREF="#property_head">property_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.publickey</CODE>
+</TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.publickeytoken</CODE>
+</TD><TD><A HREF="#assemblyref_decl">assemblyref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.removeon</CODE>
+</TD><TD><A HREF="#event_decl">event_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.set</CODE>
+</TD><TD><A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.size</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.subsystem</CODE>
+</TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.try</CODE>
+</TD><TD><A HREF="#try_block">try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.ver</CODE>
+</TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.vtentry</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.vtfixup</CODE>
+</TD><TD><A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.zeroinit</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>/</CODE>
+</TD><TD><A HREF="#slashed_name">slashed_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:</CODE>
+</TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A> /
+<A HREF="#extsource_spec">extsource_spec</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#va_spec">va_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>::</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#member_ref">member_ref</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_ref">method_ref</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>=</CODE>
+</TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A> /
+<A HREF="#assemblyref_decl">assemblyref_decl</A> /
+<A HREF="#customattr_decl">customattr_decl</A> /
+<A HREF="#data_head">data_head</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#file_decl">file_decl</A> /
+<A HREF="#init_opt">init_opt</A> /
+<A HREF="#local_spec">local_spec</A> /
+<A HREF="#name_value_pair">name_value_pair</A> /
+<A HREF="#sec_spec">sec_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>[</CODE>
+</TD><TD><A HREF="#class_ref">class_ref</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#native_suffix">native_suffix</A> /
+<A HREF="#param_attr">param_attr</A> /
+<A HREF="#repeat_opt">repeat_opt</A> /
+<A HREF="#type_spec">type_spec</A> /
+<A HREF="#type_suffix">type_suffix</A> /
+<A HREF="#variant_suffix">variant_suffix</A> /
+<A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>]</CODE>
+</TD><TD><A HREF="#class_ref">class_ref</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#native_suffix">native_suffix</A> /
+<A HREF="#param_attr">param_attr</A> /
+<A HREF="#repeat_opt">repeat_opt</A> /
+<A HREF="#type_spec">type_spec</A> /
+<A HREF="#type_suffix">type_suffix</A> /
+<A HREF="#variant_suffix">variant_suffix</A> /
+<A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>{</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#data_body">data_body</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#scope_block">scope_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>}</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#data_body">data_body</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#scope_block">scope_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>1</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>2</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>3</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>4</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>5</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>6</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>7</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>8</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>9</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>a</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>A</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>abstract</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>algorithm</CODE>
+</TD><TD><A HREF="#assembly_decl">assembly_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>alignment</CODE>
+</TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ansi</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>any</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>array</CODE>
+</TD><TD><A HREF="#fixed_spec">fixed_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>as</CODE>
+</TD><TD><A HREF="#assemblyref_head">assemblyref_head</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>assembly</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>assert</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>at</CODE>
+</TD><TD><A HREF="#at_opt">at_opt</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A> /
+<A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>auto</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>autochar</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>B</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>b</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>beforefieldinit</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>blob</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>blob_object</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bool</CODE>
+</TD><TD><A HREF="#field_init">field_init</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bytearray</CODE>
+</TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>byvalstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>c</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>callmostderived</CODE>
+</TD><TD><A HREF="#vtfixup_attr">vtfixup_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>carray</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>catch</CODE>
+</TD><TD><A HREF="#seh_clause">seh_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>cdecl</CODE>
+</TD><TD><A HREF="#unmanaged_kind">unmanaged_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>cf</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>char</CODE>
+</TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>cil</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>class</CODE>
+</TD><TD><A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>clsid</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>currency</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>custom</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>D</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>d</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>data</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>date</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>decimal</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>default</CODE>
+</TD><TD><A HREF="#call_kind">call_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>demand</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>deny</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>e</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>E</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>enum</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>error</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>explicit</CODE>
+</TD><TD><A HREF="#call_conv">call_conv</A> /
+<A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>extends</CODE>
+</TD><TD><A HREF="#extends_clause">extends_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>extern</CODE>
+</TD><TD><A HREF="#assemblyref_head">assemblyref_head</A> /
+<A HREF="#exptype_head">exptype_head</A> /
+<A HREF="#exptype_spec">exptype_spec</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A> /
+<A HREF="#module_head">module_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>F</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>f</CODE>
+</TD><TD><A HREF="#hexdigit">hexdigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>false</CODE>
+</TD><TD><A HREF="#truefalse">truefalse</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>famandassem</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>family</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>famorassem</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>fastcall</CODE>
+</TD><TD><A HREF="#unmanaged_kind">unmanaged_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>fault</CODE>
+</TD><TD><A HREF="#seh_clause">seh_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>field</CODE>
+</TD><TD><A HREF="#member_ref">member_ref</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>filetime</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>filter</CODE>
+</TD><TD><A HREF="#filter_clause">filter_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>final</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>finally</CODE>
+</TD><TD><A HREF="#seh_clause">seh_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>fixed</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>float32</CODE>
+</TD><TD><A HREF="#float64">float64</A> /
+<A HREF="#sized_float">sized_float</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>float64</CODE>
+</TD><TD><A HREF="#float64">float64</A> /
+<A HREF="#sized_float">sized_float</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>forwardref</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>fromunmanagd</CODE>
+</TD><TD><A HREF="#vtfixup_attr">vtfixup_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>handler</CODE>
+</TD><TD><A HREF="#handler_block">handler_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>hidebysig</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>hresult</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>idispatch</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>implements</CODE>
+</TD><TD><A HREF="#impl_clause">impl_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>import</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>in</CODE>
+</TD><TD><A HREF="#param_spec">param_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>inheritcheck</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>init</CODE>
+</TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>initonly</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>instance</CODE>
+</TD><TD><A HREF="#call_conv">call_conv</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int</CODE>
+</TD><TD><A HREF="#int">int</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int16</CODE>
+</TD><TD><A HREF="#sized_int">sized_int</A> /
+<A HREF="#va_spec">va_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int32</CODE>
+</TD><TD><A HREF="#sized_int">sized_int</A> /
+<A HREF="#va_spec">va_spec</A> /
+<A HREF="#vtfixup_attr">vtfixup_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int64</CODE>
+</TD><TD><A HREF="#sized_int">sized_int</A> /
+<A HREF="#vtfixup_attr">vtfixup_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int8</CODE>
+</TD><TD><A HREF="#sized_int">sized_int</A> /
+<A HREF="#va_spec">va_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>interface</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>internalcall</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>iunknown</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>lasterr</CODE>
+</TD><TD><A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>linkcheck</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>literal</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>lpstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>lpstruct</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>lptstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>lpwstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>managed</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>marshal</CODE>
+</TD><TD><A HREF="#marshal_spec">marshal_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>method</CODE>
+</TD><TD><A HREF="#member_ref">member_ref</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>modopt</CODE>
+</TD><TD><A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>modreq</CODE>
+</TD><TD><A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>native</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>nested</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#expt_attr">expt_attr</A> /
+<A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>newslot</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noappdomain</CODE>
+</TD><TD><A HREF="#assembly_attr">assembly_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noinlining</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>nomachine</CODE>
+</TD><TD><A HREF="#assembly_attr">assembly_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>nomangle</CODE>
+</TD><TD><A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>nometadata</CODE>
+</TD><TD><A HREF="#file_attr">file_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noncasdemand</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noncasinheritance</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noncaslinkdemand</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>noprocess</CODE>
+</TD><TD><A HREF="#assembly_attr">assembly_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>notserialized</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>null</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>nullref</CODE>
+</TD><TD><A HREF="#field_init">field_init</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>object</CODE>
+</TD><TD><A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>objectref</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>opt</CODE>
+</TD><TD><A HREF="#param_spec">param_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>optil</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>out</CODE>
+</TD><TD><A HREF="#param_spec">param_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>permitonly</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>pinned</CODE>
+</TD><TD><A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>pinvokeimpl</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>prejitdeny</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>prejitgrant</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>preservesig</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>private</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#expt_attr">expt_attr</A> /
+<A HREF="#field_attr">field_attr</A> /
+<A HREF="#manifestres_attr">manifestres_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>privatescope</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>public</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#expt_attr">expt_attr</A> /
+<A HREF="#field_attr">field_attr</A> /
+<A HREF="#manifestres_attr">manifestres_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#nested_access">nested_access</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>record</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>reqmin</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>reqopt</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>reqrefuse</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>reqsecobj</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>request</CODE>
+</TD><TD><A HREF="#sec_action">sec_action</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>rtspecialname</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#event_attr">event_attr</A> /
+<A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#property_attr">property_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>runtime</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>safearray</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>sealed</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>sequential</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>serializable</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>specialname</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#event_attr">event_attr</A> /
+<A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#property_attr">property_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>static</CODE>
+</TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>stdcall</CODE>
+</TD><TD><A HREF="#unmanaged_kind">unmanaged_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>storage</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>stored_object</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>stream</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>streamed_object</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>string</CODE>
+</TD><TD><A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>struct</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>synchronized</CODE>
+</TD><TD><A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>syschar</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>sysstring</CODE>
+</TD><TD><A HREF="#fixed_spec">fixed_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>tbstr</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>thiscall</CODE>
+</TD><TD><A HREF="#unmanaged_kind">unmanaged_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>tls</CODE>
+</TD><TD><A HREF="#data_head">data_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>to</CODE>
+</TD><TD><A HREF="#handler_spec">handler_spec</A> /
+<A HREF="#try_spec">try_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>true</CODE>
+</TD><TD><A HREF="#truefalse">truefalse</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>typedref</CODE>
+</TD><TD><A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>unicode</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>unmanaged</CODE>
+</TD><TD><A HREF="#call_kind">call_kind</A> /
+<A HREF="#impl_attr">impl_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>unmanagedexp</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>unsigned</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>userdefined</CODE>
+</TD><TD><A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>value</CODE>
+</TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>valuetype</CODE>
+</TD><TD><A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>vararg</CODE>
+</TD><TD><A HREF="#call_kind">call_kind</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>variant</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>vector</CODE>
+</TD><TD><A HREF="#variant_suffix">variant_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>virtual</CODE>
+</TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>void</CODE>
+</TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>winapi</CODE>
+</TD><TD><A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>with</CODE>
+</TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_xref">Production Cross Reference</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Production</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_arrayvalue" HREF="#arrayvalue">arrayvalue</A></TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A> /
+<A HREF="#assemblyref_decl">assemblyref_decl</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#file_decl">file_decl</A> /
+<A HREF="#local_spec">local_spec</A> /
+<A HREF="#sec_spec">sec_spec</A> /
+<A HREF="#string_or_bytes">string_or_bytes</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_asm_or_ref_decl" HREF="#asm_or_ref_decl">asm_or_ref_decl</A></TD><TD><A HREF="#assembly_decl">assembly_decl</A> /
+<A HREF="#assemblyref_decl">assemblyref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assembly_attr" HREF="#assembly_attr">assembly_attr</A></TD><TD><A HREF="#assembly_head">assembly_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assembly_decl" HREF="#assembly_decl">assembly_decl</A></TD><TD><A HREF="#assembly_decls">assembly_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assembly_decls" HREF="#assembly_decls">assembly_decls</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assembly_head" HREF="#assembly_head">assembly_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assemblyref_decl" HREF="#assemblyref_decl">assemblyref_decl</A></TD><TD><A HREF="#assemblyref_decls">assemblyref_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assemblyref_decls" HREF="#assemblyref_decls">assemblyref_decls</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assemblyref_head" HREF="#assemblyref_head">assemblyref_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_at_opt" HREF="#at_opt">at_opt</A></TD><TD><A HREF="#field_decl">field_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_base_id" HREF="#base_id">base_id</A></TD><TD><A HREF="#id">id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_bound" HREF="#bound">bound</A></TD><TD><A HREF="#bounds">bounds</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_bounds" HREF="#bounds">bounds</A></TD><TD><A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_bytes" HREF="#bytes">bytes</A></TD><TD><A HREF="#arrayvalue">arrayvalue</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_call_conv" HREF="#call_conv">call_conv</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_call_kind" HREF="#call_kind">call_kind</A></TD><TD><A HREF="#call_conv">call_conv</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_cavalue" HREF="#cavalue">cavalue</A></TD><TD><A HREF="#name_value_pair">name_value_pair</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_attr" HREF="#class_attr">class_attr</A></TD><TD><A HREF="#class_head">class_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_decl" HREF="#class_decl">class_decl</A></TD><TD><A HREF="#class_decls">class_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_decls" HREF="#class_decls">class_decls</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_head" HREF="#class_head">class_head</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_ref" HREF="#class_ref">class_ref</A></TD><TD><A HREF="#cavalue">cavalue</A> /
+<A HREF="#extends_clause">extends_clause</A> /
+<A HREF="#impl_clause">impl_clause</A> /
+<A HREF="#seh_clause">seh_clause</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#type_spec">type_spec</A> /
+<A HREF="#type_suffix">type_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_ref_prefix" HREF="#class_ref_prefix">class_ref_prefix</A></TD><TD><A HREF="#class_ref">class_ref</A> /
+<A HREF="#type_spec">type_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_comp_name" HREF="#comp_name">comp_name</A></TD><TD><A HREF="#assembly_head">assembly_head</A> /
+<A HREF="#assemblyref_head">assemblyref_head</A> /
+<A HREF="#class_ref_prefix">class_ref_prefix</A> /
+<A HREF="#exptype_decl">exptype_decl</A> /
+<A HREF="#exptype_head">exptype_head</A> /
+<A HREF="#exptype_spec">exptype_spec</A> /
+<A HREF="#file_decl">file_decl</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A> /
+<A HREF="#manifestres_head">manifestres_head</A> /
+<A HREF="#method_name">method_name</A> /
+<A HREF="#module_head">module_head</A> /
+<A HREF="#namespace_head">namespace_head</A> /
+<A HREF="#slashed_name">slashed_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_comp_qstring" HREF="#comp_qstring">comp_qstring</A></TD><TD><A HREF="#cavalue">cavalue</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#local_spec">local_spec</A> /
+<A HREF="#method_attr">method_attr</A> /
+<A HREF="#name_value_pair">name_value_pair</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#string_or_bytes">string_or_bytes</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_custom_type" HREF="#custom_type">custom_type</A></TD><TD><A HREF="#customattr_decl">customattr_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_customattr_decl" HREF="#customattr_decl">customattr_decl</A></TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A> /
+<A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#event_decl">event_decl</A> /
+<A HREF="#exptype_decl">exptype_decl</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_data_body" HREF="#data_body">data_body</A></TD><TD><A HREF="#data_decl">data_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_data_decl" HREF="#data_decl">data_decl</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_data_head" HREF="#data_head">data_head</A></TD><TD><A HREF="#data_decl">data_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_data_item" HREF="#data_item">data_item</A></TD><TD><A HREF="#data_body">data_body</A> /
+<A HREF="#data_items">data_items</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_data_items" HREF="#data_items">data_items</A></TD><TD><A HREF="#data_body">data_body</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decl" HREF="#decl">decl</A></TD><TD><A HREF="#decls">decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decls" HREF="#decls">decls</A></TD><TD><A HREF="#decl">decl</A> /
+<A HREF="#program">program</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_event_attr" HREF="#event_attr">event_attr</A></TD><TD><A HREF="#event_head">event_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_event_decl" HREF="#event_decl">event_decl</A></TD><TD><A HREF="#event_decls">event_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_event_decls" HREF="#event_decls">event_decls</A></TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_event_head" HREF="#event_head">event_head</A></TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_expt_attr" HREF="#expt_attr">expt_attr</A></TD><TD><A HREF="#exptype_head">exptype_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exptype_decl" HREF="#exptype_decl">exptype_decl</A></TD><TD><A HREF="#exptype_decls">exptype_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exptype_decls" HREF="#exptype_decls">exptype_decls</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exptype_head" HREF="#exptype_head">exptype_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exptype_spec" HREF="#exptype_spec">exptype_spec</A></TD><TD><A HREF="#exptype_decl">exptype_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_extends_clause" HREF="#extends_clause">extends_clause</A></TD><TD><A HREF="#class_head">class_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_extsource_spec" HREF="#extsource_spec">extsource_spec</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#event_decl">event_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_field_attr" HREF="#field_attr">field_attr</A></TD><TD><A HREF="#field_decl">field_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_field_decl" HREF="#field_decl">field_decl</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_field_init" HREF="#field_init">field_init</A></TD><TD><A HREF="#init_opt">init_opt</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_file_attr" HREF="#file_attr">file_attr</A></TD><TD><A HREF="#file_decl">file_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_file_decl" HREF="#file_decl">file_decl</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_file_entry" HREF="#file_entry">file_entry</A></TD><TD><A HREF="#file_decl">file_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_filter_clause" HREF="#filter_clause">filter_clause</A></TD><TD><A HREF="#seh_clause">seh_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_filter_spec" HREF="#filter_spec">filter_spec</A></TD><TD><A HREF="#filter_clause">filter_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_fixed_spec" HREF="#fixed_spec">fixed_spec</A></TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_float64" HREF="#float64">float64</A></TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#num64">num64</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_float64bit" HREF="#float64bit">float64bit</A></TD><TD><A HREF="#float64">float64</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_handler_block" HREF="#handler_block">handler_block</A></TD><TD><A HREF="#seh_clause">seh_clause</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_handler_spec" HREF="#handler_spec">handler_spec</A></TD><TD><A HREF="#handler_block">handler_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexbyte" HREF="#hexbyte">hexbyte</A></TD><TD><A HREF="#bytes">bytes</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexdigit" HREF="#hexdigit">hexdigit</A></TD><TD><A HREF="#hexbyte">hexbyte</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_id" HREF="#id">id</A></TD><TD><A HREF="#at_opt">at_opt</A> /
+<A HREF="#class_head">class_head</A> /
+<A HREF="#comp_name">comp_name</A> /
+<A HREF="#data_head">data_head</A> /
+<A HREF="#data_item">data_item</A> /
+<A HREF="#event_head">event_head</A> /
+<A HREF="#field_decl">field_decl</A> /
+<A HREF="#filter_spec">filter_spec</A> /
+<A HREF="#handler_spec">handler_spec</A> /
+<A HREF="#label">label</A> /
+<A HREF="#member_ref">member_ref</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#property_head">property_head</A> /
+<A HREF="#sig_arg">sig_arg</A> /
+<A HREF="#try_spec">try_spec</A> /
+<A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_impl_attr" HREF="#impl_attr">impl_attr</A></TD><TD><A HREF="#method_head">method_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_impl_clause" HREF="#impl_clause">impl_clause</A></TD><TD><A HREF="#class_head">class_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_init_opt" HREF="#init_opt">init_opt</A></TD><TD><A HREF="#field_decl">field_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#property_head">property_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_instr" HREF="#instr">instr</A></TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_int" HREF="#int">int</A></TD><TD><A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_int32" HREF="#int32">int32</A></TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A> /
+<A HREF="#assembly_decl">assembly_decl</A> /
+<A HREF="#bound">bound</A> /
+<A HREF="#cavalue">cavalue</A> /
+<A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#exptype_spec">exptype_spec</A> /
+<A HREF="#extsource_spec">extsource_spec</A> /
+<A HREF="#filter_spec">filter_spec</A> /
+<A HREF="#float64">float64</A> /
+<A HREF="#handler_spec">handler_spec</A> /
+<A HREF="#label">label</A> /
+<A HREF="#manifestres_decl">manifestres_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#native_bound">native_bound</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#repeat_opt">repeat_opt</A> /
+<A HREF="#try_spec">try_spec</A> /
+<A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_int64" HREF="#int64">int64</A></TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#float64">float64</A> /
+<A HREF="#num64">num64</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_int64bit" HREF="#int64bit">int64bit</A></TD><TD><A HREF="#int32">int32</A> /
+<A HREF="#int64">int64</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_label" HREF="#label">label</A></TD><TD><A HREF="#labels">labels</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_language_decl" HREF="#language_decl">language_decl</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#event_decl">event_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_local_spec" HREF="#local_spec">local_spec</A></TD><TD><A HREF="#asm_or_ref_decl">asm_or_ref_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_manifestres_attr" HREF="#manifestres_attr">manifestres_attr</A></TD><TD><A HREF="#manifestres_head">manifestres_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_manifestres_decl" HREF="#manifestres_decl">manifestres_decl</A></TD><TD><A HREF="#manifestres_decls">manifestres_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_manifestres_decls" HREF="#manifestres_decls">manifestres_decls</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_manifestres_head" HREF="#manifestres_head">manifestres_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_marshal_spec" HREF="#marshal_spec">marshal_spec</A></TD><TD><A HREF="#field_attr">field_attr</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#sig_arg">sig_arg</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_member_ref" HREF="#member_ref">member_ref</A></TD><TD><A HREF="#owner_type">owner_type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_attr" HREF="#method_attr">method_attr</A></TD><TD><A HREF="#method_head">method_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_decl" HREF="#method_decl">method_decl</A></TD><TD><A HREF="#method_decls">method_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_decls" HREF="#method_decls">method_decls</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#scope_block">scope_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_head" HREF="#method_head">method_head</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_name" HREF="#method_name">method_name</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_method_ref" HREF="#method_ref">method_ref</A></TD><TD><A HREF="#event_decl">event_decl</A> /
+<A HREF="#member_ref">member_ref</A> /
+<A HREF="#property_decl">property_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_module_head" HREF="#module_head">module_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_name_value_pair" HREF="#name_value_pair">name_value_pair</A></TD><TD><A HREF="#name_value_pairs">name_value_pairs</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_name_value_pairs" HREF="#name_value_pairs">name_value_pairs</A></TD><TD><A HREF="#sec_spec">sec_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_head" HREF="#namespace_head">namespace_head</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_native_bound" HREF="#native_bound">native_bound</A></TD><TD><A HREF="#native_suffix">native_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_native_prefix" HREF="#native_prefix">native_prefix</A></TD><TD><A HREF="#native_type">native_type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_native_suffix" HREF="#native_suffix">native_suffix</A></TD><TD><A HREF="#native_type">native_type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_native_type" HREF="#native_type">native_type</A></TD><TD><A HREF="#marshal_spec">marshal_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nested_access" HREF="#nested_access">nested_access</A></TD><TD><A HREF="#class_attr">class_attr</A> /
+<A HREF="#expt_attr">expt_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_num64" HREF="#num64">num64</A></TD><TD><A HREF="#field_init">field_init</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_owner_type" HREF="#owner_type">owner_type</A></TD><TD><A HREF="#customattr_decl">customattr_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_param_attr" HREF="#param_attr">param_attr</A></TD><TD><A HREF="#method_head">method_head</A> /
+<A HREF="#sig_arg">sig_arg</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_param_spec" HREF="#param_spec">param_spec</A></TD><TD><A HREF="#param_attr">param_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pinv_attr" HREF="#pinv_attr">pinv_attr</A></TD><TD><A HREF="#method_attr">method_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_program" HREF="#program">program</A></TD><TD><A HREF="#syntax">syntax</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_property_attr" HREF="#property_attr">property_attr</A></TD><TD><A HREF="#property_head">property_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_property_decl" HREF="#property_decl">property_decl</A></TD><TD><A HREF="#property_decls">property_decls</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_property_decls" HREF="#property_decls">property_decls</A></TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_property_head" HREF="#property_head">property_head</A></TD><TD><A HREF="#class_decl">class_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_qstring" HREF="#qstring">qstring</A></TD><TD><A HREF="#comp_qstring">comp_qstring</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_repeat_opt" HREF="#repeat_opt">repeat_opt</A></TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#field_decl">field_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_scope_block" HREF="#scope_block">scope_block</A></TD><TD><A HREF="#filter_spec">filter_spec</A> /
+<A HREF="#handler_block">handler_block</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#try_spec">try_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sec_action" HREF="#sec_action">sec_action</A></TD><TD><A HREF="#sec_decl">sec_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sec_decl" HREF="#sec_decl">sec_decl</A></TD><TD><A HREF="#assembly_decl">assembly_decl</A> /
+<A HREF="#class_decl">class_decl</A> /
+<A HREF="#decl">decl</A> /
+<A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sec_spec" HREF="#sec_spec">sec_spec</A></TD><TD><A HREF="#sec_decl">sec_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_seh_block" HREF="#seh_block">seh_block</A></TD><TD><A HREF="#method_decl">method_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_seh_clause" HREF="#seh_clause">seh_clause</A></TD><TD><A HREF="#seh_block">seh_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sig_arg" HREF="#sig_arg">sig_arg</A></TD><TD><A HREF="#sig_args">sig_args</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sig_args" HREF="#sig_args">sig_args</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#property_head">property_head</A> /
+<A HREF="#type_prefix">type_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sized_float" HREF="#sized_float">sized_float</A></TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#native_prefix">native_prefix</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sized_int" HREF="#sized_int">sized_int</A></TD><TD><A HREF="#data_item">data_item</A> /
+<A HREF="#field_init">field_init</A> /
+<A HREF="#int">int</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#variant_prefix">variant_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_slashed_name" HREF="#slashed_name">slashed_name</A></TD><TD><A HREF="#class_ref">class_ref</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sqstring" HREF="#sqstring">sqstring</A></TD><TD><A HREF="#extsource_spec">extsource_spec</A> /
+<A HREF="#id">id</A> /
+<A HREF="#language_decl">language_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_string_or_bytes" HREF="#string_or_bytes">string_or_bytes</A></TD><TD><A HREF="#customattr_decl">customattr_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_syntax" HREF="#syntax">syntax</A></TD><TD>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_truefalse" HREF="#truefalse">truefalse</A></TD><TD><A HREF="#cavalue">cavalue</A> /
+<A HREF="#field_init">field_init</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_try_block" HREF="#try_block">try_block</A></TD><TD><A HREF="#seh_block">seh_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_try_spec" HREF="#try_spec">try_spec</A></TD><TD><A HREF="#try_block">try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type" HREF="#type">type</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#field_decl">field_decl</A> /
+<A HREF="#member_ref">member_ref</A> /
+<A HREF="#method_head">method_head</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#property_head">property_head</A> /
+<A HREF="#sig_arg">sig_arg</A> /
+<A HREF="#type_prefix">type_prefix</A> /
+<A HREF="#type_spec">type_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_prefix" HREF="#type_prefix">type_prefix</A></TD><TD><A HREF="#type">type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_spec" HREF="#type_spec">type_spec</A></TD><TD><A HREF="#class_decl">class_decl</A> /
+<A HREF="#custom_type">custom_type</A> /
+<A HREF="#event_head">event_head</A> /
+<A HREF="#member_ref">member_ref</A> /
+<A HREF="#method_decl">method_decl</A> /
+<A HREF="#method_ref">method_ref</A> /
+<A HREF="#owner_type">owner_type</A> /
+<A HREF="#sec_spec">sec_spec</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_suffix" HREF="#type_suffix">type_suffix</A></TD><TD><A HREF="#type">type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unmanaged_kind" HREF="#unmanaged_kind">unmanaged_kind</A></TD><TD><A HREF="#call_kind">call_kind</A> /
+<A HREF="#pinv_attr">pinv_attr</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_va_spec" HREF="#va_spec">va_spec</A></TD><TD><A HREF="#cavalue">cavalue</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_variant_prefix" HREF="#variant_prefix">variant_prefix</A></TD><TD><A HREF="#variant_type">variant_type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_variant_suffix" HREF="#variant_suffix">variant_suffix</A></TD><TD><A HREF="#variant_type">variant_type</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_variant_type" HREF="#variant_type">variant_type</A></TD><TD><A HREF="#native_prefix">native_prefix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_vtfixup_attr" HREF="#vtfixup_attr">vtfixup_attr</A></TD><TD><A HREF="#vtfixup_decl">vtfixup_decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_vtfixup_decl" HREF="#vtfixup_decl">vtfixup_decl</A></TD><TD><A HREF="#decl">decl</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_labels" HREF="#labels">labels</A></TD><TD><I>Not used in any production</I></TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_first">Lookahead-1 Parser First Token</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH><A HREF="#first_arrayvalue">A</A></TH>
+ <TH><A HREF="#first_base_id">B</A></TH>
+ <TH><A HREF="#first_call_conv">C</A></TH>
+ <TH><A HREF="#first_data_body">D</A></TH>
+ <TH><A HREF="#first_event_attr">E</A></TH>
+ <TH><A HREF="#first_field_attr">F</A></TH>
+ <TH>G</TH>
+ <TH><A HREF="#first_handler_block">H</A></TH>
+ <TH><A HREF="#first_id">I</A></TH>
+ <TH>J</TH>
+ <TH>K</TH>
+ <TH><A HREF="#first_label">L</A></TH>
+ <TH><A HREF="#first_manifestres_attr">M</A></TH>
+ <TH><A HREF="#first_name_value_pair">N</A></TH>
+ <TH><A HREF="#first_owner_type">O</A></TH>
+ <TH><A HREF="#first_param_attr">P</A></TH>
+ <TH><A HREF="#first_qstring">Q</A></TH>
+ <TH><A HREF="#first_repeat_opt">R</A></TH>
+ <TH><A HREF="#first_scope_block">S</A></TH>
+ <TH><A HREF="#first_truefalse">T</A></TH>
+ <TH><A HREF="#first_unmanaged_kind">U</A></TH>
+ <TH><A HREF="#first_va_spec">V</A></TH>
+ <TH>W</TH>
+ <TH>X</TH>
+ <TH>Y</TH>
+ <TH>Z</TH>
+ </TR>
+</THEAD>
+</TABLE>
+<P>Start symbol = <A HREF="#first_syntax">syntax</A><P><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>First Tokens</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A NAME="first_arrayvalue" HREF="#arrayvalue">arrayvalue</A></TD>
+ <TD><B><CODE>'('</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_asm_or_ref_decl" HREF="#asm_or_ref_decl">asm_or_ref_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.locale'</CODE></B><BR>
+<B><CODE>'.publickey'</CODE></B><BR>
+<B><CODE>'.ver'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assembly_attr" HREF="#assembly_attr">assembly_attr</A></TD>
+ <TD><B><CODE>'noappdomain'</CODE></B><BR>
+<B><CODE>'nomachine'</CODE></B><BR>
+<B><CODE>'noprocess'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assembly_decl" HREF="#assembly_decl">assembly_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.hash'</CODE></B><BR>
+<B><CODE>'.locale'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.publickey'</CODE></B><BR>
+<B><CODE>'.ver'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assembly_decls" HREF="#assembly_decls">assembly_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.hash'</CODE></B><BR>
+<B><CODE>'.locale'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.publickey'</CODE></B><BR>
+<B><CODE>'.ver'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assembly_head" HREF="#assembly_head">assembly_head</A></TD>
+ <TD><B><CODE>'.assembly'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assemblyref_decl" HREF="#assemblyref_decl">assemblyref_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.hash'</CODE></B><BR>
+<B><CODE>'.locale'</CODE></B><BR>
+<B><CODE>'.publickey'</CODE></B><BR>
+<B><CODE>'.publickeytoken'</CODE></B><BR>
+<B><CODE>'.ver'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assemblyref_decls" HREF="#assemblyref_decls">assemblyref_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.hash'</CODE></B><BR>
+<B><CODE>'.locale'</CODE></B><BR>
+<B><CODE>'.publickey'</CODE></B><BR>
+<B><CODE>'.publickeytoken'</CODE></B><BR>
+<B><CODE>'.ver'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_assemblyref_head" HREF="#assemblyref_head">assemblyref_head</A></TD>
+ <TD><B><CODE>'.assembly'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_at_opt" HREF="#at_opt">at_opt</A></TD>
+ <TD><B><CODE>'at'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_base_id" HREF="#base_id">base_id</A></TD>
+ <TD><B><CODE>C_STYLE_IDENTIFIER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_bound" HREF="#bound">bound</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_bounds" HREF="#bounds">bounds</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_bytes" HREF="#bytes">bytes</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'A'</CODE></B><BR>
+<B><CODE>'B'</CODE></B><BR>
+<B><CODE>'C'</CODE></B><BR>
+<B><CODE>'D'</CODE></B><BR>
+<B><CODE>'E'</CODE></B><BR>
+<B><CODE>'F'</CODE></B><BR>
+<B><CODE>'a'</CODE></B><BR>
+<B><CODE>'b'</CODE></B><BR>
+<B><CODE>'c'</CODE></B><BR>
+<B><CODE>'d'</CODE></B><BR>
+<B><CODE>'e'</CODE></B><BR>
+<B><CODE>'f'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_call_conv" HREF="#call_conv">call_conv</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'default'</CODE></B><BR>
+<B><CODE>'explicit'</CODE></B><BR>
+<B><CODE>'instance'</CODE></B><BR>
+<B><CODE>'unmanaged'</CODE></B><BR>
+<B><CODE>'vararg'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_call_kind" HREF="#call_kind">call_kind</A></TD>
+ <TD><B><CODE>'default'</CODE></B><BR>
+<B><CODE>'unmanaged'</CODE></B><BR>
+<B><CODE>'vararg'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_cavalue" HREF="#cavalue">cavalue</A></TD>
+ <TD><B><CODE>'['</CODE></B><BR>
+<B><CODE>'false'</CODE></B><BR>
+<B><CODE>'true'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_attr" HREF="#class_attr">class_attr</A></TD>
+ <TD><B><CODE>'abstract'</CODE></B><BR>
+<B><CODE>'ansi'</CODE></B><BR>
+<B><CODE>'auto'</CODE></B><BR>
+<B><CODE>'autochar'</CODE></B><BR>
+<B><CODE>'beforefieldinit'</CODE></B><BR>
+<B><CODE>'enum'</CODE></B><BR>
+<B><CODE>'explicit'</CODE></B><BR>
+<B><CODE>'import'</CODE></B><BR>
+<B><CODE>'interface'</CODE></B><BR>
+<B><CODE>'nested'</CODE></B><BR>
+<B><CODE>'private'</CODE></B><BR>
+<B><CODE>'public'</CODE></B><BR>
+<B><CODE>'rtspecialname'</CODE></B><BR>
+<B><CODE>'sealed'</CODE></B><BR>
+<B><CODE>'sequential'</CODE></B><BR>
+<B><CODE>'serializable'</CODE></B><BR>
+<B><CODE>'specialname'</CODE></B><BR>
+<B><CODE>'unicode'</CODE></B><BR>
+<B><CODE>'value'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_decl" HREF="#class_decl">class_decl</A></TD>
+ <TD><B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.event'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.override'</CODE></B><BR>
+<B><CODE>'.pack'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.property'</CODE></B><BR>
+<B><CODE>'.size'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_decls" HREF="#class_decls">class_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.event'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.override'</CODE></B><BR>
+<B><CODE>'.pack'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.property'</CODE></B><BR>
+<B><CODE>'.size'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_head" HREF="#class_head">class_head</A></TD>
+ <TD><B><CODE>'.class'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_ref" HREF="#class_ref">class_ref</A></TD>
+ <TD><B><CODE>'['</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_class_ref_prefix" HREF="#class_ref_prefix">class_ref_prefix</A></TD>
+ <TD><B><CODE>'.module'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_comp_name" HREF="#comp_name">comp_name</A></TD>
+ <TD><B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_comp_qstring" HREF="#comp_qstring">comp_qstring</A></TD>
+ <TD><B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_custom_type" HREF="#custom_type">custom_type</A></TD>
+ <TD><B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'default'</CODE></B><BR>
+<B><CODE>'explicit'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'instance'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unmanaged'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'vararg'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_customattr_decl" HREF="#customattr_decl">customattr_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_data_body" HREF="#data_body">data_body</A></TD>
+ <TD><B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'bytearray'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'{'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_data_decl" HREF="#data_decl">data_decl</A></TD>
+ <TD><B><CODE>'.data'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_data_head" HREF="#data_head">data_head</A></TD>
+ <TD><B><CODE>'.data'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_data_item" HREF="#data_item">data_item</A></TD>
+ <TD><B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'bytearray'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_data_items" HREF="#data_items">data_items</A></TD>
+ <TD><B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'bytearray'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_decl" HREF="#decl">decl</A></TD>
+ <TD><B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.corflags'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B><BR>
+<B><CODE>'.imagebase'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.module'</CODE></B><BR>
+<B><CODE>'.mresource'</CODE></B><BR>
+<B><CODE>'.namespace'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.subsystem'</CODE></B><BR>
+<B><CODE>'.vtfixup'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_decls" HREF="#decls">decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.corflags'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B><BR>
+<B><CODE>'.imagebase'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.module'</CODE></B><BR>
+<B><CODE>'.mresource'</CODE></B><BR>
+<B><CODE>'.namespace'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.subsystem'</CODE></B><BR>
+<B><CODE>'.vtfixup'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_event_attr" HREF="#event_attr">event_attr</A></TD>
+ <TD><B><CODE>'rtspecialname'</CODE></B><BR>
+<B><CODE>'specialname'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_event_decl" HREF="#event_decl">event_decl</A></TD>
+ <TD><B><CODE>'.addon'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.fire'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.other'</CODE></B><BR>
+<B><CODE>'.removeon'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_event_decls" HREF="#event_decls">event_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.addon'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.fire'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.other'</CODE></B><BR>
+<B><CODE>'.removeon'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_event_head" HREF="#event_head">event_head</A></TD>
+ <TD><B><CODE>'.event'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_expt_attr" HREF="#expt_attr">expt_attr</A></TD>
+ <TD><B><CODE>'nested'</CODE></B><BR>
+<B><CODE>'private'</CODE></B><BR>
+<B><CODE>'public'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_exptype_decl" HREF="#exptype_decl">exptype_decl</A></TD>
+ <TD><B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_exptype_decls" HREF="#exptype_decls">exptype_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_exptype_head" HREF="#exptype_head">exptype_head</A></TD>
+ <TD><B><CODE>'.class'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_exptype_spec" HREF="#exptype_spec">exptype_spec</A></TD>
+ <TD><B><CODE>'extern'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_extends_clause" HREF="#extends_clause">extends_clause</A></TD>
+ <TD><B><CODE>'extends'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_extsource_spec" HREF="#extsource_spec">extsource_spec</A></TD>
+ <TD><B><CODE>'.line'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_field_attr" HREF="#field_attr">field_attr</A></TD>
+ <TD><B><CODE>'assembly'</CODE></B><BR>
+<B><CODE>'famandassem'</CODE></B><BR>
+<B><CODE>'family'</CODE></B><BR>
+<B><CODE>'famorassem'</CODE></B><BR>
+<B><CODE>'initonly'</CODE></B><BR>
+<B><CODE>'literal'</CODE></B><BR>
+<B><CODE>'marshal'</CODE></B><BR>
+<B><CODE>'notserialized'</CODE></B><BR>
+<B><CODE>'private'</CODE></B><BR>
+<B><CODE>'privatescope'</CODE></B><BR>
+<B><CODE>'public'</CODE></B><BR>
+<B><CODE>'rtspecialname'</CODE></B><BR>
+<B><CODE>'specialname'</CODE></B><BR>
+<B><CODE>'static'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_field_decl" HREF="#field_decl">field_decl</A></TD>
+ <TD><B><CODE>'.field'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_field_init" HREF="#field_init">field_init</A></TD>
+ <TD><B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'bytearray'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'nullref'</CODE></B><BR>
+<B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_file_attr" HREF="#file_attr">file_attr</A></TD>
+ <TD><B><CODE>'nometadata'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_file_decl" HREF="#file_decl">file_decl</A></TD>
+ <TD><B><CODE>'.file'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_file_entry" HREF="#file_entry">file_entry</A></TD>
+ <TD><B><CODE>'.entrypoint'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_filter_clause" HREF="#filter_clause">filter_clause</A></TD>
+ <TD><B><CODE>'filter'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_filter_spec" HREF="#filter_spec">filter_spec</A></TD>
+ <TD><B><CODE>'{'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_fixed_spec" HREF="#fixed_spec">fixed_spec</A></TD>
+ <TD><B><CODE>'array'</CODE></B><BR>
+<B><CODE>'sysstring'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_float64" HREF="#float64">float64</A></TD>
+ <TD><B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>C_STYLE_FLOATING_POINT_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_float64bit" HREF="#float64bit">float64bit</A></TD>
+ <TD><B><CODE>C_STYLE_FLOATING_POINT_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_handler_block" HREF="#handler_block">handler_block</A></TD>
+ <TD><B><CODE>'handler'</CODE></B><BR>
+<B><CODE>'{'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_handler_spec" HREF="#handler_spec">handler_spec</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hexbyte" HREF="#hexbyte">hexbyte</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'A'</CODE></B><BR>
+<B><CODE>'B'</CODE></B><BR>
+<B><CODE>'C'</CODE></B><BR>
+<B><CODE>'D'</CODE></B><BR>
+<B><CODE>'E'</CODE></B><BR>
+<B><CODE>'F'</CODE></B><BR>
+<B><CODE>'a'</CODE></B><BR>
+<B><CODE>'b'</CODE></B><BR>
+<B><CODE>'c'</CODE></B><BR>
+<B><CODE>'d'</CODE></B><BR>
+<B><CODE>'e'</CODE></B><BR>
+<B><CODE>'f'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hexdigit" HREF="#hexdigit">hexdigit</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'A'</CODE></B><BR>
+<B><CODE>'B'</CODE></B><BR>
+<B><CODE>'C'</CODE></B><BR>
+<B><CODE>'D'</CODE></B><BR>
+<B><CODE>'E'</CODE></B><BR>
+<B><CODE>'F'</CODE></B><BR>
+<B><CODE>'a'</CODE></B><BR>
+<B><CODE>'b'</CODE></B><BR>
+<B><CODE>'c'</CODE></B><BR>
+<B><CODE>'d'</CODE></B><BR>
+<B><CODE>'e'</CODE></B><BR>
+<B><CODE>'f'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_id" HREF="#id">id</A></TD>
+ <TD><B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_impl_attr" HREF="#impl_attr">impl_attr</A></TD>
+ <TD><B><CODE>'cil'</CODE></B><BR>
+<B><CODE>'forwardref'</CODE></B><BR>
+<B><CODE>'internalcall'</CODE></B><BR>
+<B><CODE>'managed'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'noinlining'</CODE></B><BR>
+<B><CODE>'optil'</CODE></B><BR>
+<B><CODE>'preservesig'</CODE></B><BR>
+<B><CODE>'runtime'</CODE></B><BR>
+<B><CODE>'synchronized'</CODE></B><BR>
+<B><CODE>'unmanaged'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_impl_clause" HREF="#impl_clause">impl_clause</A></TD>
+ <TD><B><CODE>'implements'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_init_opt" HREF="#init_opt">init_opt</A></TD>
+ <TD><B><CODE>'='</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_instr" HREF="#instr">instr</A></TD>
+ <TD><B><CODE>INSTR</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_int" HREF="#int">int</A></TD>
+ <TD><B><CODE>'int'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_int32" HREF="#int32">int32</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_int64" HREF="#int64">int64</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_int64bit" HREF="#int64bit">int64bit</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_label" HREF="#label">label</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_labels" HREF="#labels">labels</A></TD>
+ <TD><B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_language_decl" HREF="#language_decl">language_decl</A></TD>
+ <TD><B><CODE>'.language'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_local_spec" HREF="#local_spec">local_spec</A></TD>
+ <TD><B><CODE>'='</CODE></B><BR>
+<B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_manifestres_attr" HREF="#manifestres_attr">manifestres_attr</A></TD>
+ <TD><B><CODE>'private'</CODE></B><BR>
+<B><CODE>'public'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_manifestres_decl" HREF="#manifestres_decl">manifestres_decl</A></TD>
+ <TD><B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_manifestres_decls" HREF="#manifestres_decls">manifestres_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_manifestres_head" HREF="#manifestres_head">manifestres_head</A></TD>
+ <TD><B><CODE>'.mresource'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_marshal_spec" HREF="#marshal_spec">marshal_spec</A></TD>
+ <TD><B><CODE>'marshal'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_member_ref" HREF="#member_ref">member_ref</A></TD>
+ <TD><B><CODE>'field'</CODE></B><BR>
+<B><CODE>'method'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_attr" HREF="#method_attr">method_attr</A></TD>
+ <TD><B><CODE>'abstract'</CODE></B><BR>
+<B><CODE>'assembly'</CODE></B><BR>
+<B><CODE>'famandassem'</CODE></B><BR>
+<B><CODE>'family'</CODE></B><BR>
+<B><CODE>'famorassem'</CODE></B><BR>
+<B><CODE>'final'</CODE></B><BR>
+<B><CODE>'hidebysig'</CODE></B><BR>
+<B><CODE>'newslot'</CODE></B><BR>
+<B><CODE>'pinvokeimpl'</CODE></B><BR>
+<B><CODE>'private'</CODE></B><BR>
+<B><CODE>'privatescope'</CODE></B><BR>
+<B><CODE>'public'</CODE></B><BR>
+<B><CODE>'reqsecobj'</CODE></B><BR>
+<B><CODE>'rtspecialname'</CODE></B><BR>
+<B><CODE>'specialname'</CODE></B><BR>
+<B><CODE>'static'</CODE></B><BR>
+<B><CODE>'unmanagedexp'</CODE></B><BR>
+<B><CODE>'virtual'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_decl" HREF="#method_decl">method_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.emitbyte'</CODE></B><BR>
+<B><CODE>'.entrypoint'</CODE></B><BR>
+<B><CODE>'.export'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.locals'</CODE></B><BR>
+<B><CODE>'.maxstack'</CODE></B><BR>
+<B><CODE>'.override'</CODE></B><BR>
+<B><CODE>'.param'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.try'</CODE></B><BR>
+<B><CODE>'.vtentry'</CODE></B><BR>
+<B><CODE>'.zeroinit'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B><BR>
+<B><CODE>INSTR</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_decls" HREF="#method_decls">method_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.emitbyte'</CODE></B><BR>
+<B><CODE>'.entrypoint'</CODE></B><BR>
+<B><CODE>'.export'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.locals'</CODE></B><BR>
+<B><CODE>'.maxstack'</CODE></B><BR>
+<B><CODE>'.override'</CODE></B><BR>
+<B><CODE>'.param'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.try'</CODE></B><BR>
+<B><CODE>'.vtentry'</CODE></B><BR>
+<B><CODE>'.zeroinit'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B><BR>
+<B><CODE>INSTR</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_head" HREF="#method_head">method_head</A></TD>
+ <TD><B><CODE>'.method'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_name" HREF="#method_name">method_name</A></TD>
+ <TD><B><CODE>'.cctor'</CODE></B><BR>
+<B><CODE>'.ctor'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_method_ref" HREF="#method_ref">method_ref</A></TD>
+ <TD><B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'default'</CODE></B><BR>
+<B><CODE>'explicit'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'instance'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unmanaged'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'vararg'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_module_head" HREF="#module_head">module_head</A></TD>
+ <TD><B><CODE>'.module'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_name_value_pair" HREF="#name_value_pair">name_value_pair</A></TD>
+ <TD><B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_name_value_pairs" HREF="#name_value_pairs">name_value_pairs</A></TD>
+ <TD><B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_namespace_head" HREF="#namespace_head">namespace_head</A></TD>
+ <TD><B><CODE>'.namespace'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_native_bound" HREF="#native_bound">native_bound</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_native_prefix" HREF="#native_prefix">native_prefix</A></TD>
+ <TD><B><CODE>'ansi'</CODE></B><BR>
+<B><CODE>'as'</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'bstr'</CODE></B><BR>
+<B><CODE>'byvalstr'</CODE></B><BR>
+<B><CODE>'currency'</CODE></B><BR>
+<B><CODE>'custom'</CODE></B><BR>
+<B><CODE>'date'</CODE></B><BR>
+<B><CODE>'decimal'</CODE></B><BR>
+<B><CODE>'error'</CODE></B><BR>
+<B><CODE>'fixed'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'idispatch'</CODE></B><BR>
+<B><CODE>'int'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'interface'</CODE></B><BR>
+<B><CODE>'iunknown'</CODE></B><BR>
+<B><CODE>'lpstr'</CODE></B><BR>
+<B><CODE>'lpstruct'</CODE></B><BR>
+<B><CODE>'lptstr'</CODE></B><BR>
+<B><CODE>'lpwstr'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'nested'</CODE></B><BR>
+<B><CODE>'objectref'</CODE></B><BR>
+<B><CODE>'safearray'</CODE></B><BR>
+<B><CODE>'struct'</CODE></B><BR>
+<B><CODE>'syschar'</CODE></B><BR>
+<B><CODE>'tbstr'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'variant'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_native_suffix" HREF="#native_suffix">native_suffix</A></TD>
+ <TD><B><CODE>'*'</CODE></B><BR>
+<B><CODE>'['</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_native_type" HREF="#native_type">native_type</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'ansi'</CODE></B><BR>
+<B><CODE>'as'</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'bstr'</CODE></B><BR>
+<B><CODE>'byvalstr'</CODE></B><BR>
+<B><CODE>'currency'</CODE></B><BR>
+<B><CODE>'custom'</CODE></B><BR>
+<B><CODE>'date'</CODE></B><BR>
+<B><CODE>'decimal'</CODE></B><BR>
+<B><CODE>'error'</CODE></B><BR>
+<B><CODE>'fixed'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'idispatch'</CODE></B><BR>
+<B><CODE>'int'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'interface'</CODE></B><BR>
+<B><CODE>'iunknown'</CODE></B><BR>
+<B><CODE>'lpstr'</CODE></B><BR>
+<B><CODE>'lpstruct'</CODE></B><BR>
+<B><CODE>'lptstr'</CODE></B><BR>
+<B><CODE>'lpwstr'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'nested'</CODE></B><BR>
+<B><CODE>'objectref'</CODE></B><BR>
+<B><CODE>'safearray'</CODE></B><BR>
+<B><CODE>'struct'</CODE></B><BR>
+<B><CODE>'syschar'</CODE></B><BR>
+<B><CODE>'tbstr'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'variant'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_nested_access" HREF="#nested_access">nested_access</A></TD>
+ <TD><B><CODE>'assembly'</CODE></B><BR>
+<B><CODE>'famandassem'</CODE></B><BR>
+<B><CODE>'family'</CODE></B><BR>
+<B><CODE>'famorassem'</CODE></B><BR>
+<B><CODE>'private'</CODE></B><BR>
+<B><CODE>'public'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_num64" HREF="#num64">num64</A></TD>
+ <TD><B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_FLOATING_POINT_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_owner_type" HREF="#owner_type">owner_type</A></TD>
+ <TD><B><CODE>'['</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'field'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_param_attr" HREF="#param_attr">param_attr</A></TD>
+ <TD><B><CODE>'['</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_param_spec" HREF="#param_spec">param_spec</A></TD>
+ <TD><B><CODE>'in'</CODE></B><BR>
+<B><CODE>'opt'</CODE></B><BR>
+<B><CODE>'out'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_pinv_attr" HREF="#pinv_attr">pinv_attr</A></TD>
+ <TD><B><CODE>'ansi'</CODE></B><BR>
+<B><CODE>'autochar'</CODE></B><BR>
+<B><CODE>'cdecl'</CODE></B><BR>
+<B><CODE>'fastcall'</CODE></B><BR>
+<B><CODE>'lasterr'</CODE></B><BR>
+<B><CODE>'nomangle'</CODE></B><BR>
+<B><CODE>'stdcall'</CODE></B><BR>
+<B><CODE>'thiscall'</CODE></B><BR>
+<B><CODE>'unicode'</CODE></B><BR>
+<B><CODE>'winapi'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_program" HREF="#program">program</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.corflags'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B><BR>
+<B><CODE>'.imagebase'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.module'</CODE></B><BR>
+<B><CODE>'.mresource'</CODE></B><BR>
+<B><CODE>'.namespace'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.subsystem'</CODE></B><BR>
+<B><CODE>'.vtfixup'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_property_attr" HREF="#property_attr">property_attr</A></TD>
+ <TD><B><CODE>'rtspecialname'</CODE></B><BR>
+<B><CODE>'specialname'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_property_decl" HREF="#property_decl">property_decl</A></TD>
+ <TD><B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.get'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.other'</CODE></B><BR>
+<B><CODE>'.set'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_property_decls" HREF="#property_decls">property_decls</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.get'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.other'</CODE></B><BR>
+<B><CODE>'.set'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_property_head" HREF="#property_head">property_head</A></TD>
+ <TD><B><CODE>'.property'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_qstring" HREF="#qstring">qstring</A></TD>
+ <TD><B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_repeat_opt" HREF="#repeat_opt">repeat_opt</A></TD>
+ <TD><B><CODE>'['</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_scope_block" HREF="#scope_block">scope_block</A></TD>
+ <TD><B><CODE>'{'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sec_action" HREF="#sec_action">sec_action</A></TD>
+ <TD><B><CODE>'assert'</CODE></B><BR>
+<B><CODE>'demand'</CODE></B><BR>
+<B><CODE>'deny'</CODE></B><BR>
+<B><CODE>'inheritcheck'</CODE></B><BR>
+<B><CODE>'linkcheck'</CODE></B><BR>
+<B><CODE>'noncasdemand'</CODE></B><BR>
+<B><CODE>'noncasinheritance'</CODE></B><BR>
+<B><CODE>'noncaslinkdemand'</CODE></B><BR>
+<B><CODE>'permitonly'</CODE></B><BR>
+<B><CODE>'prejitdeny'</CODE></B><BR>
+<B><CODE>'prejitgrant'</CODE></B><BR>
+<B><CODE>'reqmin'</CODE></B><BR>
+<B><CODE>'reqopt'</CODE></B><BR>
+<B><CODE>'reqrefuse'</CODE></B><BR>
+<B><CODE>'request'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sec_decl" HREF="#sec_decl">sec_decl</A></TD>
+ <TD><B><CODE>'.permission'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sec_spec" HREF="#sec_spec">sec_spec</A></TD>
+ <TD><B><CODE>'='</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_seh_block" HREF="#seh_block">seh_block</A></TD>
+ <TD><B><CODE>'.try'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_seh_clause" HREF="#seh_clause">seh_clause</A></TD>
+ <TD><B><CODE>'catch'</CODE></B><BR>
+<B><CODE>'fault'</CODE></B><BR>
+<B><CODE>'filter'</CODE></B><BR>
+<B><CODE>'finally'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sig_arg" HREF="#sig_arg">sig_arg</A></TD>
+ <TD><B><CODE>'...'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sig_args" HREF="#sig_args">sig_args</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sized_float" HREF="#sized_float">sized_float</A></TD>
+ <TD><B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sized_int" HREF="#sized_int">sized_int</A></TD>
+ <TD><B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_slashed_name" HREF="#slashed_name">slashed_name</A></TD>
+ <TD><B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sqstring" HREF="#sqstring">sqstring</A></TD>
+ <TD><B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_string_or_bytes" HREF="#string_or_bytes">string_or_bytes</A></TD>
+ <TD><B><CODE>'('</CODE></B><BR>
+<B><CODE>C_STYLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_syntax" HREF="#syntax">syntax</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'.assembly'</CODE></B><BR>
+<B><CODE>'.class'</CODE></B><BR>
+<B><CODE>'.corflags'</CODE></B><BR>
+<B><CODE>'.custom'</CODE></B><BR>
+<B><CODE>'.data'</CODE></B><BR>
+<B><CODE>'.field'</CODE></B><BR>
+<B><CODE>'.file'</CODE></B><BR>
+<B><CODE>'.imagebase'</CODE></B><BR>
+<B><CODE>'.language'</CODE></B><BR>
+<B><CODE>'.line'</CODE></B><BR>
+<B><CODE>'.method'</CODE></B><BR>
+<B><CODE>'.module'</CODE></B><BR>
+<B><CODE>'.mresource'</CODE></B><BR>
+<B><CODE>'.namespace'</CODE></B><BR>
+<B><CODE>'.permission'</CODE></B><BR>
+<B><CODE>'.subsystem'</CODE></B><BR>
+<B><CODE>'.vtfixup'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_truefalse" HREF="#truefalse">truefalse</A></TD>
+ <TD><B><CODE>'false'</CODE></B><BR>
+<B><CODE>'true'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_try_block" HREF="#try_block">try_block</A></TD>
+ <TD><B><CODE>'.try'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_try_spec" HREF="#try_spec">try_spec</A></TD>
+ <TD><B><CODE>'{'</CODE></B><BR>
+<B><CODE>C_STYLE_64_BIT_INTEGER_LITERAL</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_type" HREF="#type">type</A></TD>
+ <TD><B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_type_prefix" HREF="#type_prefix">type_prefix</A></TD>
+ <TD><B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_type_spec" HREF="#type_spec">type_spec</A></TD>
+ <TD><B><CODE>'['</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'char'</CODE></B><BR>
+<B><CODE>'class'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'method'</CODE></B><BR>
+<B><CODE>'native'</CODE></B><BR>
+<B><CODE>'object'</CODE></B><BR>
+<B><CODE>'string'</CODE></B><BR>
+<B><CODE>'typedref'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'value'</CODE></B><BR>
+<B><CODE>'valuetype'</CODE></B><BR>
+<B><CODE>'void'</CODE></B><BR>
+<B><CODE>C_STYLE_IDENTIFIER</CODE></B><BR>
+<B><CODE>C_STYLE_SINGLE_QUOTED_STRING_LITERAL</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_type_suffix" HREF="#type_suffix">type_suffix</A></TD>
+ <TD><B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'modopt'</CODE></B><BR>
+<B><CODE>'modreq'</CODE></B><BR>
+<B><CODE>'pinned'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_unmanaged_kind" HREF="#unmanaged_kind">unmanaged_kind</A></TD>
+ <TD><B><CODE>'cdecl'</CODE></B><BR>
+<B><CODE>'fastcall'</CODE></B><BR>
+<B><CODE>'stdcall'</CODE></B><BR>
+<B><CODE>'thiscall'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_va_spec" HREF="#va_spec">va_spec</A></TD>
+ <TD><B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_variant_prefix" HREF="#variant_prefix">variant_prefix</A></TD>
+ <TD><B><CODE>'blob'</CODE></B><BR>
+<B><CODE>'blob_object'</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'bstr'</CODE></B><BR>
+<B><CODE>'carray'</CODE></B><BR>
+<B><CODE>'cf'</CODE></B><BR>
+<B><CODE>'clsid'</CODE></B><BR>
+<B><CODE>'currency'</CODE></B><BR>
+<B><CODE>'data'</CODE></B><BR>
+<B><CODE>'decimal'</CODE></B><BR>
+<B><CODE>'error'</CODE></B><BR>
+<B><CODE>'filetime'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'hresult'</CODE></B><BR>
+<B><CODE>'idispatch'</CODE></B><BR>
+<B><CODE>'int'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'iunknown'</CODE></B><BR>
+<B><CODE>'lpstr'</CODE></B><BR>
+<B><CODE>'lpwstr'</CODE></B><BR>
+<B><CODE>'null'</CODE></B><BR>
+<B><CODE>'record'</CODE></B><BR>
+<B><CODE>'safearray'</CODE></B><BR>
+<B><CODE>'storage'</CODE></B><BR>
+<B><CODE>'stored_object'</CODE></B><BR>
+<B><CODE>'stream'</CODE></B><BR>
+<B><CODE>'streamed_object'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'userdefined'</CODE></B><BR>
+<B><CODE>'variant'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_variant_suffix" HREF="#variant_suffix">variant_suffix</A></TD>
+ <TD><B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'vector'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_variant_type" HREF="#variant_type">variant_type</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>'blob'</CODE></B><BR>
+<B><CODE>'blob_object'</CODE></B><BR>
+<B><CODE>'bool'</CODE></B><BR>
+<B><CODE>'bstr'</CODE></B><BR>
+<B><CODE>'carray'</CODE></B><BR>
+<B><CODE>'cf'</CODE></B><BR>
+<B><CODE>'clsid'</CODE></B><BR>
+<B><CODE>'currency'</CODE></B><BR>
+<B><CODE>'data'</CODE></B><BR>
+<B><CODE>'decimal'</CODE></B><BR>
+<B><CODE>'error'</CODE></B><BR>
+<B><CODE>'filetime'</CODE></B><BR>
+<B><CODE>'float32'</CODE></B><BR>
+<B><CODE>'float64'</CODE></B><BR>
+<B><CODE>'hresult'</CODE></B><BR>
+<B><CODE>'idispatch'</CODE></B><BR>
+<B><CODE>'int'</CODE></B><BR>
+<B><CODE>'int16'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B><BR>
+<B><CODE>'int8'</CODE></B><BR>
+<B><CODE>'iunknown'</CODE></B><BR>
+<B><CODE>'lpstr'</CODE></B><BR>
+<B><CODE>'lpwstr'</CODE></B><BR>
+<B><CODE>'null'</CODE></B><BR>
+<B><CODE>'record'</CODE></B><BR>
+<B><CODE>'safearray'</CODE></B><BR>
+<B><CODE>'storage'</CODE></B><BR>
+<B><CODE>'stored_object'</CODE></B><BR>
+<B><CODE>'stream'</CODE></B><BR>
+<B><CODE>'streamed_object'</CODE></B><BR>
+<B><CODE>'unsigned'</CODE></B><BR>
+<B><CODE>'userdefined'</CODE></B><BR>
+<B><CODE>'variant'</CODE></B><BR>
+<B><CODE>'void'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_vtfixup_attr" HREF="#vtfixup_attr">vtfixup_attr</A></TD>
+ <TD><B><CODE>'callmostderived'</CODE></B><BR>
+<B><CODE>'fromunmanagd'</CODE></B><BR>
+<B><CODE>'int32'</CODE></B><BR>
+<B><CODE>'int64'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_vtfixup_decl" HREF="#vtfixup_decl">vtfixup_decl</A></TD>
+ <TD><B><CODE>'.vtfixup'</CODE></B></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_amb">Lookahead-1 Parser Ambiguities</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Ref</TH>
+ <TH>Production</TH>
+ <TH>Ambiguous<BR>Literals/Terminals</TH>
+<TH>Can't decide between the following</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="1" HREF="#ref_1">#1</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_decl" HREF="#decl">decl</A></TD>
+<TD VALIGN=TOP><B><CODE>'.file'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#file_decl">file_decl</A></LI>
+<LI> <B><CODE>'.file'</CODE></B> <B><CODE>'alignment'</CODE></B> <A HREF="#int32">int32</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="2" HREF="#ref_2">#2</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_decl" HREF="#decl">decl</A></TD>
+<TD VALIGN=TOP><B><CODE>'.assembly'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#assembly_head">assembly_head</A> <B><CODE>'{'</CODE></B> <A HREF="#assembly_decls">assembly_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#assemblyref_head">assemblyref_head</A> <B><CODE>'{'</CODE></B> <A HREF="#assemblyref_decls">assemblyref_decls</A> <B><CODE>'}'</CODE></B></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="3" HREF="#ref_3">#3</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_decl" HREF="#decl">decl</A></TD>
+<TD VALIGN=TOP><B><CODE>'.class'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#class_head">class_head</A> <B><CODE>'{'</CODE></B> <A HREF="#class_decls">class_decls</A> <B><CODE>'}'</CODE></B></LI>
+<LI> <A HREF="#exptype_head">exptype_head</A> <B><CODE>'{'</CODE></B> <A HREF="#exptype_decls">exptype_decls</A> <B><CODE>'}'</CODE></B></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="4" HREF="#ref_4">#4</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_owner_type" HREF="#owner_type">owner_type</A></TD>
+<TD VALIGN=TOP><B><CODE>'method'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#type_spec">type_spec</A></LI>
+<LI> <A HREF="#member_ref">member_ref</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="5" HREF="#ref_5">#5</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_type_spec" HREF="#type_spec">type_spec</A></TD>
+<TD VALIGN=TOP><B><CODE>'['</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#class_ref">class_ref</A></LI>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#class_ref_prefix">class_ref_prefix</A> <B><CODE>']'</CODE></B></LI>
+</UL>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<HR>
+<FONT SIZE=-2>Created with ebnf2annot.pl (<a href="mailto:andreas.gieriet@externsoft.ch?subject=Request:%20EBNF%20Tools">andreas.gieriet@externsoft.ch</a>)</Font>
+</BODY>
+</HTML>

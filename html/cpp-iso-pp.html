@@ -1,0 +1,2736 @@
+<HTML>
+<HEAD>
+<TITLE>EBNF Syntax: C++ Preprocessor (ISO/IEC 14882:1998(E))</TITLE>
+<STYLE TYPE="text/css">
+body {
+  font-family:Helvetica,Helv;
+}
+table.data {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.data th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: lightgray;
+}
+table.data td {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+}
+</STYLE></HEAD>
+<BODY>
+<H1>EBNF Syntax: C++ Preprocessor (ISO/IEC 14882:1998(E))</H1><TABLE><TBODY><TR><TD><A HREF="#toc_prod">Syntax Productions</A></TD></TR><TR><TD><A HREF="#toc_variants">Variants</A></TD></TR><TR><TD><A HREF="#toc_term">Terminals</A></TD></TR><TR><TD><A HREF="#toc_lit">Literals</A></TD></TR><TR><TD><A HREF="#toc_xref">Production Cross Reference</A></TD></TR><TR><TD><A HREF="#toc_first">Lookahead-1 Parser First Token</A></TD></TR><TR><TD><A HREF="#toc_amb">Lookahead-1 Parser Ambiguities</A></TD></TR></TBODY></TABLE><HR WIDTH="100%">
+<H2><A NAME="toc_prod">Syntax Productions</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH><A HREF="#additive_expression">A</A></TH>
+ <TH><A HREF="#boolean_literal">B</A></TH>
+ <TH><A HREF="#c_char">C</A></TH>
+ <TH><A HREF="#decimal_literal">D</A></TH>
+ <TH><A HREF="#elif_group">E</A></TH>
+ <TD>F</TD>
+ <TH><A HREF="#group">G</A></TH>
+ <TH><A HREF="#h_char">H</A></TH>
+ <TH><A HREF="#identifier">I</A></TH>
+ <TD>J</TD>
+ <TD>K</TD>
+ <TH><A HREF="#logical_and_expression">L</A></TH>
+ <TH><A HREF="#multiplicative_expression">M</A></TH>
+ <TH><A HREF="#new_line">N</A></TH>
+ <TH><A HREF="#octal_digit">O</A></TH>
+ <TH><A HREF="#pp_expression">P</A></TH>
+ <TH><A HREF="#q_char">Q</A></TH>
+ <TH><A HREF="#relational_expression">R</A></TH>
+ <TH><A HREF="#s_char">S</A></TH>
+ <TD>T</TD>
+ <TH><A HREF="#unary_expression">U</A></TH>
+ <TD>V</TD>
+ <TD>W</TD>
+ <TD>X</TD>
+ <TD>Y</TD>
+ <TD>Z</TD>
+ </TR>
+</THEAD>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<TBODY>
+<TR><TH><A NAME="xref_preprocessing_file" HREF="#preprocessing_file">Start Symbol (preprocessing_file)</TH></TR>
+</TBODY>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>Production</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A HREF="#xref_additive_expression" NAME="additive_expression">additive_expression</A></TD>
+ <TD> <A HREF="#multiplicative_expression">multiplicative_expression</A> { ( <B><CODE>'+'</CODE></B> |  <B><CODE>'-'</CODE></B> ) <A HREF="#multiplicative_expression">multiplicative_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_and_expression" NAME="and_expression">and_expression</A></TD>
+ <TD> <A HREF="#equality_expression">equality_expression</A> { <B><CODE>'&amp;'</CODE></B> <A HREF="#equality_expression">equality_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_boolean_literal" NAME="boolean_literal">boolean_literal</A> <I>(not used)</I></TD>
+ <TD><UL>
+<LI> <B><CODE>'false'</CODE></B></LI>
+<LI> <B><CODE>'true'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_c_char" NAME="c_char">c_char</A></TD>
+ <TD><UL>
+<LI> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE></B></LI>
+<LI> <A HREF="#escape_sequence">escape_sequence</A></LI>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_c_char_sequence" NAME="c_char_sequence">c_char_sequence</A></TD>
+ <TD> <A HREF="#c_char">c_char</A> { <A HREF="#c_char">c_char</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_character_literal" NAME="character_literal">character_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>&quot;'&quot;</CODE></B> <A HREF="#c_char_sequence">c_char_sequence</A> <B><CODE>&quot;'&quot;</CODE></B></LI>
+<LI> <B><CODE>&quot;L'&quot;</CODE></B> <A HREF="#c_char_sequence">c_char_sequence</A> <B><CODE>&quot;'&quot;</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_conditional_expression" NAME="conditional_expression">conditional_expression</A></TD>
+ <TD> <A HREF="#logical_or_expression">logical_or_expression</A> [ <B><CODE>'?'</CODE></B> <A HREF="#pp_expression">pp_expression</A> <B><CODE>':'</CODE></B> <A HREF="#pp_expression">pp_expression</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_control_line" NAME="control_line">control_line</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'include'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#lparen">lparen</A> [ <A HREF="#identifier_list">identifier_list</A> ] <B><CODE>')'</CODE></B> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'undef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'line'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'error'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'pragma'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_1" HREF="#1">#1</A>)</SUP></FONT></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decimal_literal" NAME="decimal_literal">decimal_literal</A></TD>
+ <TD> <A HREF="#nonzero_digit">nonzero_digit</A> { <A HREF="#digit">digit</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_digit" NAME="digit">digit</A></TD>
+ <TD> <B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_elif_group" NAME="elif_group">elif_group</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'elif'</CODE></B> <A HREF="#pp_expression">pp_expression</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_else_group" NAME="else_group">else_group</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'else'</CODE></B> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_endif_line" NAME="endif_line">endif_line</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'endif'</CODE></B> <A HREF="#new_line">new_line</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_equality_expression" NAME="equality_expression">equality_expression</A></TD>
+ <TD> <A HREF="#relational_expression">relational_expression</A> { ( <B><CODE>'=='</CODE></B> |  <B><CODE>'!='</CODE></B> ) <A HREF="#relational_expression">relational_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_escape_sequence" NAME="escape_sequence">escape_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#simple_escape_sequence">simple_escape_sequence</A></LI>
+<LI> <A HREF="#octal_escape_sequence">octal_escape_sequence</A></LI>
+<LI> <A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exclusive_or_expression" NAME="exclusive_or_expression">exclusive_or_expression</A></TD>
+ <TD> <A HREF="#and_expression">and_expression</A> { <B><CODE>'^'</CODE></B> <A HREF="#and_expression">and_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_group" NAME="group">group</A></TD>
+ <TD> { <A HREF="#group_part">group_part</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_group_part" NAME="group_part">group_part</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT></LI>
+<LI> <A HREF="#if_section">if_section</A><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT></LI>
+<LI> <A HREF="#control_line">control_line</A><FONT COLOR="maron"><SUP>(<A NAME="ref_2" HREF="#2">#2</A>)</SUP></FONT></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_h_char" NAME="h_char">h_char</A></TD>
+ <TD> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_h_char_sequence" NAME="h_char_sequence">h_char_sequence</A></TD>
+ <TD> <A HREF="#h_char">h_char</A> { <A HREF="#h_char">h_char</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_header_name" NAME="header_name">header_name</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'&lt;'</CODE></B> <A HREF="#h_char_sequence">h_char_sequence</A> <B><CODE>'&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&quot;'</CODE></B> <A HREF="#q_char_sequence">q_char_sequence</A> <B><CODE>'&quot;'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hex_quad" NAME="hex_quad">hex_quad</A></TD>
+ <TD> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_digit" NAME="hexadecimal_digit">hexadecimal_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+<LI> <B><CODE>'8'</CODE></B></LI>
+<LI> <B><CODE>'9'</CODE></B></LI>
+<LI> <B><CODE>'a'</CODE></B></LI>
+<LI> <B><CODE>'b'</CODE></B></LI>
+<LI> <B><CODE>'c'</CODE></B></LI>
+<LI> <B><CODE>'d'</CODE></B></LI>
+<LI> <B><CODE>'e'</CODE></B></LI>
+<LI> <B><CODE>'f'</CODE></B></LI>
+<LI> <B><CODE>'A'</CODE></B></LI>
+<LI> <B><CODE>'B'</CODE></B></LI>
+<LI> <B><CODE>'C'</CODE></B></LI>
+<LI> <B><CODE>'D'</CODE></B></LI>
+<LI> <B><CODE>'E'</CODE></B></LI>
+<LI> <B><CODE>'F'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_escape_sequence" NAME="hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></TD>
+ <TD> <B><CODE>'\x'</CODE></B> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> { <A HREF="#hexadecimal_digit">hexadecimal_digit</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_literal" NAME="hexadecimal_literal">hexadecimal_literal</A></TD>
+ <TD> ( <B><CODE>'0x'</CODE></B> |  <B><CODE>'0X'</CODE></B> ) <A HREF="#hexadecimal_digit">hexadecimal_digit</A> { <A HREF="#hexadecimal_digit">hexadecimal_digit</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_identifier" NAME="identifier">identifier</A></TD>
+ <TD> <A HREF="#nondigit">nondigit</A> { <A HREF="#nondigit">nondigit</A> |  <A HREF="#digit">digit</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_identifier_list" NAME="identifier_list">identifier_list</A></TD>
+ <TD> <A HREF="#identifier">identifier</A> { <B><CODE>','</CODE></B> <A HREF="#identifier">identifier</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_if_group" NAME="if_group">if_group</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'if'</CODE></B> <A HREF="#pp_expression">pp_expression</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]<FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifdef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]<FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifndef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]<FONT COLOR="maron"><SUP>(<A NAME="ref_3" HREF="#3">#3</A>)</SUP></FONT></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_if_section" NAME="if_section">if_section</A></TD>
+ <TD> <A HREF="#if_group">if_group</A> { <A HREF="#elif_group">elif_group</A> } [ <A HREF="#else_group">else_group</A> ] <A HREF="#endif_line">endif_line</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_inclusive_or_expression" NAME="inclusive_or_expression">inclusive_or_expression</A></TD>
+ <TD> <A HREF="#exclusive_or_expression">exclusive_or_expression</A> { <B><CODE>'|'</CODE></B> <A HREF="#exclusive_or_expression">exclusive_or_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_integer_literal" NAME="integer_literal">integer_literal</A></TD>
+ <TD><UL>
+<LI> <A HREF="#decimal_literal">decimal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+<LI> <A HREF="#octal_literal">octal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+<LI> <A HREF="#hexadecimal_literal">hexadecimal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_integer_suffix" NAME="integer_suffix">integer_suffix</A></TD>
+ <TD><UL>
+<LI> <A HREF="#unsigned_suffix">unsigned_suffix</A> [ <A HREF="#long_suffix">long_suffix</A> ]</LI>
+<LI> <A HREF="#long_suffix">long_suffix</A> [ <A HREF="#unsigned_suffix">unsigned_suffix</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_logical_and_expression" NAME="logical_and_expression">logical_and_expression</A></TD>
+ <TD> <A HREF="#inclusive_or_expression">inclusive_or_expression</A> { <B><CODE>'&amp;&amp;'</CODE></B> <A HREF="#inclusive_or_expression">inclusive_or_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_logical_or_expression" NAME="logical_or_expression">logical_or_expression</A></TD>
+ <TD> <A HREF="#logical_and_expression">logical_and_expression</A> { <B><CODE>'||'</CODE></B> <A HREF="#logical_and_expression">logical_and_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_long_suffix" NAME="long_suffix">long_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'l'</CODE></B></LI>
+<LI> <B><CODE>'L'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_lparen" NAME="lparen">lparen</A></TD>
+ <TD> <B><CODE>LEFT_PARENTHESIS_WITHOUT_LEADING_WS</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_multiplicative_expression" NAME="multiplicative_expression">multiplicative_expression</A></TD>
+ <TD> <A HREF="#unary_expression">unary_expression</A> { ( <B><CODE>'*'</CODE></B> |  <B><CODE>'/'</CODE></B> |  <B><CODE>'%'</CODE></B> ) <A HREF="#unary_expression">unary_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_line" NAME="new_line">new_line</A></TD>
+ <TD> <B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nondigit" NAME="nondigit">nondigit</A></TD>
+ <TD><UL>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+<LI> <B><CODE>ALPHA_CHARACTER</CODE></B></LI>
+<LI> <B><CODE>'_'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nonzero_digit" NAME="nonzero_digit">nonzero_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+<LI> <B><CODE>'8'</CODE></B></LI>
+<LI> <B><CODE>'9'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_digit" NAME="octal_digit">octal_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_escape_sequence" NAME="octal_escape_sequence">octal_escape_sequence</A></TD>
+ <TD> <B><CODE>'\'</CODE></B> <A HREF="#octal_digit">octal_digit</A> [ <A HREF="#octal_digit">octal_digit</A> [ <A HREF="#octal_digit">octal_digit</A> ] ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_literal" NAME="octal_literal">octal_literal</A></TD>
+ <TD> <B><CODE>'0'</CODE></B> { <A HREF="#octal_digit">octal_digit</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pp_expression" NAME="pp_expression">pp_expression</A></TD>
+ <TD> <A HREF="#conditional_expression">conditional_expression</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pp_number" NAME="pp_number">pp_number</A></TD>
+ <TD> [ <B><CODE>'.'</CODE></B> ] <A HREF="#digit">digit</A> { <A HREF="#digit">digit</A> |  <A HREF="#nondigit">nondigit</A> |  ( <B><CODE>'e'</CODE></B> |  <B><CODE>'E'</CODE></B> ) <A HREF="#sign">sign</A> |  <B><CODE>'.'</CODE></B> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pp_tokens" NAME="pp_tokens">pp_tokens</A></TD>
+ <TD> { <A HREF="#preprocessing_token">preprocessing_token</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_file" NAME="preprocessing_file">preprocessing_file</A></TD>
+ <TD> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_op_or_punc" NAME="preprocessing_op_or_punc">preprocessing_op_or_punc</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'{'</CODE></B></LI>
+<LI> <B><CODE>'}'</CODE></B></LI>
+<LI> <B><CODE>'['</CODE></B></LI>
+<LI> <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'#'</CODE></B></LI>
+<LI> <B><CODE>'##'</CODE></B></LI>
+<LI> <B><CODE>'('</CODE></B></LI>
+<LI> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'&lt;:'</CODE></B></LI>
+<LI> <B><CODE>':&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&lt;%'</CODE></B></LI>
+<LI> <B><CODE>'%&gt;'</CODE></B></LI>
+<LI> <B><CODE>'%:'</CODE></B></LI>
+<LI> <B><CODE>'%:%:'</CODE></B></LI>
+<LI> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>':'</CODE></B></LI>
+<LI> <B><CODE>'...'</CODE></B></LI>
+<LI> <B><CODE>'new'</CODE></B></LI>
+<LI> <B><CODE>'delete'</CODE></B></LI>
+<LI> <B><CODE>'?'</CODE></B></LI>
+<LI> <B><CODE>'::'</CODE></B></LI>
+<LI> <B><CODE>'.'</CODE></B></LI>
+<LI> <B><CODE>'.*'</CODE></B></LI>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'/'</CODE></B></LI>
+<LI> <B><CODE>'%'</CODE></B></LI>
+<LI> <B><CODE>'^'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> <B><CODE>'|'</CODE></B></LI>
+<LI> <B><CODE>'~'</CODE></B></LI>
+<LI> <B><CODE>'!'</CODE></B></LI>
+<LI> <B><CODE>'='</CODE></B></LI>
+<LI> <B><CODE>'&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;'</CODE></B></LI>
+<LI> <B><CODE>'+='</CODE></B></LI>
+<LI> <B><CODE>'-='</CODE></B></LI>
+<LI> <B><CODE>'*='</CODE></B></LI>
+<LI> <B><CODE>'/='</CODE></B></LI>
+<LI> <B><CODE>'%='</CODE></B></LI>
+<LI> <B><CODE>'^='</CODE></B></LI>
+<LI> <B><CODE>'&amp;='</CODE></B></LI>
+<LI> <B><CODE>'|='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;='</CODE></B></LI>
+<LI> <B><CODE>'=='</CODE></B></LI>
+<LI> <B><CODE>'!='</CODE></B></LI>
+<LI> <B><CODE>'&lt;='</CODE></B></LI>
+<LI> <B><CODE>'&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&amp;&amp;'</CODE></B></LI>
+<LI> <B><CODE>'||'</CODE></B></LI>
+<LI> <B><CODE>'++'</CODE></B></LI>
+<LI> <B><CODE>'--'</CODE></B></LI>
+<LI> <B><CODE>','</CODE></B></LI>
+<LI> <B><CODE>'-&gt;*'</CODE></B></LI>
+<LI> <B><CODE>'-&gt;'</CODE></B></LI>
+<LI> <B><CODE>'and'</CODE></B></LI>
+<LI> <B><CODE>'and_eq'</CODE></B></LI>
+<LI> <B><CODE>'bitand'</CODE></B></LI>
+<LI> <B><CODE>'bitor'</CODE></B></LI>
+<LI> <B><CODE>'compl'</CODE></B></LI>
+<LI> <B><CODE>'not'</CODE></B></LI>
+<LI> <B><CODE>'not_eq'</CODE></B></LI>
+<LI> <B><CODE>'or'</CODE></B></LI>
+<LI> <B><CODE>'or_eq'</CODE></B></LI>
+<LI> <B><CODE>'xor'</CODE></B></LI>
+<LI> <B><CODE>'xor_eq'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_token" NAME="preprocessing_token">preprocessing_token</A></TD>
+ <TD><UL>
+<LI> <A HREF="#header_name">header_name</A><FONT COLOR="maron"><SUP>(<A NAME="ref_4" HREF="#4">#4</A>)</SUP></FONT><FONT COLOR="maron"><SUP>(<A NAME="ref_6" HREF="#6">#6</A>)</SUP></FONT></LI>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A><FONT COLOR="maron"><SUP>(<A NAME="ref_5" HREF="#5">#5</A>)</SUP></FONT></LI>
+<LI> <A HREF="#character_literal">character_literal</A></LI>
+<LI> <A HREF="#string_literal">string_literal</A><FONT COLOR="maron"><SUP>(<A NAME="ref_6" HREF="#6">#6</A>)</SUP></FONT></LI>
+<LI> <A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A><FONT COLOR="maron"><SUP>(<A NAME="ref_4" HREF="#4">#4</A>)</SUP></FONT><FONT COLOR="maron"><SUP>(<A NAME="ref_5" HREF="#5">#5</A>)</SUP></FONT></LI>
+<LI> <B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_primary_expression" NAME="primary_expression">primary_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#integer_literal">integer_literal</A></LI>
+<LI> <A HREF="#character_literal">character_literal</A></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#pp_expression">pp_expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#identifier">identifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_q_char" NAME="q_char">q_char</A></TD>
+ <TD> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_q_char_sequence" NAME="q_char_sequence">q_char_sequence</A></TD>
+ <TD> <A HREF="#q_char">q_char</A> { <A HREF="#q_char">q_char</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_relational_expression" NAME="relational_expression">relational_expression</A></TD>
+ <TD> <A HREF="#shift_expression">shift_expression</A> { ( <B><CODE>'&lt;'</CODE></B> |  <B><CODE>'&gt;'</CODE></B> |  <B><CODE>'&lt;='</CODE></B> |  <B><CODE>'&gt;='</CODE></B> ) <A HREF="#shift_expression">shift_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_replacement_list" NAME="replacement_list">replacement_list</A></TD>
+ <TD> [ <A HREF="#pp_tokens">pp_tokens</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_s_char" NAME="s_char">s_char</A></TD>
+ <TD><UL>
+<LI> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE></B></LI>
+<LI> <A HREF="#escape_sequence">escape_sequence</A></LI>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_s_char_sequence" NAME="s_char_sequence">s_char_sequence</A></TD>
+ <TD> <A HREF="#s_char">s_char</A> { <A HREF="#s_char">s_char</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_shift_expression" NAME="shift_expression">shift_expression</A></TD>
+ <TD> <A HREF="#additive_expression">additive_expression</A> { ( <B><CODE>'&lt;&lt;'</CODE></B> |  <B><CODE>'&gt;&gt;'</CODE></B> ) <A HREF="#additive_expression">additive_expression</A> }</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sign" NAME="sign">sign</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_simple_escape_sequence" NAME="simple_escape_sequence">simple_escape_sequence</A></TD>
+ <TD><UL>
+<LI> <B><CODE>&quot;\'&quot;</CODE></B></LI>
+<LI> <B><CODE>'\&quot;'</CODE></B></LI>
+<LI> <B><CODE>'\?'</CODE></B></LI>
+<LI> <B><CODE>'\\'</CODE></B></LI>
+<LI> <B><CODE>'\a'</CODE></B></LI>
+<LI> <B><CODE>'\b'</CODE></B></LI>
+<LI> <B><CODE>'\f'</CODE></B></LI>
+<LI> <B><CODE>'\n'</CODE></B></LI>
+<LI> <B><CODE>'\r'</CODE></B></LI>
+<LI> <B><CODE>'\t'</CODE></B></LI>
+<LI> <B><CODE>'\v'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_string_literal" NAME="string_literal">string_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'&quot;'</CODE></B> [ <A HREF="#s_char_sequence">s_char_sequence</A> ] <B><CODE>'&quot;'</CODE></B></LI>
+<LI> <B><CODE>'L&quot;'</CODE></B> [ <A HREF="#s_char_sequence">s_char_sequence</A> ] <B><CODE>'&quot;'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unary_expression" NAME="unary_expression">unary_expression</A></TD>
+ <TD> [ <A HREF="#unary_operator">unary_operator</A> ] <A HREF="#primary_expression">primary_expression</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unary_operator" NAME="unary_operator">unary_operator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+<LI> <B><CODE>'!'</CODE></B></LI>
+<LI> <B><CODE>'~'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_universal_character_name" NAME="universal_character_name">universal_character_name</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'\u'</CODE></B> <A HREF="#hex_quad">hex_quad</A></LI>
+<LI> <B><CODE>'\U'</CODE></B> <A HREF="#hex_quad">hex_quad</A> <A HREF="#hex_quad">hex_quad</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unsigned_suffix" NAME="unsigned_suffix">unsigned_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'u'</CODE></B></LI>
+<LI> <B><CODE>'U'</CODE></B></LI>
+</UL>
+</TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_variants">Variants</A></H2>none
+<HR WIDTH="100%">
+<H2><A NAME="toc_term">Terminals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Terminal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>ALPHA_CHARACTER</CODE>
+</TD><TD><A HREF="#nondigit">nondigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE>
+</TD><TD><A HREF="#q_char">q_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE>
+</TD><TD><A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE>
+</TD><TD><A HREF="#h_char">h_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE>
+</TD><TD><A HREF="#c_char">c_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE>
+</TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>DIGIT</CODE>
+</TD><TD><A HREF="#digit">digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>LEFT_PARENTHESIS_WITHOUT_LEADING_WS</CODE>
+</TD><TD><A HREF="#lparen">lparen</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>NEWLINE</CODE>
+</TD><TD><A HREF="#new_line">new_line</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_lit">Literals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Literal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>!</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>!=</CODE>
+</TD><TD><A HREF="#equality_expression">equality_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&quot;</CODE>
+</TD><TD><A HREF="#header_name">header_name</A> /
+<A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>#</CODE>
+</TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#endif_line">endif_line</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>##</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%:%:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;</CODE>
+</TD><TD><A HREF="#and_expression">and_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;&amp;</CODE>
+</TD><TD><A HREF="#logical_and_expression">logical_and_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>'</CODE>
+</TD><TD><A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>(</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>)</CODE>
+</TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>*</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>*=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>+</CODE>
+</TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#sign">sign</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>++</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>+=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>,</CODE>
+</TD><TD><A HREF="#identifier_list">identifier_list</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-</CODE>
+</TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#sign">sign</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>--</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-&gt;*</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.</CODE>
+</TD><TD><A HREF="#pp_number">pp_number</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.*</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>...</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>/</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>/=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:</CODE>
+</TD><TD><A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>::</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;</CODE>
+</TD><TD><A HREF="#header_name">header_name</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;%</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;&lt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;&lt;=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>==</CODE>
+</TD><TD><A HREF="#equality_expression">equality_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;</CODE>
+</TD><TD><A HREF="#header_name">header_name</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;&gt;=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>?</CODE>
+</TD><TD><A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>[</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\</CODE>
+</TD><TD><A HREF="#octal_escape_sequence">octal_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\&quot;</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\'</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\?</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\U</CODE>
+</TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\\</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\a</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\b</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\f</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\n</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\r</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\t</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\u</CODE>
+</TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\v</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\x</CODE>
+</TD><TD><A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>]</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>^</CODE>
+</TD><TD><A HREF="#exclusive_or_expression">exclusive_or_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>^=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>_</CODE>
+</TD><TD><A HREF="#nondigit">nondigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>{</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>|</CODE>
+</TD><TD><A HREF="#inclusive_or_expression">inclusive_or_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>|=</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>||</CODE>
+</TD><TD><A HREF="#logical_or_expression">logical_or_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>}</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>~</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#octal_digit">octal_digit</A> /
+<A HREF="#octal_literal">octal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0X</CODE>
+</TD><TD><A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0x</CODE>
+</TD><TD><A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>1</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>2</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>3</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>4</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>5</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>6</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>7</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>8</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>9</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>a</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>A</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>and</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>and_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>B</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>b</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bitand</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bitor</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>c</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>compl</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>d</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>D</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>define</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>delete</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>E</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>e</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>elif</CODE>
+</TD><TD><A HREF="#elif_group">elif_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>else</CODE>
+</TD><TD><A HREF="#else_group">else_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>endif</CODE>
+</TD><TD><A HREF="#endif_line">endif_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>error</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>F</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>f</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>false</CODE>
+</TD><TD><A HREF="#boolean_literal">boolean_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>if</CODE>
+</TD><TD><A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ifdef</CODE>
+</TD><TD><A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ifndef</CODE>
+</TD><TD><A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>include</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L</CODE>
+</TD><TD><A HREF="#long_suffix">long_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>l</CODE>
+</TD><TD><A HREF="#long_suffix">long_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L&quot;</CODE>
+</TD><TD><A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L'</CODE>
+</TD><TD><A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>line</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>new</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>not</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>not_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>or</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>or_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>pragma</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>true</CODE>
+</TD><TD><A HREF="#boolean_literal">boolean_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>u</CODE>
+</TD><TD><A HREF="#unsigned_suffix">unsigned_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>U</CODE>
+</TD><TD><A HREF="#unsigned_suffix">unsigned_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>undef</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>xor</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>xor_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_xref">Production Cross Reference</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Production</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_additive_expression" HREF="#additive_expression">additive_expression</A></TD><TD><A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_and_expression" HREF="#and_expression">and_expression</A></TD><TD><A HREF="#exclusive_or_expression">exclusive_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_c_char" HREF="#c_char">c_char</A></TD><TD><A HREF="#c_char_sequence">c_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_c_char_sequence" HREF="#c_char_sequence">c_char_sequence</A></TD><TD><A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_character_literal" HREF="#character_literal">character_literal</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_conditional_expression" HREF="#conditional_expression">conditional_expression</A></TD><TD><A HREF="#pp_expression">pp_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_control_line" HREF="#control_line">control_line</A></TD><TD><A HREF="#group_part">group_part</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decimal_literal" HREF="#decimal_literal">decimal_literal</A></TD><TD><A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_digit" HREF="#digit">digit</A></TD><TD><A HREF="#decimal_literal">decimal_literal</A> /
+<A HREF="#identifier">identifier</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_elif_group" HREF="#elif_group">elif_group</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_else_group" HREF="#else_group">else_group</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_endif_line" HREF="#endif_line">endif_line</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_equality_expression" HREF="#equality_expression">equality_expression</A></TD><TD><A HREF="#and_expression">and_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_escape_sequence" HREF="#escape_sequence">escape_sequence</A></TD><TD><A HREF="#c_char">c_char</A> /
+<A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exclusive_or_expression" HREF="#exclusive_or_expression">exclusive_or_expression</A></TD><TD><A HREF="#inclusive_or_expression">inclusive_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_group" HREF="#group">group</A></TD><TD><A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#preprocessing_file">preprocessing_file</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_group_part" HREF="#group_part">group_part</A></TD><TD><A HREF="#group">group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_h_char" HREF="#h_char">h_char</A></TD><TD><A HREF="#h_char_sequence">h_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_h_char_sequence" HREF="#h_char_sequence">h_char_sequence</A></TD><TD><A HREF="#header_name">header_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_header_name" HREF="#header_name">header_name</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hex_quad" HREF="#hex_quad">hex_quad</A></TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_digit" HREF="#hexadecimal_digit">hexadecimal_digit</A></TD><TD><A HREF="#hex_quad">hex_quad</A> /
+<A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A> /
+<A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_escape_sequence" HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_literal" HREF="#hexadecimal_literal">hexadecimal_literal</A></TD><TD><A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_identifier" HREF="#identifier">identifier</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#identifier_list">identifier_list</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#preprocessing_token">preprocessing_token</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_identifier_list" HREF="#identifier_list">identifier_list</A></TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_if_group" HREF="#if_group">if_group</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_if_section" HREF="#if_section">if_section</A></TD><TD><A HREF="#group_part">group_part</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_inclusive_or_expression" HREF="#inclusive_or_expression">inclusive_or_expression</A></TD><TD><A HREF="#logical_and_expression">logical_and_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_integer_literal" HREF="#integer_literal">integer_literal</A></TD><TD><A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_integer_suffix" HREF="#integer_suffix">integer_suffix</A></TD><TD><A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_logical_and_expression" HREF="#logical_and_expression">logical_and_expression</A></TD><TD><A HREF="#logical_or_expression">logical_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_logical_or_expression" HREF="#logical_or_expression">logical_or_expression</A></TD><TD><A HREF="#conditional_expression">conditional_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_long_suffix" HREF="#long_suffix">long_suffix</A></TD><TD><A HREF="#integer_suffix">integer_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_lparen" HREF="#lparen">lparen</A></TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_multiplicative_expression" HREF="#multiplicative_expression">multiplicative_expression</A></TD><TD><A HREF="#additive_expression">additive_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_line" HREF="#new_line">new_line</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#endif_line">endif_line</A> /
+<A HREF="#group_part">group_part</A> /
+<A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nondigit" HREF="#nondigit">nondigit</A></TD><TD><A HREF="#identifier">identifier</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nonzero_digit" HREF="#nonzero_digit">nonzero_digit</A></TD><TD><A HREF="#decimal_literal">decimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_digit" HREF="#octal_digit">octal_digit</A></TD><TD><A HREF="#octal_escape_sequence">octal_escape_sequence</A> /
+<A HREF="#octal_literal">octal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_escape_sequence" HREF="#octal_escape_sequence">octal_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_literal" HREF="#octal_literal">octal_literal</A></TD><TD><A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pp_expression" HREF="#pp_expression">pp_expression</A></TD><TD><A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pp_number" HREF="#pp_number">pp_number</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pp_tokens" HREF="#pp_tokens">pp_tokens</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#group_part">group_part</A> /
+<A HREF="#replacement_list">replacement_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_file" HREF="#preprocessing_file">preprocessing_file</A></TD><TD>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_op_or_punc" HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD><TD><A HREF="#pp_tokens">pp_tokens</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_primary_expression" HREF="#primary_expression">primary_expression</A></TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_q_char" HREF="#q_char">q_char</A></TD><TD><A HREF="#q_char_sequence">q_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_q_char_sequence" HREF="#q_char_sequence">q_char_sequence</A></TD><TD><A HREF="#header_name">header_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_relational_expression" HREF="#relational_expression">relational_expression</A></TD><TD><A HREF="#equality_expression">equality_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_replacement_list" HREF="#replacement_list">replacement_list</A></TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_s_char" HREF="#s_char">s_char</A></TD><TD><A HREF="#s_char_sequence">s_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_s_char_sequence" HREF="#s_char_sequence">s_char_sequence</A></TD><TD><A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_shift_expression" HREF="#shift_expression">shift_expression</A></TD><TD><A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sign" HREF="#sign">sign</A></TD><TD><A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_simple_escape_sequence" HREF="#simple_escape_sequence">simple_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_string_literal" HREF="#string_literal">string_literal</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unary_expression" HREF="#unary_expression">unary_expression</A></TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unary_operator" HREF="#unary_operator">unary_operator</A></TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_universal_character_name" HREF="#universal_character_name">universal_character_name</A></TD><TD><A HREF="#c_char">c_char</A> /
+<A HREF="#nondigit">nondigit</A> /
+<A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unsigned_suffix" HREF="#unsigned_suffix">unsigned_suffix</A></TD><TD><A HREF="#integer_suffix">integer_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_boolean_literal" HREF="#boolean_literal">boolean_literal</A></TD><TD><I>Not used in any production</I></TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_first">Lookahead-1 Parser First Token</A></H2><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH><A HREF="#first_additive_expression">A</A></TH>
+ <TH><A HREF="#first_boolean_literal">B</A></TH>
+ <TH><A HREF="#first_c_char">C</A></TH>
+ <TH><A HREF="#first_decimal_literal">D</A></TH>
+ <TH><A HREF="#first_elif_group">E</A></TH>
+ <TH>F</TH>
+ <TH><A HREF="#first_group">G</A></TH>
+ <TH><A HREF="#first_h_char">H</A></TH>
+ <TH><A HREF="#first_identifier">I</A></TH>
+ <TH>J</TH>
+ <TH>K</TH>
+ <TH><A HREF="#first_logical_and_expression">L</A></TH>
+ <TH><A HREF="#first_multiplicative_expression">M</A></TH>
+ <TH><A HREF="#first_new_line">N</A></TH>
+ <TH><A HREF="#first_octal_digit">O</A></TH>
+ <TH><A HREF="#first_pp_expression">P</A></TH>
+ <TH><A HREF="#first_q_char">Q</A></TH>
+ <TH><A HREF="#first_relational_expression">R</A></TH>
+ <TH><A HREF="#first_s_char">S</A></TH>
+ <TH>T</TH>
+ <TH><A HREF="#first_unary_expression">U</A></TH>
+ <TH>V</TH>
+ <TH>W</TH>
+ <TH>X</TH>
+ <TH>Y</TH>
+ <TH>Z</TH>
+ </TR>
+</THEAD>
+</TABLE>
+<P>Start symbol = <A HREF="#first_preprocessing_file">preprocessing_file</A><P><TABLE BORDER=1 CELLPADDING=2>
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>First Tokens</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A NAME="first_additive_expression" HREF="#additive_expression">additive_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_and_expression" HREF="#and_expression">and_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_boolean_literal" HREF="#boolean_literal">boolean_literal</A></TD>
+ <TD><B><CODE>'false'</CODE></B><BR>
+<B><CODE>'true'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_c_char" HREF="#c_char">c_char</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B><BR>
+<B><CODE>'\x'</CODE></B><BR>
+<B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_c_char_sequence" HREF="#c_char_sequence">c_char_sequence</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B><BR>
+<B><CODE>'\x'</CODE></B><BR>
+<B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_character_literal" HREF="#character_literal">character_literal</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_conditional_expression" HREF="#conditional_expression">conditional_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_control_line" HREF="#control_line">control_line</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_decimal_literal" HREF="#decimal_literal">decimal_literal</A></TD>
+ <TD><B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_digit" HREF="#digit">digit</A></TD>
+ <TD><B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_elif_group" HREF="#elif_group">elif_group</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_else_group" HREF="#else_group">else_group</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_endif_line" HREF="#endif_line">endif_line</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_equality_expression" HREF="#equality_expression">equality_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_escape_sequence" HREF="#escape_sequence">escape_sequence</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B><BR>
+<B><CODE>'\x'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_exclusive_or_expression" HREF="#exclusive_or_expression">exclusive_or_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_group" HREF="#group">group</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B><BR>
+<B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_group_part" HREF="#group_part">group_part</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B><BR>
+<B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_h_char" HREF="#h_char">h_char</A></TD>
+ <TD><B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_h_char_sequence" HREF="#h_char_sequence">h_char_sequence</A></TD>
+ <TD><B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_header_name" HREF="#header_name">header_name</A></TD>
+ <TD><B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hex_quad" HREF="#hex_quad">hex_quad</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'A'</CODE></B><BR>
+<B><CODE>'B'</CODE></B><BR>
+<B><CODE>'C'</CODE></B><BR>
+<B><CODE>'D'</CODE></B><BR>
+<B><CODE>'E'</CODE></B><BR>
+<B><CODE>'F'</CODE></B><BR>
+<B><CODE>'a'</CODE></B><BR>
+<B><CODE>'b'</CODE></B><BR>
+<B><CODE>'c'</CODE></B><BR>
+<B><CODE>'d'</CODE></B><BR>
+<B><CODE>'e'</CODE></B><BR>
+<B><CODE>'f'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hexadecimal_digit" HREF="#hexadecimal_digit">hexadecimal_digit</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'A'</CODE></B><BR>
+<B><CODE>'B'</CODE></B><BR>
+<B><CODE>'C'</CODE></B><BR>
+<B><CODE>'D'</CODE></B><BR>
+<B><CODE>'E'</CODE></B><BR>
+<B><CODE>'F'</CODE></B><BR>
+<B><CODE>'a'</CODE></B><BR>
+<B><CODE>'b'</CODE></B><BR>
+<B><CODE>'c'</CODE></B><BR>
+<B><CODE>'d'</CODE></B><BR>
+<B><CODE>'e'</CODE></B><BR>
+<B><CODE>'f'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hexadecimal_escape_sequence" HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></TD>
+ <TD><B><CODE>'\x'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_hexadecimal_literal" HREF="#hexadecimal_literal">hexadecimal_literal</A></TD>
+ <TD><B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_identifier" HREF="#identifier">identifier</A></TD>
+ <TD><B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_identifier_list" HREF="#identifier_list">identifier_list</A></TD>
+ <TD><B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_if_group" HREF="#if_group">if_group</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_if_section" HREF="#if_section">if_section</A></TD>
+ <TD><B><CODE>'#'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_inclusive_or_expression" HREF="#inclusive_or_expression">inclusive_or_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_integer_literal" HREF="#integer_literal">integer_literal</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_integer_suffix" HREF="#integer_suffix">integer_suffix</A></TD>
+ <TD><B><CODE>'L'</CODE></B><BR>
+<B><CODE>'U'</CODE></B><BR>
+<B><CODE>'l'</CODE></B><BR>
+<B><CODE>'u'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_logical_and_expression" HREF="#logical_and_expression">logical_and_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_logical_or_expression" HREF="#logical_or_expression">logical_or_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_long_suffix" HREF="#long_suffix">long_suffix</A></TD>
+ <TD><B><CODE>'L'</CODE></B><BR>
+<B><CODE>'l'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_lparen" HREF="#lparen">lparen</A></TD>
+ <TD><B><CODE>LEFT_PARENTHESIS_WITHOUT_LEADING_WS</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_multiplicative_expression" HREF="#multiplicative_expression">multiplicative_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_new_line" HREF="#new_line">new_line</A></TD>
+ <TD><B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_nondigit" HREF="#nondigit">nondigit</A></TD>
+ <TD><B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_nonzero_digit" HREF="#nonzero_digit">nonzero_digit</A></TD>
+ <TD><B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_octal_digit" HREF="#octal_digit">octal_digit</A></TD>
+ <TD><B><CODE>'0'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_octal_escape_sequence" HREF="#octal_escape_sequence">octal_escape_sequence</A></TD>
+ <TD><B><CODE>'\'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_octal_literal" HREF="#octal_literal">octal_literal</A></TD>
+ <TD><B><CODE>'0'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_pp_expression" HREF="#pp_expression">pp_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_pp_number" HREF="#pp_number">pp_number</A></TD>
+ <TD><B><CODE>'.'</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_pp_tokens" HREF="#pp_tokens">pp_tokens</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_preprocessing_file" HREF="#preprocessing_file">preprocessing_file</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B><BR>
+<B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_preprocessing_op_or_punc" HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></TD>
+ <TD><B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_primary_expression" HREF="#primary_expression">primary_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_q_char" HREF="#q_char">q_char</A></TD>
+ <TD><B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_q_char_sequence" HREF="#q_char_sequence">q_char_sequence</A></TD>
+ <TD><B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_relational_expression" HREF="#relational_expression">relational_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_replacement_list" HREF="#replacement_list">replacement_list</A></TD>
+ <TD><B><CODE>&oslash;</CODE></B><BR>
+<B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'!='</CODE></B><BR>
+<B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'##'</CODE></B><BR>
+<B><CODE>'#'</CODE></B><BR>
+<B><CODE>'%'</CODE></B><BR>
+<B><CODE>'%:%:'</CODE></B><BR>
+<B><CODE>'%:'</CODE></B><BR>
+<B><CODE>'%='</CODE></B><BR>
+<B><CODE>'%&gt;'</CODE></B><BR>
+<B><CODE>'&amp;&amp;'</CODE></B><BR>
+<B><CODE>'&amp;'</CODE></B><BR>
+<B><CODE>'&amp;='</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>')'</CODE></B><BR>
+<B><CODE>'*'</CODE></B><BR>
+<B><CODE>'*='</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'++'</CODE></B><BR>
+<B><CODE>'+='</CODE></B><BR>
+<B><CODE>','</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'--'</CODE></B><BR>
+<B><CODE>'-='</CODE></B><BR>
+<B><CODE>'-&gt;'</CODE></B><BR>
+<B><CODE>'-&gt;*'</CODE></B><BR>
+<B><CODE>'.'</CODE></B><BR>
+<B><CODE>'.*'</CODE></B><BR>
+<B><CODE>'...'</CODE></B><BR>
+<B><CODE>'/'</CODE></B><BR>
+<B><CODE>'/='</CODE></B><BR>
+<B><CODE>':'</CODE></B><BR>
+<B><CODE>'::'</CODE></B><BR>
+<B><CODE>':&gt;'</CODE></B><BR>
+<B><CODE>';'</CODE></B><BR>
+<B><CODE>'&lt;%'</CODE></B><BR>
+<B><CODE>'&lt;'</CODE></B><BR>
+<B><CODE>'&lt;:'</CODE></B><BR>
+<B><CODE>'&lt;&lt;'</CODE></B><BR>
+<B><CODE>'&lt;&lt;='</CODE></B><BR>
+<B><CODE>'&lt;='</CODE></B><BR>
+<B><CODE>'='</CODE></B><BR>
+<B><CODE>'=='</CODE></B><BR>
+<B><CODE>'&gt;'</CODE></B><BR>
+<B><CODE>'&gt;='</CODE></B><BR>
+<B><CODE>'&gt;&gt;'</CODE></B><BR>
+<B><CODE>'&gt;&gt;='</CODE></B><BR>
+<B><CODE>'?'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B><BR>
+<B><CODE>'['</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>']'</CODE></B><BR>
+<B><CODE>'^'</CODE></B><BR>
+<B><CODE>'^='</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'and'</CODE></B><BR>
+<B><CODE>'and_eq'</CODE></B><BR>
+<B><CODE>'bitand'</CODE></B><BR>
+<B><CODE>'bitor'</CODE></B><BR>
+<B><CODE>'compl'</CODE></B><BR>
+<B><CODE>'delete'</CODE></B><BR>
+<B><CODE>'new'</CODE></B><BR>
+<B><CODE>'not'</CODE></B><BR>
+<B><CODE>'not_eq'</CODE></B><BR>
+<B><CODE>'or'</CODE></B><BR>
+<B><CODE>'or_eq'</CODE></B><BR>
+<B><CODE>'xor'</CODE></B><BR>
+<B><CODE>'xor_eq'</CODE></B><BR>
+<B><CODE>'{'</CODE></B><BR>
+<B><CODE>'|'</CODE></B><BR>
+<B><CODE>'|='</CODE></B><BR>
+<B><CODE>'||'</CODE></B><BR>
+<B><CODE>'}'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B><BR>
+<B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B><BR>
+<B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_s_char" HREF="#s_char">s_char</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B><BR>
+<B><CODE>'\x'</CODE></B><BR>
+<B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_s_char_sequence" HREF="#s_char_sequence">s_char_sequence</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B><BR>
+<B><CODE>'\x'</CODE></B><BR>
+<B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_shift_expression" HREF="#shift_expression">shift_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_sign" HREF="#sign">sign</A></TD>
+ <TD><B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_simple_escape_sequence" HREF="#simple_escape_sequence">simple_escape_sequence</A></TD>
+ <TD><B><CODE>&quot;\'&quot;</CODE></B><BR>
+<B><CODE>'\&quot;'</CODE></B><BR>
+<B><CODE>'\?'</CODE></B><BR>
+<B><CODE>'\\'</CODE></B><BR>
+<B><CODE>'\a'</CODE></B><BR>
+<B><CODE>'\b'</CODE></B><BR>
+<B><CODE>'\f'</CODE></B><BR>
+<B><CODE>'\n'</CODE></B><BR>
+<B><CODE>'\r'</CODE></B><BR>
+<B><CODE>'\t'</CODE></B><BR>
+<B><CODE>'\v'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_string_literal" HREF="#string_literal">string_literal</A></TD>
+ <TD><B><CODE>'&quot;'</CODE></B><BR>
+<B><CODE>'L&quot;'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_unary_expression" HREF="#unary_expression">unary_expression</A></TD>
+ <TD><B><CODE>&quot;'&quot;</CODE></B><BR>
+<B><CODE>&quot;L'&quot;</CODE></B><BR>
+<B><CODE>'!'</CODE></B><BR>
+<B><CODE>'('</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'0'</CODE></B><BR>
+<B><CODE>'0X'</CODE></B><BR>
+<B><CODE>'0x'</CODE></B><BR>
+<B><CODE>'1'</CODE></B><BR>
+<B><CODE>'2'</CODE></B><BR>
+<B><CODE>'3'</CODE></B><BR>
+<B><CODE>'4'</CODE></B><BR>
+<B><CODE>'5'</CODE></B><BR>
+<B><CODE>'6'</CODE></B><BR>
+<B><CODE>'7'</CODE></B><BR>
+<B><CODE>'8'</CODE></B><BR>
+<B><CODE>'9'</CODE></B><BR>
+<B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B><BR>
+<B><CODE>'_'</CODE></B><BR>
+<B><CODE>'~'</CODE></B><BR>
+<B><CODE>ALPHA_CHARACTER</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_unary_operator" HREF="#unary_operator">unary_operator</A></TD>
+ <TD><B><CODE>'!'</CODE></B><BR>
+<B><CODE>'+'</CODE></B><BR>
+<B><CODE>'-'</CODE></B><BR>
+<B><CODE>'~'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_universal_character_name" HREF="#universal_character_name">universal_character_name</A></TD>
+ <TD><B><CODE>'\U'</CODE></B><BR>
+<B><CODE>'\u'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A NAME="first_unsigned_suffix" HREF="#unsigned_suffix">unsigned_suffix</A></TD>
+ <TD><B><CODE>'U'</CODE></B><BR>
+<B><CODE>'u'</CODE></B></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_amb">Lookahead-1 Parser Ambiguities</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Ref</TH>
+ <TH>Production</TH>
+ <TH>Ambiguous<BR>Literals/Terminals</TH>
+<TH>Can't decide between the following</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="1" HREF="#ref_1">#1</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_control_line" HREF="#control_line">control_line</A></TD>
+<TD VALIGN=TOP><B><CODE>'#'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'include'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#lparen">lparen</A> [ <A HREF="#identifier_list">identifier_list</A> ] <B><CODE>')'</CODE></B> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'undef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'line'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'error'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'pragma'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <A HREF="#new_line">new_line</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="2" HREF="#ref_2">#2</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_group_part" HREF="#group_part">group_part</A></TD>
+<TD VALIGN=TOP><B><CODE>'#'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#control_line">control_line</A></LI>
+<LI> <A HREF="#if_section">if_section</A></LI>
+<LI> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="3" HREF="#ref_3">#3</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_if_group" HREF="#if_group">if_group</A></TD>
+<TD VALIGN=TOP><B><CODE>'#'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'if'</CODE></B> <A HREF="#pp_expression">pp_expression</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifndef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifdef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="4" HREF="#ref_4">#4</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD>
+<TD VALIGN=TOP><B><CODE>'&lt;'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#header_name">header_name</A></LI>
+<LI> <A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="5" HREF="#ref_5">#5</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD>
+<TD VALIGN=TOP><B><CODE>'.'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#pp_number">pp_number</A></LI>
+<LI> <A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></LI>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><SUP><A NAME="6" HREF="#ref_6">#6</A></SUP></TD>
+<TD VALIGN=TOP><A NAME="annot_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD>
+<TD VALIGN=TOP><B><CODE>'&quot;'</CODE></B></TD>
+<TD VALIGN=TOP><UL>
+<LI> <A HREF="#header_name">header_name</A></LI>
+<LI> <A HREF="#string_literal">string_literal</A></LI>
+</UL>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<HR>
+<FONT SIZE=-2>Created with ebnf2annot.pl (<a href="mailto:andreas.gieriet@externsoft.ch?subject=Request:%20EBNF%20Tools">andreas.gieriet@externsoft.ch</a>)</Font>
+</BODY>
+</HTML>

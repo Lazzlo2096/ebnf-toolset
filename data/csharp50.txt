@@ -1,0 +1,1236 @@
+
+#!namedexpression CS1040    "C# 1.0 to 4.0"
+#!namedexpression CS2040    "C# 2.0 to 4.0"
+#!namedexpression CS20up    "C# 2.0 up"
+#!namedexpression CS30up    "C# 3.0 up"
+#!namedexpression CS40      "C# 4.0 only"
+#!namedexpression CS40up    "C# 4.0 up"
+#!namedexpression CS50up    "C# 5.0 up"
+#!namedexpression unsafe     "unsafe"
+
+c_sharp			   : lexical_grammar
+				   | syntactic_grammar
+				   .
+lexical_grammar	   : input .
+syntactic_grammar  : compilation_unit .
+
+
+# A.1 Lexical Grammar
+
+input              : [ input_section ] .
+input_section      : input_section_part { input_section_part } .
+input_section_part : { input_element } new_line | pp_directive .
+input_element	   : whitespace
+				   | comment
+				   | token
+				   .
+
+# A.1.1 Line Terminators
+
+new_line           : CR_u000D [ LF_u000A ]
+				   | LF_u000A
+				   | NL_u0085
+				   | LS_u2028
+				   | PS_u2029
+				   .
+
+# A.1.2 White space
+
+whitespace            : whitespace_character { whitespace_character } .
+whitespace_character  : ANY_UNICODE_Zs_CHAR
+					  | HT_u0009
+					  | VT_u000B
+					  | FF_u000C
+					  .
+
+# A.1.3 Comments
+
+comment				       : single_line_comment
+						   | delimited_comment
+						   .
+single_line_comment		   : "//" { input_character } .
+input_character			   : ANY_UNICODE_EXCEPT_new_line .
+delimited_comment		   : "/*" { delimited_comment_section } asterisks "/" .
+delimited_comment_section  : non_asterisk
+						   | asterisks non_slash
+						   .
+asterisks				   : "*" { "*" } .
+non_asterisk			   : ANY_UNICODE_EXCEPT_u002A .
+non_slash				   : ANY_UNICODE_EXCEPT_u002F .
+
+# A.1.4 Tokens
+
+token                      : identifier
+						   | keyword
+						   | integer_literal
+						   | real_literal
+						   | character_literal
+						   | string_literal
+						   | operator_or_punctuation
+						   .
+
+# A.1.5 Unicode Escape Sequences
+
+unicode_escape_sequence    : "\u" hex_digit hex_digit hex_digit hex_digit
+						   | "\U" hex_digit hex_digit hex_digit hex_digit
+						          hex_digit hex_digit hex_digit hex_digit
+						   .
+
+# A.1.6 Identifiers
+
+identifier                 : available_identifier
+						   | "@" identifier_or_keyword
+						   .
+available_identifier	   : ANY_IDENTIFIER_EXCEPT_keyword .
+identifier_or_keyword	   : identifier_start_character { identifier_part_character } .
+identifier_start_character : letter_character
+						   | "_"
+						   .
+identifier_part_character  : letter_character
+						   | decimal_digit_character
+						   | connecting_character
+						   | combining_character
+						   | formatting_character
+						   .
+letter_character		   : ANY_UNICODE_Lu_Ll_Lt_Lm_Lo_Ni
+						   | ANY_uXXXX_Lu_Ll_Lt_Lm_Lo_Ni
+						   | ANY_UXXXXXXXX_Lu_Ll_Lt_Lm_Lo_Ni
+						   .
+combining_character		   : ANY_UNICODE_Mn_Mc
+						   | ANY_uXXXX_Mn_Mc
+						   | ANY_UXXXXXXXX_Mn_Mc
+						   .
+decimal_digit_character	   : ANY_UNICODE_Nd
+						   | ANY_uXXXX_Nd
+						   | ANY_UXXXXXXXX_Nd
+						   .
+connecting_character	   : ANY_UNICODE_Pc
+						   | ANY_uXXXX_Pc
+						   | ANY_UXXXXXXXX_Pc
+						   .
+formatting_character	   : ANY_UNICODE_Cf
+						   | ANY_uXXXX_Cf
+						   | ANY_UXXXXXXXX_Cf
+						   .
+# A1.7 Keywords
+
+keyword                    : "abstract"
+						   | "as"
+						   | "base"
+						   | "bool"
+						   | "break"
+						   | "byte"
+						   | "case"
+						   | "catch"
+						   | "char"
+						   | "checked"
+						   | "class"
+						   | "const"
+						   | "continue"
+						   | "decimal"
+						   | "default"
+						   | "delegate"
+						   | "do"
+						   | "double"
+						   | (+CS40 "dynamic" )
+						   | "else"
+						   | "enum"
+						   | "event"
+						   | "explicit"
+						   | "extern"
+						   | "false"
+						   | "finally"
+						   | "fixed"
+						   | "float"
+						   | "for"
+						   | "foreach"
+						   | "goto"
+						   | "if"
+						   | "implicit"
+						   | "in"
+						   | "int"
+						   | "interface"
+						   | "internal"
+						   | "is"
+						   | "lock"
+						   | "long"
+						   | "namespace"
+						   | "new"
+						   | "null"
+						   | "object"
+						   | "operator"
+						   | "out"
+						   | "override"
+						   | "params"
+						   | "private"
+						   | "protected"
+						   | "public"
+						   | "readonly"
+						   | "ref"
+						   | "return"
+						   | "sbyte"
+						   | "sealed"
+						   | "short"
+						   | "sizeof"
+						   | "stackalloc"
+						   | "static"
+						   | "string"
+						   | "struct"
+						   | "switch"
+						   | "this"
+						   | "throw"
+						   | "true"
+						   | "try"
+						   | "typeof"
+						   | "uint"
+						   | "ulong"
+						   | "unchecked"
+						   | "unsafe"
+						   | "ushort"
+						   | "using"
+						   | "virtual"
+						   | "void"
+						   | "volatile"
+						   | "while"
+						   .
+
+# A.1.8 Literals
+
+literal				       : boolean_literal
+						   | integer_literal
+						   | real_literal
+						   | character_literal
+						   | string_literal
+						   | null_literal
+						   .
+boolean_literal			   : "true" | "false" .
+integer_literal			   : decimal_integer_literal
+						   | hexadecimal_integer_literal
+						   .
+decimal_integer_literal	   : decimal_digits [ integer_type_suffix ] .
+decimal_digits			   : decimal_digit { decimal_digit } .
+decimal_digit			   : "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" .
+integer_type_suffix		   : "u" | "U"
+						   | "l" | "L"
+						   | "ul" | "uL"
+						   | "Ul" | "UL"
+						   | "lu" | "lU"
+						   | "Lu" | "LU"
+						   .
+hexadecimal_integer_literal : ( "0x" | "0X" ) hex_digits [ integer_type_suffix ] .
+hex_digits					: hex_digit { hex_digit } .
+hex_digit					: decimal_digit
+							| "a" | "b" | "c" | "d" | "e" | "f"
+							| "A" | "B" | "C" | "D" | "E" | "F"
+							.
+real_literal				: [ decimal_digits ] "." decimal_digits [ exponent_part ] [ real_type_suffix ]
+							| decimal_digits exponent_part [ real_type_suffix ]
+							| decimal_digits real_type_suffix
+							.
+exponent_part				: ( "e" | "E" ) [ sign ] decimal_digits .
+sign						: "+" | "-" .
+real_type_suffix			: "f" | "F"
+							| "d" | "D"
+							| "m" | "M"
+							.
+character_literal			: "'" character "'" .
+character					: single_character
+							| simple_escape_sequence
+							| hexadecimal_escape_sequence
+							| unicode_escape_sequence
+							.
+single_character			: ANY_UNICODE_EXCEPT_u0027_u005C_new_line .
+simple_escape_sequence		: "\'" | '\"' | "\\" | "\0" | "\a" | "\b" | "\f" | "\n" | "\r" | "\t" | "\v" .
+hexadecimal_escape_sequence : "\x" hex_digit [ hex_digit ] [ hex_digit ] [ hex_digit ] .
+string_literal				: regular_string_literal
+							| verbatim_string_literal
+							.
+regular_string_literal		: '"' { regular_string_literal_character } '"' .
+regular_string_literal_character : single_regular_string_literal_character
+								 | simple_escape_sequence
+								 | hexadecimal_escape_sequence
+								 | unicode_escape_sequence
+								 .
+single_regular_string_literal_character : ANY_UNICODE_EXCEPT_u0022_u005C_new_line .
+verbatim_string_literal     : '@"' { verbatim_string_literal_character } '"' .
+verbatim_string_literal_character : single_verbatim_string_literal_character
+								  | quote_excape_sequence
+								  .
+single_verbatim_string_literal_character : ANY_UNICODE_EXCEPT_u0022 .
+quote_excape_sequence       : '""' .
+null_literal				: "null" .
+
+# A.1.9 Operators Or Punctuations
+
+operator_or_punctuation     : "{"
+							| "}"
+							| "["
+							| "]"
+							| "("
+							| ")"
+							| "."
+							| ","
+							| ":"
+							| ";"
+							| "+"
+							| "-"
+							| "*"
+							| "/"
+							| "%"
+							| "&"
+							| "|"
+							| "^"
+							| "!"
+							| "~"
+							| "="
+							| "<"
+							| ">"
+							| "?"
+							| (+CS20up "??" )
+							| (+CS20up "::" )
+							| "++"
+							| "--"
+							| "&&"
+							| "||"
+							| "->"
+							| "=="
+							| "!="
+							| "<="
+							| ">="
+							| "+="
+							| "-="
+							| "*="
+							| "/="
+							| "%="
+							| "&="
+							| "|="
+							| "^="
+							| "<<"
+							| "<<="
+							| (+CS30up "=>" )
+							.
+right_shift					: ">" ">" .
+right_shift_assignment		: ">" ">=" .
+
+
+# A.1.10 Pre-processing Directives
+
+pp_directive				: pp_declaration
+							| pp_conditional
+							| pp_line
+							| pp_diagnostic
+							| pp_region
+							| (+CS20up pp_pragma )
+							.
+conditional_symbol			: identifier
+							| ANY_keyword_EXCEPT_true_false
+							.
+ws							: whitespace .
+ws_opt						: [ ws ] .
+pp_expression				: ws_opt pp_or_expression ws_opt .
+pp_or_expression			: pp_and_expression { ws_opt "||" ws_opt pp_and_expression } .
+pp_and_expression			: pp_equality_expression { ws_opt "&&" ws_opt pp_equality_expression } .
+pp_equality_expression		: pp_unnary_expression { ws_opt ( "==" | "!=" ) ws_opt pp_unnary_expression } .
+pp_unnary_expression		: { "!" ws_opt } pp_primary_expression .
+pp_primary_expression		: "true"
+							| "false"
+							| conditional_symbol
+							| "(" ws_opt pp_expression ws_opt ")"
+							.
+pp_declaration				: ws_opt "#" ws_opt ( "define" | "undef" ) ws conditional_symbol pp_new_line .
+pp_new_line					: ws_opt [ single_line_comment ] new_line .
+pp_conditional				: pp_if_section { pp_elif_section } [ pp_else_section ] pp_endif .
+pp_if_section				: ws_opt "#" ws_opt "if"   ws pp_expression pp_new_line conditional_section .
+pp_elif_section				: ws_opt "#" ws_opt "elif" ws pp_expression pp_new_line conditional_section .
+pp_else_section				: ws_opt "#" ws_opt "else"                  pp_new_line conditional_section .
+pp_endif					: ws_opt "#" ws_opt "endif" pp_new_line .
+conditional_section			: input_section
+							| skipped_section
+							.
+skipped_section				: skipped_section_part { skipped_section_part } .
+skipped_section_part		: ws_opt [ skipped_characters ] new_line
+							| pp_directive
+							.
+skipped_characters			: not_number_sign { input_character } .
+not_number_sign				: ANY_UNICODE_EXCEPT_u0023_new_line .
+pp_line						: ws_opt "#" ws_opt "line" ws line_indicator pp_new_line .
+line_indicator				: decimal_digits [ ws file_name ]
+							| (+CS30up "default" )
+							| (+CS30up "hidden" )
+							| identifier_or_keyword
+							.
+file_name					: '"' file_name_character { file_name_character } '"' .
+file_name_character			: ANY_UNICODE_EXCEPT_u0022_new_line .
+pp_diagnostic				: ws_opt "#" ws_opt ( "error" | "warning" ) pp_message .
+pp_message					: [ ws { input_character } ] new_line .
+pp_region					: pp_start_region [ conditional_section ] pp_end_region .
+pp_start_region				: ws_opt "#" ws_opt "region" pp_message .
+pp_end_region				: ws_opt "#" ws_opt "endregion" pp_message .
+pp_pragma					: (+CS20up ws_opt "#" ws_opt "pragma" pp_pragma_body pp_new_line ) .
+pp_pragma_body				: (+CS30up pp_pragma_warning_body )
+							| pp_pragma_text
+							.
+pp_pragma_text				: [ ws { input_character } ] .
+pp_pragma_warning_body		: "warning" ws pp_pragma_warning_action [ ws pp_pragma_warning_list ] .
+pp_pragma_warning_action	: "disable"
+							| "restore"
+							.
+pp_pragma_warning_list		: decimal_digits { ws_opt "," ws_opt decimal_digits } .
+
+#-------------------------------------------------------------------------------------------------------------
+
+# A.2 Syntactic Grammar
+
+# A.2.1. Basic Concepts
+
+compilation_unit		    : (+CS20up [ extern_alias_directives ] ) [ using_directives ] [ global_attributes ] [ namespace_member_declarations ] .
+
+
+namespace_name				: namespace_or_type_name .
+type_name					: namespace_or_type_name .
+namespace_or_type_name		: namespace_or_type_name_prefix { "." namespace_or_type_name_part } .
+namespace_or_type_name_prefix : namespace_or_type_name_part
+							  | (+CS20up qualified_alias_member )
+							  .
+namespace_or_type_name_part : identifier (+CS20up [ type_argument_list ] ) .
+
+# A2.2 Types
+
+type                        : value_type		
+							| reference_type
+							| (+CS20up type_parameter )
+							| (+CS40 "dynamic" )
+							| (+unsafe pointer_type )
+							.
+value_type					: struct_type
+							| enum_type
+							.
+struct_type					: type_name
+							| simple_type
+							| (+CS20up nullable_type )
+							.
+simple_type					: numeric_type
+							| "bool"
+							.
+numeric_type				: integral_type
+							| floating_point_type
+							| "decimal"
+							.
+integral_type				: "sbyte"
+							| "byte"
+							| "short"
+							| "ushort"
+							| "int"
+							| "uint"
+							| "long"
+							| "ulong"
+							| "char"
+							.
+floating_point_type			: "float"
+							| "double"
+							.
+enum_type					: type_name .
+nullable_type				: (+CS20up non_nullable_value_type "?" ) .
+non_nullable_value_type		: (+CS2040 enum_type)
+							| (+CS2040 type_name)
+							| (+CS2040 simple_type)
+                            | (+CS50up type)
+							.
+reference_type				: class_type
+							| interface_type
+							| array_type
+							| delegate_type
+							.
+class_type					: type_name
+							| "object"
+							| (+CS40up "dynamic" )
+							| "string"
+							.
+interface_type				: type_name .
+array_type					: non_array_type rank_specifier { rank_specifier } .
+non_array_type				: (+CS1040 value_type)
+							| (+CS1040 class_type)
+							| (+CS1040 interface_type)
+							| (+CS1040 delegate_type)
+							| (+CS1040 (+CS20up type_parameter ))
+							| (+CS50up type)
+							.
+rank_specifier				: "[" { "," } "]" .
+delegate_type				: type_name .
+
+pointer_type				: (+unsafe unmanaged_type "*" )
+							| (+unsafe "void" "*" )
+							.
+unmanaged_type				: (+unsafe type) .
+
+# A.2.3 Variables
+
+variable_reference          : expression .
+
+# A.2.4 Expressions
+
+argument_list               : argument { "," argument } .
+argument					: (+CS40up [ argument_name ] ) argument_value .
+argument_name				: identifier ":" .
+argument_value				: expression
+							| ( "ref" | "out" ) variable_reference
+							.
+primary_expression			: array_creation_expression
+							| primary_no_array_creation_expression
+							.
+primary_no_array_creation_expression
+                            : literal
+							| simple_name
+							| parenthesized_expression
+							| member_access
+							| invocation_expression
+							| element_access
+							| this_access
+							| base_access
+							| post_increment_expression
+							| post_decrement_expression
+							| object_creation_expression
+							| delegate_creation_expression
+							| (+CS30up anonymous_object_creation_expression )
+							| typeof_expression
+							| checked_expression
+							| unchecked_expression
+							| (+CS20up default_value_expression )
+							| (+CS20up anonymous_method_expression )
+							| (+unsafe sizeof_expression )
+							| (+unsafe pointer_member_expression )
+							| (+unsafe pointer_element_expression )
+							.
+simple_name					: identifier (+CS20up [ type_argument_list ] ) .
+parenthesized_expression	: "(" expression ")" .
+member_access				: member_access_prefix "." member_access_suffix
+							| (+CS20up qualified_alias_member "." identifier)
+							.
+member_access_prefix		: primary_expression | predefined_type .
+member_access_suffix		: identifier (+CS20up [ type_argument_list ] ).
+predefined_type				: "bool"
+							| "byte"
+							| "char"
+							| "decimal"
+							| "double"
+							| "float"
+							| "int"
+							| "long"
+							| "object"
+							| "sbyte"
+							| "short"
+							| "string"
+							| "uint"
+							| "ulong"
+							| "ushort"
+                            | (+CS40 "dynamic" )
+							.
+invocation_expression		: primary_expression "(" [ argument_list ] ")" .
+element_access				: primary_no_array_creation_expression "[" expression_list "]" .
+expression_list				: expression { "," expression } .
+this_access					: "this" .
+base_access					: "base" base_access_suffix .
+base_access_suffix			: "." identifier (+CS2040 [ type_argument_list ] )
+							| "[" base_access_element_list "]"
+							.
+base_access_element_list	: (+CS1040 expression_list )
+							| (+CS50up argument_list )
+							.
+post_increment_expression	: primary_expression "++" .
+post_decrement_expression	: primary_expression "--" .
+object_creation_expression	: "new" type "(" [ argument_list ] ")" (+CS30up [ object_or_collection_initializer ] )
+							| (+CS30up "new" type [ object_or_collection_initializer ] )
+							.
+object_or_collection_initializer : object_initializer
+								 | collection_initializer
+								 .
+object_initializer			: "{" [ member_initializer_list [ "," ] ] "}" .
+member_initializer_list  	: member_initializer { "," member_initializer } .
+member_initializer			: identifier "=" initializer_value .
+initializer_value			: expression
+							| object_or_collection_initializer
+							.
+collection_initializer		: "{" element_initializer_list [ "," ] "}" .
+element_initializer_list  	: element_initializer { "," element_initializer } .
+element_initializer			: non_assignment_expression
+							| "{" expression "}"
+							.
+array_creation_expression	: "new" non_array_type "[" expression_list "]"  [ rank_specifier ] [ array_initializer ]
+							| "new" array_type array_initializer
+							| (+CS30up "new" rank_specifier array_initializer )
+							.
+delegate_creation_expression : "new" delegate_type "(" expression ")" .
+anonymous_object_creation_expression : (+CS30up "new" anonymous_object_initializer ) .
+anonymous_object_initializer : (+CS30up "{" [ member_declarator_list [ "," ] ] "}" ) .
+member_declarator_list  	: (+CS30up member_declarator { "," member_declarator } ) .
+member_declarator			: (+CS30up simple_name )
+							| (+CS30up member_access )
+							| (+CS30up identifier "=" expression )
+							.
+typeof_expression			: "typeof" "(" typeof_argument ")" .
+typeof_argument				: type
+							| "void"
+							| (+CS20up unbound_type_name )
+							.
+unbound_type_name			: unbound_type_name_prefix { "." identifier [ generic_dimension_specifier ] } .
+unbound_type_name_prefix	: identifier [ "::" identifier ] [ generic_dimension_specifier ] .
+generic_dimension_specifier	: "<" { "," } ">" .
+checked_expression			: "checked" "(" expression ")" .
+unchecked_expression		: "unchecked" "(" expression ")" .
+default_value_expression	: "default" "(" type ")" .
+pointer_member_expression   : (+unsafe primary_expression "->" identifier (+CS20up [ type_argument_list ] ) ) .
+pointer_element_expression  : (+unsafe primary_no_array_creation_expression "[" expression "]" ) .
+sizeof_expression			: (+unsafe "sizeof" "(" unmanaged_type ")" ) .
+addressof_expression		: (+unsafe "&" unary_expression ) .
+unary_expression			: primary_expression
+							| "+" unary_expression
+							| "-" unary_expression
+							| "!" unary_expression
+							| "~" unary_expression
+							| pre_increment_expression
+							| pre_decrement_expression
+							| cast_expression
+							| (+CS50up await_expression )
+							| (+unsafe pointer_indirection_expression )
+							| (+unsafe addressof_expression )
+							.
+pre_increment_expression	: "++" unary_expression .
+pre_decrement_expression	: "--" unary_expression .
+cast_expression				: "(" type  ")" unary_expression .
+await_expression            : (+CS50up "await" unary_expression ) .
+pointer_indirection_expression : (+unsafe "*" unary_expression ) .
+multiplicative_expression	: unary_expression { ( "*" | "/" | "%" ) unary_expression } .
+additive_expression			: multiplicative_expression { ( "+" | "-" ) multiplicative_expression } .
+shift_expression			: additive_expression { ( "<<" | right_shift ) additive_expression } .
+relational_expression		: shift_expression { relation_or_type_check } .
+relation_or_type_check		: ( "<" | ">" | "<=" | ">=" ) shift_expression
+							| ( "is" | "as") type
+							.
+equality_expression			: relational_expression { ( "==" | "!=" ) relational_expression } .
+and_expression				: equality_expression { "&" equality_expression } .
+exclusive_or_expression		: and_expression { "^" and_expression } .
+inclusive_or_expression		: exclusive_or_expression { "|" exclusive_or_expression } .
+conditional_and_expression	: inclusive_or_expression { "&&" inclusive_or_expression } .
+conditional_or_expression	: conditional_and_expression { "||" conditional_and_expression } .
+null_coalescing_expression	: conditional_or_expression (+CS20up [ "??" null_coalescing_expression ] ) .
+conditional_expression		: null_coalescing_expression [ "?" expression ":" expression ] .
+lambda_expression			: (+CS30up (+CS50up [ "async" ] ) anonymous_method_signature "=>" anonymous_method_body ).
+anonymous_method_expression	: (+CS20up (+CS50up [ "async" ] ) "delegate" [ explicit_anonymous_method_signature ] block ) .
+anonymous_method_signature	: (+CS20up explicit_anonymous_method_signature )
+							| (+CS20up implicit_anonymous_method_signature )
+							.
+explicit_anonymous_method_signature	: (+CS20up "(" [ explicit_anonymous_method_parameter_list ] ")" ) .
+explicit_anonymous_method_parameter_list : (+CS20up explicit_anonymous_method_parameter { "," explicit_anonymous_method_parameter } ) .
+explicit_anonymous_method_parameter : (+CS20up [ explicit_parameter_modifier ] type identifier ) .
+explicit_parameter_modifier	: (+CS20up "ref" )
+							| (+CS20up "out" )
+							.
+implicit_anonymous_method_signature	: (+CS20up "(" [ implicit_anonymous_method_parameter_list ] ")" )
+									| (+CS20up implicit_anonymous_method_parameter )
+									.
+implicit_anonymous_method_parameter_list : (+CS20up implicit_anonymous_method_parameter { "," implicit_anonymous_method_parameter } ) .
+implicit_anonymous_method_parameter : (+CS20up identifier ) .
+anonymous_method_body		: (+CS30up expression )
+							| (+CS30up block )
+							.
+query_expression			: (+CS30up from_clause query_body ) .
+from_clause					: (+CS30up "from" [ type ] identifier "in" expression ) .
+query_body					: (+CS30up { query_body_clause } select_or_group_clause [ query_continuation ] ) .
+query_body_clause			: (+CS30up from_clause )
+							| (+CS30up let_clause )
+							| (+CS30up where_clause )
+							| (+CS30up join_clause )
+							| (+CS30up join_into_clause )
+							| (+CS30up orderby_clause )
+							.
+let_clause					: (+CS30up "let" identifier "=" expression ) .
+where_clause				: (+CS30up "where" <boolean>expression ) .
+join_clause					: (+CS30up "join" [ type ] identifier "in" expression "on" expression "equals" expression ) .
+join_into_clause			: (+CS30up join_clause "into" identifier ) .
+orderby_clause				: (+CS30up "orderby" ordering { "," ordering } ) .
+ordering					: (+CS30up expression [ ordering_direction ] ) .
+ordering_direction			: (+CS30up "ascending" )
+							| (+CS30up "descending" )
+							.
+select_or_group_clause		: (+CS30up select_clause )
+							| (+CS30up group_clause )
+							.
+select_clause				: (+CS30up "select" expression ) .
+group_clause				: (+CS30up "group" expression "by" expression ) .
+query_continuation			: (+CS30up "into" identifier query_body ) .
+assignment					: unary_expression assignment_operator expression .
+assignment_operator			: "="
+							| "+="
+							| "-="
+							| "*="
+							| "/="
+							| "%="
+							| "&="
+							| "|="
+							| "^="
+							| "<<="
+							| right_shift_assignment
+							.
+expression					: non_assignment_expression
+							| assignment
+							.
+non_assignment_expression	: conditional_expression
+							| (+CS30up lambda_expression )
+							| (+CS30up query_expression )
+							.
+
+# A.2.5. Statements
+
+statement                   : labeled_statement
+							| declaration_statement
+							| embedded_statement
+							.
+embedded_statement			: (+unsafe [ "unsafe" ] ) block
+							| empty_statement
+							| expression_statement
+							| selection_statement
+							| iteration_statement
+							| jump_statement
+							| try_statement
+							| checked_statement
+							| unchecked_statement
+							| lock_statement
+							| using_statement
+							| (+CS20up yield_statement )
+							| (+unsafe fixed_statement )
+							.
+block						: "{" { statement } "}" .
+empty_statement				: ";" .
+labeled_statement			: identifier ":" statement .
+declaration_statement		: local_variable_declaration ";"
+							| local_constant_declaration ";"
+							.
+local_variable_declaration	: local_variable_type local_variable_declarator { "," local_variable_declarator } .
+local_variable_type			: type
+							| (+CS30up "var" )
+							.
+local_variable_declarator	: identifier [ "=" local_variable_initializer ] .
+local_variable_initializer	: expression
+							| array_initializer
+							| (+unsafe stackalloc_initializer )
+							.
+stackalloc_initializer		: (+unsafe "stackalloc" unmanaged_type "[" expression "]" ) .
+local_constant_declaration	: "const" type constant_declarators .
+constant_declarators		: constant_declarator { "," constant_declarator } .
+constant_declarator			: identifier "=" <constant>expression .
+expression_statement		: statement_expression ";" .
+statement_expression		: invocation_expression
+							| object_creation_expression
+							| assignment
+							| post_increment_expression
+							| post_decrement_expression
+							| pre_increment_expression
+							| pre_decrement_expression
+							| (+CS50up await_expression )
+							.
+selection_statement			: if_statement
+							| switch_statement
+							.
+if_statement				: "if" "(" <boolean>expression ")" embedded_statement [ "else" embedded_statement ].
+switch_statement			: "switch" "(" expression ")" switch_block .
+switch_block				: "{" { switch_section } "}" .
+switch_section				: switch_label { switch_label } statement { statement } .
+switch_label				: "case" <constant>expression ":"
+							| "default" ":"
+							.
+iteration_statement			: while_statement
+							| do_statement
+							| for_statement
+							| foreach_statement
+							.
+while_statement				: "while" "(" <boolean>expression ")" embedded_statement .
+do_statement				: "do" embedded_statement "while" "(" <boolean>expression ")" ";" .
+for_statement				: "for" "(" [ for_initializer ] ";" [ <boolean>expression ] ";" [ for_iterator ] ")" embedded_statement .
+for_initializer				: local_variable_declaration
+							| statement_expression_list
+							.
+for_iterator				: statement_expression_list .
+statement_expression_list	: statement_expression { "," statement_expression } .
+foreach_statement			: "foreach" "(" local_variable_type identifier "in" expression ")" embedded_statement .
+jump_statement				: break_statement
+							| continue_statement
+							| goto_statement
+							| return_statement
+							| throw_statement
+							.
+break_statement				: "break" ";" .
+continue_statement			: "continue" ";" .
+goto_statement				: "goto" goto_label ";" .
+goto_label					: identifier
+							| "case" <constant>expression
+							| "default"
+							.
+return_statement			: "return" [ expression ] ";" .
+throw_statement				: "throw" [ expression ] ";" .
+try_statement				: "try" block try_suffix .
+try_suffix					: catch_clauses [ finally_clause ]
+							| finally_clause
+							.
+catch_clauses				: specific_catch_clauses [ general_catch_clause ]
+							| general_catch_clause
+							.
+specific_catch_clauses		: specific_catch_clause { specific_catch_clause } .
+specific_catch_clause		: "catch" "(" class_type [ identifier ] ")" block .
+general_catch_clause		: "catch" block .
+finally_clause				: "finally" block .
+checked_statement			: "checked" block .
+unchecked_statement			: "unchecked" block .
+lock_statement				: "lock" "(" expression ")" embedded_statement .
+using_statement				: "using" "(" resource_acquisition ")" embedded_statement .
+resource_acquisition		: local_variable_declaration
+							| expression
+							.
+yield_statement				: (+CS20up "yield" yield_suffix ";" ) .
+yield_suffix				: (+CS20up "return" expression )
+							| (+CS20up "break" )
+							.
+fixed_statement				: (+unsafe "fixed" "(" pointer_type fixed_pointer_declarators ")" embedded_statement ) .
+fixed_pointer_declarators	: (+unsafe fixed_pointer_declarator { "," fixed_pointer_declarator } ) .
+fixed_pointer_declarator	: (+unsafe identifier "=" fixed_pointer_initializer ) .
+fixed_pointer_initializer	: (+unsafe "&" variable_reference )
+							| (+unsafe expression )
+							.
+namespace_declaration		: "namespace" qualified_identifier namespace_body [ ";" ] .
+qualified_identifier		: identifier { "." identifier } .
+namespace_body				: "{" (+CS20up [ extern_alias_directives ] ) [ using_directives ] [ namespace_member_declarations ] "}" .
+extern_alias_directives		: extern_alias_directive { extern_alias_directive } .
+extern_alias_directive		: "extern" "alias" identifier ";" .
+using_directives			: using_directive { using_directive } .
+using_directive				: using_alias_directive
+							| using_namespace_directive
+							.
+using_alias_directive		: "using" identifier "=" namespace_or_type_name ";" .
+using_namespace_directive	: "using" namespace_name ";" .
+namespace_member_declarations : namespace_member_declaration { namespace_member_declaration } .
+namespace_member_declaration  : namespace_declaration
+							  | type_declaration
+							  .
+type_declaration			: class_declaration
+							| struct_declaration
+							| interface_declaration
+							| enum_declaration
+							| delegate_declaration
+							.
+qualified_alias_member		: identifier "::" identifier (+CS20up [ type_argument_list ] ) .
+
+# A.2.6 Classes
+
+class_declaration           : class_prefix "class" identifier class_suffix class_body [ ";" ] .
+class_prefix				: [ attributes ] { class_modifier } (+CS20up [ "partial" ] ) .
+class_suffix				: (+CS20up [ type_parameter_list ] ) [ class_base ] (+CS20up [ type_parameter_constraints_clauses ] ) .
+class_modifier				: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "abstract"
+							| "sealed"
+							| (+CS20up "static" )
+							| (+unsafe "unsafe")
+							.
+class_base					: ":" class_type [ "," interface_type_list ]
+							| ":" interface_type_list
+							.
+interface_type_list			: interface_type { "," interface_type } .
+class_body					: "{" { class_member_declaration } "}" .
+class_member_declaration	: constant_declaration
+							| field_declaration
+							| method_declaration
+							| property_declaration
+							| event_declaration
+							| indexer_declaration
+							| operator_declaration
+							| constructor_declaration
+							| (+CS1040 finalizer_declaration )
+							| (+CS50up destructor_declaration )
+							| static_constructor_declaration
+							| type_declaration
+							.
+constant_declaration		: constant_prefix "const" type constant_declarators ";" .
+constant_prefix				: [ attributes ] { constant_modifier } .
+constant_modifier			: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							.
+field_declaration			: field_prefix type variable_declarators ";" .
+variable_declarators		: variable_declarator { "," variable_declarator } .
+field_prefix				: [ attributes ] { field_modifier } .
+field_modifier				: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "static"
+							| "readonly"
+							| "volatile"
+						    | (+unsafe "unsafe")
+							.
+variable_declarator			: identifier [ "=" variable_initializer ] .
+variable_initializer		: expression
+							| array_initializer
+							.
+method_declaration			: method_header method_body .
+method_header				: method_prefix return_type member_name (+CS20up [ type_parameter_list ] ) "(" [ formal_parameter_list ] ")" (+CS20up [ type_parameter_constraints_clauses ] ) .
+method_prefix				: [ attributes ] { method_modifier } (+CS30up [ "partial" ] ) .
+method_modifier				: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "static"
+							| "virtual"
+							| "sealed"
+							| "override"
+							| "abstract"
+							| "extern"
+							| (+CS50up "async" )
+						    | (+unsafe "unsafe")
+							.
+return_type					: type
+							| "void"
+							.
+member_name					: [ interface_type "." ] identifier .
+method_body					: block
+							| ";"
+							.
+formal_parameter_list		: fixed_parameter { "," fixed_parameter } [ "," parameter_array ]
+							| parameter_array
+							.
+fixed_parameter				: parameter_prefix type identifier (+CS40up [ default_argument ] ) .
+parameter_prefix			: [ attributes ] [ parameter_modifier ] .
+parameter_modifier			: "ref"
+							| "out"
+							| (+CS30up "this" )
+							.
+default_argument			: "=" expression .
+parameter_array				: [ attributes ] "params" array_type identifier .
+property_declaration		: property_prefix type member_name "{" accessor_declaraions "}" .
+property_prefix				: [ attributes ] { property_modifier } .
+property_modifier			: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "static"
+							| "virtual"
+							| "sealed"
+							| "override"
+							| "abstract"
+							| "extern"
+						    | (+unsafe "unsafe")
+							.
+accessor_declaraions		: get_accessor_declaration [ set_accessor_declaration ]
+							| set_accessor_declaration [ get_accessor_declaration ]
+							.
+get_accessor_declaration	: accessor_prefix "get" accessor_body .
+set_accessor_declaration	: accessor_prefix "set" accessor_body .
+accessor_prefix				: [ attributes ] (+CS20up [ accessor_modifier ] ) .
+accessor_modifier			: (+CS20up "protected" [ "internal" ] )
+							| (+CS20up "internal" [ "protected" ] )
+							| (+CS20up "private" )
+							.
+accessor_body				: block
+							| (+CS30up ";" )
+							.
+event_declaration			: event_prefix "event" type event_suffix .
+event_prefix				: [ attributes ] { event_modifier } .
+event_suffix				: variable_declarators ";"
+							| member_name "{" event_accessor_declarations "}"
+							.
+event_modifier				: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "static"
+							| "virtual"
+							| "sealed"
+							| "override"
+							| "abstract"
+							| "extern"
+						    | (+unsafe "unsafe")
+							.
+event_accessor_declarations	: add_accessor_declaration remove_accessor_declaration
+							| remove_accessor_declaration add_accessor_declaration
+							.
+add_accessor_declaration	: [ attributes ] "add" block .
+remove_accessor_declaration	: [ attributes ] "remove" block .
+indexer_declaration			: indexer_prefix indexer_declarator "{" accessor_declaraions "}" .
+indexer_prefix				: [ attributes ] { indexer_modifier } .
+indexer_modifier			: "new"
+							| "public"
+							| "protected"
+							| "internal"
+							| "private"
+							| "virtual"
+							| "sealed"
+							| "override"
+							| "abstract"
+							| "extern"
+						    | (+unsafe "unsafe")
+							.
+indexer_declarator			: type [ interface_type "." ] "this" "[" formal_parameter_list "]" .
+operator_declaration		: operator_prefix operator_declarator operator_body .
+operator_prefix				: [ attributes ] { operator_modifier } .
+operator_modifier			: "public"
+							| "static"
+							| "extern"
+						    | (+unsafe "unsafe")
+							.
+operator_declarator			: unary_operator_declarator
+							| binary_operator_declarator
+							| conversion_operator_declarator
+							.
+unary_operator_declarator	: type "operator" overloadable_unary_operator "(" type identifier ")" .
+overloadable_unary_operator	: "+"
+							| "-"
+							| "!"
+							| "~"
+							| "++"
+							| "--"
+							| "true"
+							| "false"
+							.
+binary_operator_declarator	: type "operator" overloadable_binary_operator "(" type identifier "," type identifier ")" .
+overloadable_binary_operator : "+"
+							 | "-"
+							 | "*"
+							 | "/"
+							 | "%"
+							 | "&"
+							 | "|"
+							 | "^"
+							 | "<<"
+							 | right_shift
+							 | "=="
+							 | "!="
+							 | "<"
+							 | ">"
+							 | "<="
+							 | ">="
+							 .
+conversion_operator_declarator : "implicit" "operator" type "(" type identifier ")"
+							   | "explicit" "operator" type "(" type identifier ")"
+							   .
+operator_body			   : block
+						   | ";"
+						   .
+constructor_declaration	   : constructor_prefix constructor_declatator constructor_body .
+constructor_prefix		   : [ attributes ] { constructor_modifier } .
+constructor_modifier	   : "public"
+						   | "protected"
+						   | "internal"
+						   | "private"
+						   | "extern"
+						   | (+unsafe "unsafe")
+						   .
+constructor_declatator	   : identifier "(" [ formal_parameter_list ] ")" [ constructor_initializer ] .
+constructor_initializer	   : "base" "(" [ argument_list ] ")"
+						   | "this" "(" [ argument_list ] ")"
+						   .
+constructor_body		   : block
+						   | ";"
+						   .
+static_constructor_declaration : static_constructor_prefix identifier "(" ")" static_constructor_body .
+static_constructor_prefix  : [ attributes ] static_constructor_modifier { static_constructor_modifier } .
+static_constructor_modifier : "extern"
+							| "static"
+						    | (+unsafe "unsafe" )
+							.
+static_constructor_body	   : block
+						   | ";"
+						   .
+finalizer_declaration	   : (+CS1040 finalizer_prefix "~" identifier "(" ")" finalizer_body) .
+finalizer_prefix		   : (+CS1040 [ attributes ]) (+CS1040 { finalizer_modifier }) .
+finalizer_modifier		   : (+CS1040 "extern")
+						   | (+CS1040 (+unsafe "unsafe" ))
+						   .
+finalizer_body			   : (+CS1040 block)
+						   | (+CS1040 ";")
+						   .
+destructor_declaration	   : (+CS50up destructor_prefix "~" identifier "(" ")" destructor_body) .
+destructor_prefix		   : (+CS50up [ attributes ]) (+CS50up { destructor_modifier }) .
+destructor_modifier		   : (+CS50up "extern")
+						   | (+CS50up (+unsafe "unsafe" ))
+						   .
+destructor_body			   : (+CS50up block )
+						   | (+CS50up ";" )
+						   .
+
+# A.2.7 Structs
+
+struct_declaration         : struct_prefix "struct" identifier struct_suffix struct_body [ ";" ] .
+struct_prefix			   : [ attributes ] { struct_modifier } (+CS20up [ "partial" ] ) .
+struct_suffix			   : (+CS20up [ type_parameter_list ] ) [ struct_intercfaces ] (+CS20up [ type_parameter_constraints_clauses ] ) .
+struct_modifier			   : "new"
+						   | "public"
+						   | "protected"
+						   | "internal"
+						   | "private"
+						   | (+unsafe "unsafe")
+						   .
+struct_intercfaces		   : ":" interface_type_list .
+struct_body				   : "{" { struct_member_declaration } "}" .
+struct_member_declaration  : constructor_declaration
+						   | field_declaration
+						   | method_declaration
+						   | property_declaration
+						   | event_declaration
+						   | indexer_declaration
+						   | operator_declaration
+						   | constructor_declaration
+						   | static_constructor_declaration
+						   | type_declaration
+						   | (+CS50up (+unsafe fixed_size_buffer_declaration))
+						   .
+
+# A.2.8 Arrays
+
+array_initializer		   : "{" [ variable_initializer_list [ "," ] ] "}" .
+variable_initializer_list  : variable_initializer { "," variable_initializer } .
+
+# A.2.9 Interfaces
+
+interface_declaration      : interface_prefix "interface" identifier interface_suffix interface_body [ ";" ] .
+interface_prefix		   : [ attributes ] { interface_modifier } (+CS20up [ "partial" ] ) .
+interface_suffix		   : (+CS20up [ variant_type_parameter_list ] ) [ intercface_base ] (+CS20up [ type_parameter_constraints_clauses ] ) .
+interface_modifier		   : "new"
+						   | "public"
+						   | "protected"
+						   | "internal"
+						   | "private"
+						   | (+unsafe "unsafe")
+						   .
+intercface_base			   : ":" interface_type_list .
+interface_body			   : "{" { interface_member_delcaration } "}" .
+interface_member_delcaration : interface_method_declaration
+							 | interface_property_declaration
+							 | interface_event_declaration
+							 | interface_indexer_declaration
+							 .
+interface_method_declaration : [ attributes ] [ "new" ] return_type identifier (+CS20up [ type_parameter_list ] ) "(" [ formal_parameter_list ] ")" (+CS20up [ type_parameter_constraints_clauses ] ) ";" .
+interface_property_declaration : [ attributes ] [ "new" ] type identifier "{" interface_accessor "}" .
+interface_accessor		   : interface_get_accessor [ interface_set_accessor ]
+						   | interface_set_accessor [ interface_get_accessor ]
+						   .
+interface_get_accessor	   : [ attributes ] "get" ";" .
+interface_set_accessor	   : [ attributes ] "set" ";" .
+interface_event_declaration : [ attributes ] [ "new" ] "event" type identifier ";" .
+interface_indexer_declaration : [ attributes ] [ "new" ] type "this" "[" formal_parameter_list "]" "{" interface_accessor "}" .
+
+# A.2.10 Enums
+
+enum_declaration           : enum_prefix "enum" identifier enum_suffix enum_body [ ";" ] .
+enum_prefix				   : [ attributes ] { enum_modifier } .
+enum_suffix				   : [ ":" enum_base ] .
+enum_base				   : integral_type .
+enum_body				   : "{" [ enum_member_declarations [ "," ] ] "}" .
+enum_modifier			   : "new"
+						   | "public"
+						   | "protected"
+						   | "internal"
+						   | "private"
+						   .
+enum_member_declarations   : enum_member_declaration { "," enum_member_declaration } .
+enum_member_declaration	   : [ attributes ] identifier [ "=" <constant>expression ] .
+
+# A.2.11 Delegates
+
+delegate_declaration       : delegate_prefix "delegate" return_type identifier delegate_suffix ";" .
+delegate_prefix			   : [ attributes ] { delegate_modifier } .
+delegate_suffix			   : (+CS20up [ variant_type_parameter_list ] ) "(" [ formal_parameter_list ] ")" (+CS20up [ type_parameter_constraints_clauses ] ) .
+delegate_modifier		   : "new"
+						   | "public"
+						   | "protected"
+						   | "internal"
+						   | "private"
+						   | (+unsafe "unsafe")
+						   .
+
+# A.2.12 Attributes
+
+global_attributes          : global_attribute_section { global_attribute_section } .
+global_attribute_section   : "[" global_attribute_target_specifier attribute_list [ "," ] "]" .
+global_attribute_target_specifier : global_attribute_target ":" .
+global_attribute_target	   : "assembly"
+						   | "module"
+						   .
+attributes				   : attribute_section { attribute_section } .
+attribute_section		   : "[" [ attribute_target_specifier ] attribute_list [ "," ] "]" .
+attribute_target_specifier : attribute_target ":" .
+attribute_target		   : "field"
+						   | "event"
+						   | "method"
+						   | (+CS1040 "module" )
+						   | "param"
+						   | "property"
+						   | "return"
+						   | "type"
+						   .
+attribute_list			   : attribute { "," attribute } .
+attribute				   : attribute_name [ attribute_arguments ] .
+attribute_name			   : type_name .
+attribute_arguments		   : "(" attribute_argument_list ")" .
+attribute_argument_list	   : [ positional_argument_list ]
+						   | positional_argument_list "," named_argument_list
+						   | named_argument_list
+						   .
+positional_argument_list   : (+CS1040 argument_list)
+						   | (+CS50up positional_argument { "," positional_argument })
+						   .
+positional_argument        : (+CS50up [ argument_name ] expression ) .
+named_argument_list		   : named_argument { "," named_argument } .
+named_argument			   : identifier "=" expression .
+
+# A.2.13 Generics
+
+variant_type_parameter_list: (+CS20up "<" variant_type_parameters ">" ) .
+variant_type_parameters	   : (+CS20up variant_prefix type_parameter { "," variant_prefix type_parameter } ) .
+variant_prefix			   : (+CS20up [ attributes ] (+CS40up [ variance_annotation ] ) ) .
+variance_annotation		   : (+CS20up "in" )
+						   | (+CS20up "out" )
+						   .
+type_parameter_list        : (+CS20up "<" type_parameters ">" ) .
+type_parameters			   : (+CS20up [ attributes ] type_parameter { "," [ attributes ] type_parameter } ) .
+type_parameter			   : (+CS20up identifier ) .
+type_argument_list		   : (+CS20up "<" type_arguments ">" ) .
+type_arguments			   : (+CS20up type_argument { "," type_argument } ) .
+type_argument			   : (+CS20up type ) .
+type_parameter_constraints_clauses : (+CS20up type_parameter_constraints_clause { type_parameter_constraints_clause } ) .
+type_parameter_constraints_clause : (+CS20up "where" type_parameter ":" type_parameter_constraints ) .
+type_parameter_constraints : (+CS20up primary_constraint [ "," secondary_constraint ] [ "," constructor_constraint ] )
+						   | (+CS20up secondary_constraint [ "," constructor_constraint ] )
+						   | (+CS20up constructor_constraint )
+						   .
+primary_constraint		   : (+CS20up class_type )
+						   | (+CS20up "class" )
+						   | (+CS20up "struct" )
+						   .
+secondary_constraint	   : (+CS20up interface_type { "," secondary_constraint } )
+						   | (+CS20up type_parameter { "," secondary_constraint } )
+						   .
+constructor_constraint	   : (+CS20up "new" "(" ")" ) .
+
+
+#-------------------------------------------------------------------------------------------------------------
+
+# ------------ some additions of C# 5.0 ----------------
+
+fixed_size_buffer_declaration : (+CS50up (+unsafe [ attributes ] { fixed_size_buffer_modifier } "fixed" buffer_element_type fixed_size_buffer_declarators ";" )) .
+fixed_size_buffer_modifier    : (+CS50up (+unsafe "new" ))
+							  | (+CS50up (+unsafe "public" ))
+							  | (+CS50up (+unsafe "protected" ))
+							  | (+CS50up (+unsafe "internal" ))
+							  | (+CS50up (+unsafe "private" ))
+							  | (+CS50up (+unsafe "unsafe" ))
+							  .
+buffer_element_type           : (+CS50up (+unsafe type )) .
+fixed_size_buffer_declarators : (+CS50up (+unsafe fixed_size_buffer_declarator { fixed_size_buffer_declarator } )) .
+fixed_size_buffer_declarator  : (+CS50up (+unsafe identifier "[" expression "]" )) .

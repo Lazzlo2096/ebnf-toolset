@@ -1,0 +1,20 @@
+# A comment starts with a '#' and ends with the end-of-line character.
+# Meta commands are comments that look as follows '#!<command> parameters
+# E.g. #!namedexpression V2 "Syntax 2.0..."
+
+#!namedexpression V2 "Syntax 2.0..."
+
+file	: { prod } .
+prod	: lhs ":" expr "." .
+lhs	: NAME .
+expr	: term { "|" term } .
+term	: factor { factor } .
+factor	: TERMINAL
+	| LITERAL
+	| [ '<' ATTR '>' ] NAME
+	| "[" expr "]"			    # optional expressions
+	| "{" expr "}"                      # 0... expressions
+	| "(" expr ")"			    # grouped expression
+	| (+V2 "(+" NAME expr ")" )         # named expr
+	.
+

@@ -1,0 +1,1089 @@
+
+# ISO/IEC 14882:1998(E)/2011
+
+# C++98 from std document
+# C++11 draft from: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf
+
+#!namedexpression CPP11 "C++11 only"
+#!namedexpression CPP98 "C++98 only"
+
+
+# chapter: Annex A (informative) Grammar summary
+
+
+# not covered by the standard
+syntax : <cpp_syntax>translation_unit
+       | <preprocessor_syntax>preprocessing_file
+       .
+
+
+
+
+# page: 667
+
+# section: [gram.key]
+
+# also defined on page 676:
+# typedef_name           : identifier .
+
+# also defined on page 677:
+# namespace_name                 : original_namespace_name
+#                                | namespace_alias
+#                                .
+
+# also defined on page 677:
+# original_namespace_name        : identifier .
+
+# also defined on page 677:
+# namespace_alias                : identifier .
+
+
+# also defined on page 679:
+# class_name             : identifier
+#                        | template_id
+#                        .
+
+# also defined on page 676:
+# enum_name              : identifier .
+
+# also defined on page 681:
+# template_name          : identifier .
+
+
+# section: [gram.lex]
+
+hex_quad                 : hexadecimal_digit hexadecimal_digit
+                           hexadecimal_digit hexadecimal_digit
+                         .
+universal_character_name : '\u' hex_quad
+                         | '\U' hex_quad hex_quad
+                         .
+
+# page: 668
+preprocessing_token      : header_name
+                         | identifier
+                         | pp_number
+                         | character_literal
+                         | (+CPP11 user_defined_character_literal )
+                         | string_literal
+                         | (+CPP11 user_defined_string_literal )
+                         | preprocessing_op_or_punc
+                         | ANY_NOT_YET_COVERED_NON_WS_CHARACTER
+                         .
+token                    : identifier
+                         | KEYWORD
+                         | literal
+                         | operator
+                         | PUNCTUATOR
+                         .
+header_name              : '<' h_char_sequence '>'
+                         | '"' q_char_sequence '"'
+                         .
+h_char_sequence          : h_char
+                         | h_char_sequence h_char
+                         .
+h_char                   : ANY_CHARACTER_EXCEPT_NEWLINE_GT .
+q_char_sequence          : q_char
+                         | q_char_sequence q_char
+                         .
+q_char                   : ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE .
+pp_number                : digit
+                         | '.' digit
+                         | pp_number digit
+                         | pp_number nondigit
+                         | pp_number 'e' sign
+                         | pp_number 'E' sign
+                         | pp_number '.'
+                         .
+identifier               : nondigit
+                         | identifier nondigit
+                         | identifier digit
+                         .
+nondigit                 : universal_character_name
+                         | ALPHA_CHARACTER
+                         | '_'
+                         | (+CPP11 OTHER_IMPLEMENTATION_DEFINED_CHARACTERS )
+                         .
+digit                    : DIGIT .
+
+# page: 669
+
+preprocessing_op_or_punc :'{'|'}'|'['|']'|'#'|'##'|'('|')'
+                         |'<:'|':>'|'<%'|'%>'|'%:'|'%:%:'|';'|':'|'...'
+                         |'new'|'delete'|'?'|'::'|'.'|'.*'
+                         |'+'|'-'|'*'|'/'|'%'|'^'|'&'|'|'|'~'
+                         |'!'|'='|'<'|'>'|'+='|'-='|'*='|'/='|'%='
+                         |'^='|'&='|'|='|'<<'|'>>'|'>>='|'<<='|'=='|'!='
+                         |'<='|'>='|'&&'|'||'|'++'|'--'|','|'->*'|'->'
+                         |'and'|'and_eq'|'bitand'|'bitor'|'compl'|'not'
+                         |'not_eq'|'or'|'or_eq'|'xor'|'xor_eq'
+                         .
+literal                  : integer_literal
+                         | character_literal
+                         | floating_literal
+                         | string_literal
+                         | boolean_literal
+                         | (+CPP11 pointer_literal )
+                         | (+CPP11 user_defined_literal )
+                         .
+integer_literal          : decimal_literal [ integer_suffix ]
+                         | octal_literal [ integer_suffix ]
+                         | hexadecimal_literal [ integer_suffix ]
+                         .
+decimal_literal          : nonzero_digit
+                         | decimal_literal digit
+                         .
+octal_literal            : '0'
+                         | octal_literal octal_digit
+                         .
+hexadecimal_literal      : '0x' hexadecimal_digit
+                         | '0X' hexadecimal_digit
+                         | hexadecimal_literal hexadecimal_digit
+                         .
+nonzero_digit            : '1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'.
+octal_digit              : '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'.
+hexadecimal_digit        : '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
+                         | 'a'|'b'|'c'|'d'|'e'|'f'
+                         | 'A'|'B'|'C'|'D'|'E'|'F'
+                         .
+integer_suffix           : unsigned_suffix [ long_suffix ]
+                         | unsigned_suffix [ long_long_suffix ]
+                         | long_suffix [ unsigned_suffix ]
+                         | long_long_suffix [ unsigned_suffix ]
+                         .
+unsigned_suffix          : 'u' | 'U' .
+long_suffix              : 'l' | 'L' .
+long_long_suffix              : 'll' | 'LL' .
+
+# page: 670
+
+character_literal        : "'" c_char_sequence "'"
+                         | (+CPP11 "u'" c_char_sequence "'" )
+                         | (+CPP11 "U'" c_char_sequence "'" )
+                         | "L'" c_char_sequence "'"
+                         .
+c_char_sequence          : c_char
+                         | c_char_sequence c_char
+                         .
+c_char                   : ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH
+                         | escape_sequence
+                         | universal_character_name
+                         .
+escape_sequence          : simple_escape_sequence
+                         | octal_escape_sequence
+                         | hexadecimal_escape_sequence
+                         .
+simple_escape_sequence   : "\'"|'\"'|'\?'|'\\'
+                         | '\a'|'\b'|'\f'|'\n'|'\r'|'\t'|'\v'
+                         .
+octal_escape_sequence    : '\' octal_digit
+                         | '\' octal_digit octal_digit
+                         | '\' octal_digit octal_digit octal_digit
+                         .
+hexadecimal_escape_sequence : '\x' hexadecimal_digit
+                            | hexadecimal_escape_sequence hexadecimal_digit
+                            .
+floating_literal         : fractional_constant [exponent_part] [floating_suffix]
+                         | digit_sequence exponent_part [floating_suffix]
+                         .
+fractional_constant      : [ digit_sequence ] '.' digit_sequence
+                         | digit_sequence '.'
+                         .
+exponent_part            : 'e' [sign] digit_sequence
+                         | 'E' [sign] digit_sequence
+                         .
+sign                     : '+' |'-' .
+digit_sequence           : digit
+                         | digit_sequence digit
+                         .
+floating_suffix          : 'f'|'l'|'F'|'L'.
+string_literal           : [ encoding_prefix ] '"' [s_char_sequence] '"'
+                         | (+CPP11 [ encoding_prefix ] 'R' raw_string )
+                         .
+encoding_prefix          : 'L'
+                         | (+CPP11 'u8')
+                         | (+CPP11 'u')
+                         | (+CPP11 'U')
+                         .
+# page: 671
+
+s_char_sequence          : s_char
+                         | s_char_sequence s_char
+                         .
+s_char                   : ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH
+                         | escape_sequence
+                         | universal_character_name
+                         .
+raw_string               : '"' [ d_char_sequence ]
+                           '(' [ r_char_sequence ] ')'
+                               [ d_char_sequence ] '"'
+                         .
+r_char_sequence          : r_char
+                         | r_char_sequence r_char
+                         .
+r_char                   : ANY_CHAR_UNTIL_END_OF_RAW_STRING .
+d_char_sequence          : d_char
+                         | d_char_sequence d_char
+                         .
+d_char                   : ANY_RAW_STRING_DELIMITER_CHAR .
+
+boolean_literal          : 'false'|'true'.
+
+pointer_literal          : 'nullptr' .
+
+user_defined_literal     : user_defined_integer_literal
+                         | user_defined_floating_literal
+                         | user_defined_string_literal
+                         | user_defined_character_literal
+                         .
+user_defined_integer_literal : decimal_literal ud_suffix
+                         | octal_literal ud_suffix
+                         | hexadecimal_literal ud_suffix
+                         .
+user_defined_floating_literal: fractional_constant [ exponent_part ] ud_suffix
+                         | digit_sequence exponent_part ud_suffix
+                         .
+user_defined_string_literal : string_literal ud_suffix .
+user_defined_character_literal : character_literal ud_suffix .
+ud_suffix                : identifier .
+
+# section: [gram.basic]
+
+translation_unit         : [ declaration_seq ] .
+
+
+# section: [gram.expr]
+
+primary_expression       : literal
+                         | 'this'
+                         | '(' expression ')'
+                         | id_expression
+                         | (+CPP11 lambda_expression )
+                         .
+id_expression            : unqualified_id
+                         | qualified_id
+                         .
+unqualified_id           : identifier
+                         | operator_function_id
+                         | conversion_function_id
+                         | (+CPP11 literal_operator_id )
+                         | '~' class_name
+                         | (+CPP11 '~' decltype_specifier )
+                         | template_id
+                         .
+qualified_id             : ['::'] nested_name_specifier
+                           ['template'] unqualified_id
+                         | '::' identifier
+                         | '::' operator_function_id
+                         | (+CPP11 '::' literal_operator_id )
+                         | '::' template_id
+                         .
+nested_name_specifier    : (+CPP98 class_or_namespace_name '::' [nested_name_specifier] )
+                         | (+CPP98 class_or_namespace_name '::'
+                                        'template' nested_name_specifier )
+                         | (+CPP11 type_name '::' )
+                         | (+CPP11 namespace_name '::' )
+                         | (+CPP11 decltype_specifier '::' )
+                         | (+CPP11 nested_name_specifier identifier '::' )
+                         | (+CPP11 nested_name_specifier ['template'] simple_template_id '::' )
+                         .
+class_or_namespace_name  : class_name
+                         | namespace_name
+                         .
+lambda_expression        : lambda_introducer [lambda_declarator] compound_statement .
+lambda_introducer        : '[' [ lambda_capture ] ']' .
+lambda_capture           : capture_default
+                         | capture_list
+                         | capture_default ',' capture_list
+                         .
+capture_default          : '&' | '=' .
+capture_list             : capture ['...']
+                         | capture_list ',' capture ['...']
+                         .
+capture                  : identifier
+                         | '&' identifier
+                         | 'this'
+                         .
+lambda_declarator        : '(' parameter_declaration_clause ')' ['mutable']
+                                   [exception_specification]
+                                   [attribute_specifier_seq]
+                                   [trailing_return_type]
+                         .
+# page: 672
+
+postfix_expression       : primary_expression
+                         | postfix_expression '[' expression ']'
+                         | postfix_expression '[' braced_init_list ']'
+                         | postfix_expression '(' [expression_list] ')'
+                         | simple_type_specifier '(' [expression_list] ')'
+                         | (+CPP11 typename_specifier '(' [expression_list] ')' )
+                         | (+CPP11 simple_type_specifier braced_init_list )
+                         | (+CPP11 typename_specifier braced_init_list )
+                         | (+CPP98 'typename' ['::'] nested_name_specifier
+                                      identifier '(' [expression_list] ')' )
+                         | (+CPP98'typename' ['::'] nested_name_specifier
+                                      ['template'] template_id
+                                      '(' [expression_list] ')' )
+                         | postfix_expression '.' ['template'] id_expression
+                         | postfix_expression '->' ['template'] id_expression
+                         | postfix_expression '.' pseudo_destructor_name
+                         | postfix_expression '->' pseudo_destructor_name
+                         | postfix_expression '++'
+                         | postfix_expression '--'
+                         | 'dynamic_cast' '<' type_id '>' '('expression')'
+                         | 'static_cast' '<' type_id '>' '('expression')'
+                         | 'reinterpret_cast' '<' type_id '>' '('expression')'
+                         | 'const_cast' '<' type_id '>' '('expression')'
+                         | 'typeid' '(' expression ')'
+                         | 'typeid' '(' type_id ')'
+                         .
+expression_list          : (+CPP98 assignment_expression )
+                         | (+CPP98 expression_list ',' assignment_expression )
+                         | (+CPP11 initializer_list )
+                         .
+pseudo_destructor_name   : ['::'] [nested_name_specifier]
+                                  type_name '::' '~' type_name
+                         | (+CPP98 ['::'] nested_name_specifier 'template'
+                                  template_id '::' '~' type_name )
+                         | (+CPP11 ['::'] nested_name_specifier 'template'
+                                  simple_template_id '::' '~' type_name )
+                         | ['::'] [nested_name_specifier]
+                                  '~' type_name
+                         | (+CPP11 '~' decltype_specifier )
+                         .
+unary_expression         : postfix_expression
+                         | '++' cast_expression
+                         | '--' cast_expression
+                         | unary_operator cast_expression
+                         | 'sizeof' unary_expression
+                         | 'sizeof' '(' type_id ')'
+                         | (+CPP11 'sizeof' '...' '(' identifier ')' )
+                         | (+CPP11 'alignof' '(' type_id ')' )
+                         | (+CPP11 noexcept_expression )
+                         | new_expression
+                         | delete_expression
+                         .
+unary_operator           : '*'|'&'|'+'|'-'|'!'|'~'.
+new_expression           : ['::'] 'new' [new_placement]
+                                   new_type_id [new_initializer]
+                         | ['::'] 'new' [new_placement]
+                                   '(' type_id ')' [new_initializer]
+                         .
+new_placement            : '(' expression_list ')' .                    
+new_type_id              : type_specifier_seq [ new_declarator ] .
+new_declarator           : ptr_operator [ new_declarator ]
+                         | (+CPP98 direct_new_declarator )
+                         | (+CPP11 noptr_new_declarator )
+                         .
+direct_new_declarator    : '[' expression ']'
+                         | direct_new_declarator '[' constant_expression ']'
+                         .
+noptr_new_declarator    : '[' expression ']' [ attribute_specifier_seq ]
+                         | noptr_new_declarator '[' constant_expression ']' [ attribute_specifier_seq ]
+                         .
+
+# page: 673
+
+new_initializer          : '(' [expression_list] ')'
+                         | (+CPP11 braced_init_list )
+                         .
+delete_expression        : ['::'] 'delete' cast_expression
+                         | ['::'] 'delete' '[' ']' cast_expression
+                         .
+noexcept_expression      : 'noexcept' '(' expression ')' .
+cast_expression          : unary_expression
+                         | '(' type_id ')' cast_expression
+                         .
+pm_expression            : cast_expression
+                         | pm_expression '.*' cast_expression
+                         | pm_expression '->*' cast_expression
+                         .
+multiplicative_expression : pm_expression
+                         | multiplicative_expression '*' pm_expression
+                         | multiplicative_expression '/' pm_expression
+                         | multiplicative_expression '%' pm_expression
+                         .
+additive_expression      : multiplicative_expression
+                         | additive_expression '+' multiplicative_expression
+                         | additive_expression '-' multiplicative_expression
+                         .
+shift_expression         : additive_expression
+                         | shift_expression '<<' additive_expression
+                         | shift_expression '>>' additive_expression
+                         .
+relational_expression    : shift_expression
+                         | relational_expression '<'  shift_expression
+                         | relational_expression '>'  shift_expression
+                         | relational_expression '<=' shift_expression
+                         | relational_expression '>=' shift_expression
+                         .
+equality_expression      : relational_expression
+                         | equality_expression '==' relational_expression
+                         | equality_expression '!=' relational_expression
+                         .
+and_expression           : equality_expression
+                         | and_expression '&' equality_expression
+                         .
+exclusive_or_expression  : and_expression
+                         | exclusive_or_expression '^' and_expression
+                         .
+inclusive_or_expression  : exclusive_or_expression
+                         | inclusive_or_expression '|' exclusive_or_expression
+                         .
+logical_and_expression   : inclusive_or_expression
+                         | logical_and_expression '&&' inclusive_or_expression
+                         .
+
+# page: 674
+
+logical_or_expression    : logical_and_expression
+                         | logical_or_expression '||' logical_and_expression
+                         .
+conditional_expression   : logical_or_expression
+                         | logical_or_expression '?' expression
+                                                ':' assignment_expression
+                         .
+assignment_expression    : conditional_expression
+                         | (+CPP98 logical_or_expression assignment_operator
+                                                assignment_expression )
+                         | (+CPP11 logical_or_expression assignment_operator
+                                                initializer_clause )
+                         | throw_expression
+                         .
+assignment_operator      : '='|'*='|'/='|'%='|'+='|'-='
+                         | '>>='|'<<='|'&='|'^='|'|='
+                         .
+expression               : assignment_expression
+                         | expression ',' assignment_expression
+                         .
+constant_expression      : conditional_expression .
+
+
+# section: [gram.stmt.stmt]
+
+statement                : labeled_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] expression_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] compound_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] selection_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] iteration_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] jump_statement
+                         | declaration_statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] try_block
+                         .
+labeled_statement        : [ (+CPP11 attribute_specifier_seq ) ] identifier ':' statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] 'case' constant_expression ':' statement
+                         | [ (+CPP11 attribute_specifier_seq ) ] 'default' ':' statement
+                         .
+expression_statement     : [ expression ] ';' .
+compound_statement       : '{' [ statement_seq ] '}' .
+statement_seq            : statement
+                         | statement_seq statement
+                         .
+selection_statement      : 'if' '(' condition ')' statement
+                         | 'if' '(' condition ')' statement 'else' statement
+                         | 'switch' '(' condition ')' statement
+                         .
+condition                : expression
+                         | (+CPP98 type_specifier_seq declarator
+                                             '=' assignment_expression )
+                         | (+CPP11 [ attribute_specifier_seq ] decl_specifier_seq declarator
+                                             '=' initializer_clause )
+                         | (+CPP11 [ attribute_specifier_seq ] decl_specifier_seq declarator
+                                             braced_init_list )
+                         .
+
+# page: 675
+
+iteration_statement      : 'while' '(' condition ')' statement
+                         | 'do' statement 'while' '(' expression ')' ';'
+                         | 'for' '(' for_init_statement
+                                     [condition] ';' [expression] ')' statement
+                         | (+CPP11 'for' '(' for_range_declaration ':' for_range_initializer ')' statement )
+                         .
+for_init_statement       : expression_statement
+                         | simple_declaration
+                         .
+for_range_declaration    : [ attribute_specifier_seq ] type_specifier_seq declarator .
+for_range_initializer    : expression
+                         | braced_init_list
+                         .
+
+jump_statement           : 'break' ';'
+                         | 'continue' ';'
+                         | 'return' [expression] ';'
+                         | (+CPP11 'return' braced_init_list ';' )
+                         | 'goto' identifier ';'
+                         .
+declaration_statement    : block_declaration .
+
+
+# section: [gram.dcl.dcl]
+
+declaration_seq          : declaration
+                         | declaration_seq declaration
+                         .
+declaration              : block_declaration
+                         | function_definition
+                         | template_declaration
+                         | explicit_instantiation
+                         | explicit_specialization
+                         | linkage_specification
+                         | namespace_definition
+                         | (+CPP11 empty_declaration )
+                         | (+CPP11 attribute_declaration )
+                         .
+block_declaration        : simple_declaration
+                         | asm_definition
+                         | namespace_alias_definition
+                         | using_declaration
+                         | using_directive
+                         | (+CPP11 static_assert_declaration )
+                         | (+CPP11 alias_declaration )
+                         | (+CPP11 opaque_enum_declaration )
+                         .
+alias_declaration        : 'using' identifier '=' type_id ';' .
+simple_declaration       : [attribute_specifier_seq] [decl_specifier_seq] [init_declarator_list] ';' .
+static_assert_declaration: 'static_assert' '(' constant_expression ',' string_literal ')' ';' .
+empty_declaration        : ';' .
+attribute_declaration    : attribute_specifier_seq ';' .
+decl_specifier           : storage_class_specifier
+                         | type_specifier
+                         | function_specifier
+                         | 'friend'
+                         | 'typedef'
+                         | (+CPP11 'constexpr' )
+                         .
+decl_specifier_seq       : (+CPP98 [decl_specifier_seq] decl_specifier )
+                         | (+CPP11 decl_specifier [attribute_specifier_seq] )
+                         | (+CPP11 decl_specifier decl_specifier_seq )
+                         .
+storage_class_specifier  : (+CPP98 'auto' )
+                         | 'register'
+                         | 'static'
+                         | (+CPP11 'thread_local' )
+                         | 'extern'
+                         | 'mutable'
+                         .
+
+#page: 676
+
+function_specifier       : 'inline'|'virtual'|'explicit'.
+typedef_name             : identifier .
+type_specifier           : (+CPP98 simple_type_specifier )
+                         | (+CPP11 trailing_type_specifier )
+                         | class_specifier
+                         | enum_specifier
+                         | (+CPP98 elaborated_type_specifier )
+                         | (+CPP98 cv_qualifier )
+                         .
+trailing_type_specifier  : simple_type_specifier
+                         | elaborated_type_specifier
+                         | typename_specifier
+                         | cv_qualifier
+                         .
+trailing_type_specifier_seq: trailing_type_specifier [ attribute_specifier_seq ]
+                         | trailing_type_specifier trailing_type_specifier_seq
+                         .
+simple_type_specifier    : ['::'] [nested_name_specifier] type_name
+                         | (+CPP98 ['::'] nested_name_specifier 'template' template_id )
+                         | (+CPP11 ['::'] nested_name_specifier 'template' simple_template_id )
+                         | 'char'
+                         | (+CPP11 'char16_t' )
+                         | (+CPP11 'char32_t' )
+                         | 'wchar_t'
+                         | 'bool'
+                         | 'short'
+                         | 'int'
+                         | 'long'
+                         | 'signed'
+                         | 'unsigned'
+                         | 'float'
+                         | 'double'
+                         | 'void'
+                         | (+CPP11 'auto' )
+                         | (+CPP11 decltype_specifier )
+                         .
+type_name                : class_name
+                         | enum_name
+                         | typedef_name
+                         | (+CPP11 simple_template_id )
+                         .
+decltype_specifier       : 'decltype' '(' expression ')' .
+elaborated_type_specifier: class_key [(+CPP11 attribute_specifier_seq)]
+                                     ['::'][nested_name_specifier] identifier
+                         | (+CPP11 class_key ['::'][nested_name_specifier]
+                                     ['template'] simple_template_id)
+                         | 'enum' ['::'][nested_name_specifier] identifier
+                         | (+CPP98 'typename' ['::'] nested_name_specifier identifier )
+                         | (+CPP98 'typename' ['::'] nested_name_specifier
+                                             ['template'] template_id )
+                         .
+enum_name                : identifier .
+enum_specifier           : (+CPP98 'enum' [identifier] '{' [enumerator_list] '}')
+                         | (+CPP11 enum_head '{' [enumerator_list] '}' )
+                         | (+CPP11 enum_head '{' enumerator_list [','] '}' ) # comma was not optional?
+                         .
+enum_head                : enum_key [attribute_specifier_seq] [identifier] [enum_base]
+                         | enum_key [attribute_specifier_seq] nested_name_specifier identifier [enum_base]
+                         .
+opaque_enum_declaration  : enum_key [attribute_specifier_seq] identifier [enum_base] .
+enum_key                 : 'enum'|'enum' 'class'|'enum' 'struct'.
+enum_base                : type_specifier_seq .
+enumerator_list          : enumerator_definition
+                         | enumerator_list ',' enumerator_definition
+                         .
+enumerator_definition    : enumerator
+                         | enumerator '=' constant_expression
+                         .
+enumerator               : identifier
+                         .
+
+# page: 677
+
+
+namespace_name           : original_namespace_name
+                         | namespace_alias
+                         .
+original_namespace_name  : identifier .
+namespace_definition     : named_namespace_definition
+                         | unnamed_namespace_definition
+                         .
+named_namespace_definition : original_namespace_definition
+                         | extension_namespace_definition
+                         .
+original_namespace_definition : [(+CPP11 'inline')] 'namespace' identifier '{' namespace_body '}' .
+extension_namespace_definition : [(+CPP11 'inline')] 'namespace' original_namespace_name
+                                             '{' namespace_body '}'
+                         .
+unnamed_namespace_definition : [(+CPP11 'inline')] 'namespace' '{' namespace_body '}' .
+namespace_body           : [ declaration_seq ] .
+namespace_alias          : identifier .
+namespace_alias_definition : 'namespace' identifier
+                                         '=' qualified_namespace_specifier ';'
+                         .
+qualified_namespace_specifier : ['::'][nested_name_specifier] namespace_name .
+using_declaration        : 'using' ['typename']['::'] nested_name_specifier
+                                   unqualified_id ';'
+                         | 'using' '::' unqualified_id ';'
+                         .
+using_directive          : [(+CPP11 attribute_specifier_seq)] 'using' 'namespace'
+                                   ['::'] [nested_name_specifier] namespace_name ';'
+                         .
+asm_definition           : 'asm' '(' string_literal ')' ';' .
+linkage_specification    : 'extern' string_literal '{' [declaration_seq] '}'
+                         | 'extern' string_literal declaration
+                         .
+attribute_specifier_seq  : [attribute_specifier_seq] attribute_specifier .
+attribute_specifier      : '[' '[' attribute_list ']' ']'
+                         | alignment_specifier
+                         .
+alignment_specifier      : 'alignas' '(' type_id ['...'] ')'
+                         | 'alignas' '(' <alignment>expression ['...'] ')'
+                         .
+attribute_list           : [ attribute ]
+                         | attribute_list ',' [attribute]
+                         | attribute '...'
+                         | attribute_list ',' attribute '...'
+                         .
+attribute                : attribute_token [attribute_argument_clause] .
+attribute_token          : identifier
+                         | attribute_scoped_token
+                         .
+attribute_scoped_token   : attribute_namespace '::' identifier .
+attribute_namespace      : identifier .
+attribute_argument_clause: '(' balanced_token_seq ')' .
+balanced_token_seq       : balanced_token
+                         | balanced_token_seq balanced_token
+                         .
+balanced_token           : '(' balanced_token_seq ')'
+                         | '[' balanced_token_seq ']'
+                         | '{' balanced_token_seq '}'
+                         | ANY_TOKEN_OTHER_THAN_PARENTHESIS_BRAVKET_BRACE
+                         .
+
+# section: [gram.dcl.decl]
+                        
+init_declarator_list     : init_declarator
+                         | init_declarator_list ',' init_declarator
+                         .
+init_declarator          : declarator [ initializer ] .
+
+# page: 678
+
+declarator               : (+CPP98 direct_declarator )
+                         | (+CPP98 ptr_operator declarator )
+                         | (+CPP11 ptr_declarator )
+                         | (+CPP11 noptr_declarator parameters_and_qualifiers trailing_return_type )
+                         .
+ptr_declarator           : noptr_declarator
+                         | ptr_operator ptr_declarator
+                         .
+noptr_declarator         : declarator_id [attribute_specifier_seq]
+                         | noptr_declarator parameters_and_qualifiers
+                         | noptr_declarator '[' [constant_expression] ']' [attribute_specifier_seq]
+                         | '(' ptr_declarator ')'
+                         .
+parameters_and_qualifiers: '(' parameter_declaration_clause ')'
+                               [attribute_specifier_seq]
+                               [cv_qualifier_seq]
+                               [ref_qualifier]
+                               [exception_specification]
+                         .
+trailing_return_type     : '->' trailing_type_specifier_seq [abstract_declarator] .
+
+direct_declarator        : declarator_id
+                         | direct_declarator
+                              '(' parameter_declaration_clause ')'
+                              [ cv_qualifier_seq ] [ exception_specification ]
+                         | direct_declarator '[' [constant_expression] ']'
+                         | '(' declarator ')'
+                         .
+ptr_operator             : '*' [(+CPP11 attribute_specifier_seq)][cv_qualifier_seq]
+                         | '&' [(+CPP11 attribute_specifier_seq)]
+                         | (+CPP11 '&&' [attribute_specifier_seq])
+                         | ['::'] nested_name_specifier '*' [(+CPP11 attribute_specifier_seq)][cv_qualifier_seq]
+                         .
+cv_qualifier_seq         : cv_qualifier [cv_qualifier_seq] .
+cv_qualifier             : 'const'|'volatile'.
+ref_qualifier            : '&' | '&&' .
+declarator_id            : (+CPP98 id_expression)
+                         | (+CPP98 ['::'][nested_name_specifier] type_name )
+                         | (+CPP11 ['...'] id_expression)
+                         | (+CPP11 ['::'][nested_name_specifier] class_name )
+                         .
+type_id                  : type_specifier_seq [ abstract_declarator ] .
+type_specifier_seq       : (+CPP98 type_specifier [ type_specifier_seq ] )
+                         | (+CPP11 type_specifier   type_specifier_seq   )
+                         | (+CPP11 type_specifier [ attribute_specifier_seq ] )
+                         .
+abstract_declarator      : (+CPP98 ptr_operator [ abstract_declarator ] )
+                         | (+CPP98 direct_abstract_declarator )
+                         | (+CPP11 ptr_abstract_declarator)
+                         | (+CPP11 [noptr_abstract_declarator] [parameters_and_qualifiers]
+                                           trailing_return_type)
+                         | (+CPP11 '...')
+                         .
+ptr_abstract_declarator  : noptr_abstract_declarator
+                         | ptr_operator [ptr_abstract_declarator]
+                         .
+noptr_abstract_declarator: [noptr_abstract_declarator] parameters_and_qualifiers
+                         | [noptr_abstract_declarator] '[' constant_expression ']'
+                                                       [attribute_specifier_seq]
+                         | '(' ptr_abstract_declarator ')'
+                         .
+direct_abstract_declarator : [ direct_abstract_declarator ]
+                              '(' parameter_declaration_clause ')'
+                              [ cv_qualifier_seq ] [ exception_specification ]
+                         | [direct_abstract_declarator]
+                              '[' [constant_expression] ']'
+                         | '(' abstract_declarator ')'
+                         .
+parameter_declaration_clause : [parameter_declaration_list]['...']
+                         | parameter_declaration_list ',' '...'
+                         .
+parameter_declaration_list : parameter_declaration
+                         | parameter_declaration_list ',' parameter_declaration
+                         .
+parameter_declaration    : (+CPP98 decl_specifier_seq declarator )
+                         | (+CPP98 decl_specifier_seq declarator
+                                              '=' assignment_expression )
+                         | (+CPP98 decl_specifier_seq [abstract_declarator] )
+                         | (+CPP98 decl_specifier_seq [abstract_declarator]
+                                              '=' assignment_expression )
+                         | (+CPP11 [attribute_specifier_seq] decl_specifier_seq declarator )
+                         | (+CPP11 [attribute_specifier_seq] decl_specifier_seq declarator
+                                              '=' initializer_clause )
+                         | (+CPP11 [attribute_specifier_seq] decl_specifier_seq
+                                              [abstract_declarator] )
+                         | (+CPP11 [attribute_specifier_seq] decl_specifier_seq
+                                              [abstract_declarator]
+                                              '=' initializer_clause )
+                         .
+
+# page: 679
+
+function_definition      : (+CPP98 [decl_specifier_seq] declarator [ctor_initializer]
+                                                function_body )
+                         | (+CPP98 [decl_specifier_seq] declarator function_try_block )
+                         | (+CPP11 [attribute_specifier_seq] [decl_specifier_seq]
+                                                declarator function_body )
+                         | (+CPP11 [attribute_specifier_seq] [decl_specifier_seq]
+                                                declarator '=' 'default' ';' )
+                         | (+CPP11 [attribute_specifier_seq] [decl_specifier_seq]
+                                                declarator '=' 'delete' ';' )
+                         .
+function_body            : [(+CPP11 ctor_initializer)] compound_statement
+                         | (+CPP11 function_try_block )
+                         .
+initializer              : (+CPP98 '=' initializer_clause )
+                         | (+CPP11 brace_or_equal_initializer )
+                         | '(' expression_list ')'
+                         .
+brace_or_equal_initializer: '=' initializer_clause
+                         | braced_init_list
+                         .
+initializer_clause       : assignment_expression
+                         | (+CPP98 '{' initializer_list [','] '}' )
+                         | (+CPP98 '{' '}' )
+                         | (+CPP11 braced_init_list )
+                         .
+initializer_list         : initializer_clause [(+CPP11 '...')]
+                         | initializer_list ',' initializer_clause [(+CPP11 '...')]
+                         .
+braced_init_list         : '{' initializer_list [','] '}'
+                         | '{' '}'
+                         .
+
+
+# section: [gram.class]
+
+class_name               : identifier
+                         | (+CPP98 template_id )
+                         | (+CPP11 simple_template_id )
+                         .
+class_specifier          : class_head '{' [member_specification] '}' .
+
+class_head               : (+CPP98 class_key [identifier] [base_clause] )
+                         | (+CPP98 class_key nested_name_specifier identifier
+                                     [base_clause] )
+                         | (+CPP98 class_key [nested_name_specifier] template_id
+                                     [base_clause] )
+                         | (+CPP11 class_key [attribute_specifier_seq] class_head_name
+                                             [class_virt_specifier_seq] [base_clause] )
+                         | (+CPP11 class_key [attribute_specifier_seq] [base_clause] )
+                         .
+class_head_name          : [nested_name_specifier] class_name .
+class_virt_specifier_seq : class_virt_specifier
+                         | class_virt_specifier_seq class_virt_specifier
+                         .
+class_virt_specifier     : 'final' | 'explicit' .
+class_key                : 'class'|'struct'|'union'.
+member_specification     : member_declaration [ member_specification ]
+                         | access_specifier ':' [ member_specification ]
+                         .
+member_declaration       : [(+CPP11 attribute_specifier_seq)][decl_specifier_seq]
+                                                             [member_declarator_list] ';'
+                         | function_definition [';']
+                         | (+CPP98 ['::'] nested_name_specifier ['template']
+                                  unqualified_id ';' )
+                         | using_declaration
+                         | (+CPP11 static_assert_declaration)
+                         | template_declaration
+                         | (+CPP11 alias_declaration)
+                         .
+member_declarator_list   : member_declarator
+                         | member_declarator_list ',' member_declarator
+                         .
+member_declarator        : (+CPP98 declarator [pure_specifier] )
+                         | (+CPP98 declarator [constant_initializer] )
+                         | (+CPP98 [identifier] ':' constant_expression )
+                         | (+CPP11 declarator [virt_specifier_seq][pure_specifier] )
+                         | (+CPP11 declarator [virt_specifier_seq][brace_or_equal_initializer] )
+                         | (+CPP11 [identifier][attribute_specifier_seq][virt_specifier_seq]
+                                               ':' constant_expression )
+                         .
+virt_specifier_seq       : virt_specifier
+                         | virt_specifier_seq virt_specifier
+                         .
+virt_specifier           : 'override'
+                         | 'final'
+                         | 'new'
+                         .
+
+# page: 680
+
+pure_specifier           : '=' '0' .
+constant_initializer     : '=' constant_expression .
+
+
+# section: [gram.class.derived]
+
+base_clause              : ':' base_specifier_list .
+base_specifier_list      : base_specifier [(+CPP11 '...')]
+                         | base_specifier_list ',' base_specifier [(+CPP11 '...')]
+                         .
+base_specifier           : (+CPP98 ['::'][nested_name_specifier] class_name )
+                         | (+CPP98 'virtual' [access_specifier]
+                                     ['::'][nested_name_specifier] class_name )
+                         | (+CPP98 access_specifier ['virtual']
+                                     ['::'][nested_name_specifier] class_name )
+                         | (+CPP11 [attribute_specifier_seq] base_type_specifier )
+                         | (+CPP11 [attribute_specifier_seq] 
+                                        'virtual' [access_specifier] base_type_specifier )
+                         | (+CPP11 [attribute_specifier_seq]
+                                        access_specifier ['virtual'] base_type_specifier )
+                         .
+class_or_decltype        : ['..'] [nested_name_specifier] class_name
+                         | decltype_specifier
+                         .
+base_type_specifier      : class_or_decltype .
+access_specifier         : 'private'|'protected'|'public'.
+
+
+# section: [gram.special]
+
+conversion_function_id   : 'operator' conversion_type_id .
+conversion_type_id       : type_specifier_seq [conversion_declarator] .
+conversion_declarator    : ptr_operator [conversion_declarator] .
+ctor_initializer         : ':' mem_initializer_list .
+mem_initializer_list     : mem_initializer [(+CPP11 '...')]
+                         | mem_initializer ',' mem_initializer_list [(+CPP11 '...')]
+                         .
+mem_initializer          : mem_initializer_id '(' [expression_list] ')'
+                         | (+CPP11 mem_initializer_id braced_init_list )
+                         .
+mem_initializer_id       : (+CPP98 ['::'][nested_name_specifier] class_name )
+                         | (+CPP11 class_or_decltype)
+                         | identifier
+                         .
+
+
+# section: [gram.over]
+
+operator_function_id     : 'operator' operator .
+
+# page: 681
+
+operator                 :'new'|'delete'|'new[]'|'delete[]'
+                         |'+'|'-'|'*'|'/'|'%'|'^'|'&'|'|'|'~'
+                         |'!'|'='|'<'|'>'|'+='|'-='|'*='|'/='|'%='
+                         |'^='|'&='|'|='|'<<'|'>>'|'>>='|'<<='|'=='|'!='
+                         |'<='|'>='|'&&'|'||'|'++'|'--'|','|'->*'|'->'
+                         |'()'|'[]'
+                         .
+literal_operator_id      : 'operator' '""' identifier .
+
+# section: [gram.temp]
+
+template_declaration     : [(+CPP98 'export')] 'template'
+                                      '<' template_parameter_list '>' declaration
+                         .
+template_parameter_list  : template_parameter
+                         | template_parameter_list ',' template_parameter
+                         .
+template_parameter       : type_parameter
+                         | parameter_declaration
+                         .
+type_parameter           : 'class' [(+CPP11 '...')][identifier]
+                         | 'class' [identifier] '=' type_id
+                         | 'typename' [(+CPP11 '...')][identifier]
+                         | 'typename' [identifier] '=' type_id
+                         | 'template' '<' template_parameter_list '>'
+                                      'class' [(+CPP11 '...')][identifier]
+                         | 'template' '<' template_parameter_list '>'
+                                      'class' [identifier] '=' id_expression
+                         .
+simple_template_id       : template_name '<' [template_argument_list] '>' .
+template_id              : (+CPP98 template_name '<' [template_argument_list] '>' )
+                         | (+CPP11 simple_template_id )
+                         | (+CPP11 operator_function_id '<' [template_argument_list] '>' )
+                         | (+CPP11 literal_operator_id '<' [template_argument_list] '>' )
+                         .
+template_name            : identifier .
+template_argument_list   : template_argument [(+CPP11 '...')]
+                         | template_argument_list ',' template_argument [(+CPP11 '...')]
+                         .
+template_argument        : (+CPP98 assignment_expression )
+                         | (+CPP11 constant_expression )
+                         | type_id
+                         | id_expression
+                         .
+typename_specifier       : 'typename' ['::'] nested_name_specifier identifier
+                         | (+CPP98 'typename' ['::'] nested_name_specifier
+                                             ['template'] template_id )
+                         | (+CPP11 'typename' ['::'] nested_name_specifier
+                                             ['template'] simple_template_id )
+                         .
+explicit_instantiation   : [(+CPP11 'extern')] 'template' declaration .
+explicit_specialization  : 'template' '<' '>' declaration .
+
+
+
+# section: [gram.except]
+
+try_block                : 'try' compound_statement handler_seq .
+function_try_block       : (+CPP98 'try' [ctor_initializer] function_body handler_seq )
+                         | (+CPP11 'try' [ctor_initializer] compound_statement handler_seq )
+                         .
+
+# page: 682
+
+handler_seq              : handler [handler_seq] .
+handler                  : 'catch' '(' exception_declatation ')'
+                                   compound_statement
+                         .
+exception_declatation    : (+CPP98 type_specifier_seq declarator)
+                         | (+CPP98 type_specifier_seq abstract_declarator)
+                         | (+CPP98 type_specifier_seq)
+                         | (+CPP11 [attribute_specifier_seq] type_specifier_seq declarator)
+                         | (+CPP11 [attribute_specifier_seq] type_specifier_seq
+                                                             [abstract_declarator])
+                         | '...'
+                         .
+throw_expression         : 'throw' [assignment_expression] .
+exception_specification  : (+CPP98 'throw' '(' [type_id_list] ')' )
+                         | (+CPP11 dynamic_exception_specification)
+                         | (+CPP11 noexcept_specification)
+                         .
+dynamic_exception_specification: 'throw' '(' [type_id_list] ')' .
+type_id_list             : type_id [(+CPP11 '...')]
+                         | type_id_list ',' type_id [(+CPP11 '...')]
+                         .
+noexcept_specification   : 'noexcept' '(' constant_expression ')'
+                         | 'noexcept'
+                         .
+
+# section: [gram.cpp]
+
+preprocessing_file       : [group].
+group                    : group_part
+                         | group group_part
+                         .
+group_part               : (+CPP98 [pp_tokens] new_line )
+                         | if_section
+                         | control_line
+                         | (+CPP11 text_line )
+                         | (+CPP11 '#' non_directive)
+                         .
+if_section               : if_group [elif_groups] [else_group] endif_line .
+if_group                 : '#' 'if' constant_expression new_line [group]
+                         | '#' 'ifdef' identifier new_line [group]
+                         | '#' 'ifndef' identifier new_line [group]
+                         .
+elif_groups              : elif_group
+                         | elif_groups elif_group
+                         .
+elif_group               : '#' 'elif' constant_expression new_line [group] .
+else_group               : '#' 'else' new_line [group] .
+endif_line               : '#' 'endif' new_line .
+
+# page: 683
+
+control_line            : '#' 'include' pp_tokens                    new_line
+                        | '#' 'define'  identifier replacement_list  new_line
+                        | '#' 'define'  identifier lparen [identifier_list] ')'
+                                                   replacement_list  new_line
+                        | (+CPP11 '#' 'define'  identifier lparen '...' ')'
+                                                   replacement_list  new_line )
+                        | (+CPP11 '#' 'define'  identifier lparen identifier_list ',' '...' ')'
+                                                   replacement_list  new_line )
+                        | '#' 'undef'   identifier                   new_line
+                        | '#' 'line'    pp_tokens                    new_line
+                        | '#' 'error'   [pp_tokens]                  new_line
+                        | '#' 'pragma'  [pp_tokens]                  new_line
+                        | '#'                                        new_line
+                        .
+text_line               : [pp_tokens] new_line .
+non_directive           : pp_tokens new_line .
+lparen                  : LEFT_PARENTHESIS_WITHOUT_LEADING_WS .
+replacement_list        : [pp_tokens].
+pp_tokens               : preprocessing_token
+                        | pp_tokens preprocessing_token
+                        .
+new_line                : NEWLINE .
+
+# this production is missing in the standard
+identifier_list         : identifier
+                        | identifier_list ',' identifier
+                        .
+

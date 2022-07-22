@@ -1,0 +1,3494 @@
+<HTML>
+<HEAD>
+<TITLE>EBNF Syntax: C++ (ISO/IEC 14882:1998(E))</TITLE>
+<STYLE TYPE="text/css">
+body {
+  font-family:Helvetica,Helv;
+}
+table.data {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.data th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: lightgray;
+}
+table.data td {
+	border-width: 1px;
+	padding: 2px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+}
+</STYLE></HEAD>
+<BODY>
+<H1>EBNF Syntax: C++ (ISO/IEC 14882:1998(E))</H1><TABLE><TBODY><TR><TD><A HREF="#toc_prod">Syntax Productions</A></TD></TR><TR><TD><A HREF="#toc_variants">Variants</A></TD></TR><TR><TD><A HREF="#toc_term">Terminals</A></TD></TR><TR><TD><A HREF="#toc_lit">Literals</A></TD></TR><TR><TD><A HREF="#toc_xref">Production Cross Reference</A></TD></TR></TBODY></TABLE><HR WIDTH="100%">
+<H2><A NAME="toc_prod">Syntax Productions</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH><A HREF="#abstract_declarator">A</A></TH>
+ <TH><A HREF="#base_clause">B</A></TH>
+ <TH><A HREF="#c_char">C</A></TH>
+ <TH><A HREF="#decimal_literal">D</A></TH>
+ <TH><A HREF="#elaborated_type_specifier">E</A></TH>
+ <TH><A HREF="#floating_literal">F</A></TH>
+ <TH><A HREF="#group">G</A></TH>
+ <TH><A HREF="#h_char">H</A></TH>
+ <TH><A HREF="#id_expression">I</A></TH>
+ <TH><A HREF="#jump_statement">J</A></TH>
+ <TD>K</TD>
+ <TH><A HREF="#labeled_statement">L</A></TH>
+ <TH><A HREF="#mem_initializer">M</A></TH>
+ <TH><A HREF="#named_namespace_definition">N</A></TH>
+ <TH><A HREF="#octal_digit">O</A></TH>
+ <TH><A HREF="#paramerter_declaration_clause">P</A></TH>
+ <TH><A HREF="#q_char">Q</A></TH>
+ <TH><A HREF="#relational_expression">R</A></TH>
+ <TH><A HREF="#s_char">S</A></TH>
+ <TH><A HREF="#template_argument">T</A></TH>
+ <TH><A HREF="#unary_expression">U</A></TH>
+ <TD>V</TD>
+ <TD>W</TD>
+ <TD>X</TD>
+ <TD>Y</TD>
+ <TD>Z</TD>
+ </TR>
+</THEAD>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<TBODY>
+<TR><TH><A NAME="xref_syntax" HREF="#syntax">Start Symbol (syntax)</TH></TR>
+</TBODY>
+</TABLE>
+<P><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Name</TH>
+ <TH>Production</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR>
+ <TD VALIGN=TOP><A HREF="#xref_abstract_declarator" NAME="abstract_declarator">abstract_declarator</A></TD>
+ <TD><UL>
+<LI> <A HREF="#ptr_operator">ptr_operator</A> [ <A HREF="#abstract_declarator">abstract_declarator</A> ]</LI>
+<LI> <A HREF="#direct_abstract_declarator">direct_abstract_declarator</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_access_specifier" NAME="access_specifier">access_specifier</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'private'</CODE></B></LI>
+<LI> <B><CODE>'protected'</CODE></B></LI>
+<LI> <B><CODE>'public'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_additive_expression" NAME="additive_expression">additive_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#multiplicative_expression">multiplicative_expression</A></LI>
+<LI> <A HREF="#additive_expression">additive_expression</A> <B><CODE>'+'</CODE></B> <A HREF="#multiplicative_expression">multiplicative_expression</A></LI>
+<LI> <A HREF="#additive_expression">additive_expression</A> <B><CODE>'-'</CODE></B> <A HREF="#multiplicative_expression">multiplicative_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_and_expression" NAME="and_expression">and_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#equality_expression">equality_expression</A></LI>
+<LI> <A HREF="#and_expression">and_expression</A> <B><CODE>'&amp;'</CODE></B> <A HREF="#equality_expression">equality_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_asm_definition" NAME="asm_definition">asm_definition</A></TD>
+ <TD> <B><CODE>'asm'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#string_literal">string_literal</A> <B><CODE>')'</CODE></B> <B><CODE>';'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assignment_expression" NAME="assignment_expression">assignment_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#conditional_expression">conditional_expression</A></LI>
+<LI> <A HREF="#logical_or_expression">logical_or_expression</A> <A HREF="#assignment_operator">assignment_operator</A> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <A HREF="#throw_expression">throw_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_assignment_operator" NAME="assignment_operator">assignment_operator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'='</CODE></B></LI>
+<LI> <B><CODE>'*='</CODE></B></LI>
+<LI> <B><CODE>'/='</CODE></B></LI>
+<LI> <B><CODE>'%='</CODE></B></LI>
+<LI> <B><CODE>'+='</CODE></B></LI>
+<LI> <B><CODE>'-='</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;='</CODE></B></LI>
+<LI> <B><CODE>'&amp;='</CODE></B></LI>
+<LI> <B><CODE>'^='</CODE></B></LI>
+<LI> <B><CODE>'|='</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_base_clause" NAME="base_clause">base_clause</A></TD>
+ <TD> <B><CODE>':'</CODE></B> <A HREF="#base_specifier_list">base_specifier_list</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_base_specifier" NAME="base_specifier">base_specifier</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#class_name">class_name</A></LI>
+<LI> <B><CODE>'virtual'</CODE></B> [ <A HREF="#access_specifier">access_specifier</A> ] [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#class_name">class_name</A></LI>
+<LI> <A HREF="#access_specifier">access_specifier</A> [ <B><CODE>'virtual'</CODE></B> ] [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#class_name">class_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_base_specifier_list" NAME="base_specifier_list">base_specifier_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#base_specifier">base_specifier</A></LI>
+<LI> <A HREF="#base_specifier_list">base_specifier_list</A> <B><CODE>','</CODE></B> <A HREF="#base_specifier">base_specifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_block_declaration" NAME="block_declaration">block_declaration</A></TD>
+ <TD><UL>
+<LI> <A HREF="#simple_declaration">simple_declaration</A></LI>
+<LI> <A HREF="#asm_definition">asm_definition</A></LI>
+<LI> <A HREF="#namespace_alias_definition">namespace_alias_definition</A></LI>
+<LI> <A HREF="#using_declaration">using_declaration</A></LI>
+<LI> <A HREF="#using_directive">using_directive</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_boolean_literal" NAME="boolean_literal">boolean_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'false'</CODE></B></LI>
+<LI> <B><CODE>'true'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_c_char" NAME="c_char">c_char</A></TD>
+ <TD><UL>
+<LI> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE></B></LI>
+<LI> <A HREF="#escape_sequence">escape_sequence</A></LI>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_c_char_sequence" NAME="c_char_sequence">c_char_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#c_char">c_char</A></LI>
+<LI> <A HREF="#c_char_sequence">c_char_sequence</A> <A HREF="#c_char">c_char</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_cast_expression" NAME="cast_expression">cast_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#unary_expression">unary_expression</A></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>')'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_character_literal" NAME="character_literal">character_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>&quot;'&quot;</CODE></B> <A HREF="#c_char_sequence">c_char_sequence</A> <B><CODE>&quot;'&quot;</CODE></B></LI>
+<LI> <B><CODE>&quot;L'&quot;</CODE></B> <A HREF="#c_char_sequence">c_char_sequence</A> <B><CODE>&quot;'&quot;</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_head" NAME="class_head">class_head</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_key">class_key</A> [ <A HREF="#identifier">identifier</A> ] [ <A HREF="#base_clause">base_clause</A> ]</LI>
+<LI> <A HREF="#class_key">class_key</A> <A HREF="#nested_name_specifier">nested_name_specifier</A> <A HREF="#identifier">identifier</A> [ <A HREF="#base_clause">base_clause</A> ]</LI>
+<LI> <A HREF="#class_key">class_key</A> [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#template_id">template_id</A> [ <A HREF="#base_clause">base_clause</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_key" NAME="class_key">class_key</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'class'</CODE></B></LI>
+<LI> <B><CODE>'struct'</CODE></B></LI>
+<LI> <B><CODE>'union'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_name" NAME="class_name">class_name</A></TD>
+ <TD><UL>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <A HREF="#template_id">template_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_or_namespace_name" NAME="class_or_namespace_name">class_or_namespace_name</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_name">class_name</A></LI>
+<LI> <A HREF="#namespace_name">namespace_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_class_specifier" NAME="class_specifier">class_specifier</A></TD>
+ <TD> <A HREF="#class_head">class_head</A> <B><CODE>'{'</CODE></B> [ <A HREF="#member_specification">member_specification</A> ] <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_compound_statement" NAME="compound_statement">compound_statement</A></TD>
+ <TD> <B><CODE>'{'</CODE></B> [ <A HREF="#statement_seq">statement_seq</A> ] <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_condition" NAME="condition">condition</A></TD>
+ <TD><UL>
+<LI> <A HREF="#expression">expression</A></LI>
+<LI> <A HREF="#type_specifier_seq">type_specifier_seq</A> <A HREF="#declarator">declarator</A> <B><CODE>'='</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_conditional_expression" NAME="conditional_expression">conditional_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#logical_or_expression">logical_or_expression</A></LI>
+<LI> <A HREF="#logical_or_expression">logical_or_expression</A> <B><CODE>'?'</CODE></B> <A HREF="#expression">expression</A> <B><CODE>':'</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_constant_expression" NAME="constant_expression">constant_expression</A></TD>
+ <TD> <A HREF="#conditional_expression">conditional_expression</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_constant_initializer" NAME="constant_initializer">constant_initializer</A></TD>
+ <TD> <B><CODE>'='</CODE></B> <A HREF="#constant_expression">constant_expression</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_control_line" NAME="control_line">control_line</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'include'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'define'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#lparen">lparen</A> [ <A HREF="#identifier_list">identifier_list</A> ] <B><CODE>')'</CODE></B> <A HREF="#replacement_list">replacement_list</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'undef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'line'</CODE></B> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'error'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'pragma'</CODE></B> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+<LI> <B><CODE>'#'</CODE></B> <A HREF="#new_line">new_line</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_conversion_declarator" NAME="conversion_declarator">conversion_declarator</A></TD>
+ <TD> <A HREF="#ptr_operator">ptr_operator</A> [ <A HREF="#conversion_declarator">conversion_declarator</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_conversion_function_id" NAME="conversion_function_id">conversion_function_id</A></TD>
+ <TD> <B><CODE>'operator'</CODE></B> <A HREF="#conversion_type_id">conversion_type_id</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_conversion_type_id" NAME="conversion_type_id">conversion_type_id</A></TD>
+ <TD> <A HREF="#type_specifier_seq">type_specifier_seq</A> [ <A HREF="#conversion_declarator">conversion_declarator</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_ctor_initializer" NAME="ctor_initializer">ctor_initializer</A></TD>
+ <TD> <B><CODE>':'</CODE></B> <A HREF="#mem_initializer_list">mem_initializer_list</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_cv_qualifier" NAME="cv_qualifier">cv_qualifier</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'const'</CODE></B></LI>
+<LI> <B><CODE>'volatile'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_cv_qualifier_seq" NAME="cv_qualifier_seq">cv_qualifier_seq</A></TD>
+ <TD> <A HREF="#cv_qualifier">cv_qualifier</A> [ <A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decimal_literal" NAME="decimal_literal">decimal_literal</A></TD>
+ <TD><UL>
+<LI> <A HREF="#nonzero_digit">nonzero_digit</A></LI>
+<LI> <A HREF="#decimal_literal">decimal_literal</A> <A HREF="#digit">digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decl_specifier" NAME="decl_specifier">decl_specifier</A></TD>
+ <TD><UL>
+<LI> <A HREF="#storage_class_specifier">storage_class_specifier</A></LI>
+<LI> <A HREF="#type_specifier">type_specifier</A></LI>
+<LI> <A HREF="#function_specifier">function_specifier</A></LI>
+<LI> <B><CODE>'friend'</CODE></B></LI>
+<LI> <B><CODE>'typedef'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_decl_specifier_seq" NAME="decl_specifier_seq">decl_specifier_seq</A></TD>
+ <TD> [ <A HREF="#decl_specifier_seq">decl_specifier_seq</A> ] <A HREF="#decl_specifier">decl_specifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_declaration" NAME="declaration">declaration</A></TD>
+ <TD><UL>
+<LI> <A HREF="#block_declaration">block_declaration</A></LI>
+<LI> <A HREF="#function_definition">function_definition</A></LI>
+<LI> <A HREF="#template_declaration">template_declaration</A></LI>
+<LI> <A HREF="#explicit_instantiation">explicit_instantiation</A></LI>
+<LI> <A HREF="#explicit_specialization">explicit_specialization</A></LI>
+<LI> <A HREF="#linkage_specification">linkage_specification</A></LI>
+<LI> <A HREF="#namespace_definition">namespace_definition</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_declaration_seq" NAME="declaration_seq">declaration_seq</A></TD>
+ <TD><UL>
+<LI> <A HREF="#declaration">declaration</A></LI>
+<LI> <A HREF="#declaration_seq">declaration_seq</A> <A HREF="#declaration">declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_declaration_statement" NAME="declaration_statement">declaration_statement</A></TD>
+ <TD> <A HREF="#block_declaration">block_declaration</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_declarator" NAME="declarator">declarator</A></TD>
+ <TD><UL>
+<LI> <A HREF="#direct_declarator">direct_declarator</A></LI>
+<LI> <A HREF="#ptr_operator">ptr_operator</A> <A HREF="#declarator">declarator</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_declarator_id" NAME="declarator_id">declarator_id</A></TD>
+ <TD><UL>
+<LI> <A HREF="#id_expression">id_expression</A></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#type_name">type_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_delete_expression" NAME="delete_expression">delete_expression</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] <B><CODE>'delete'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <B><CODE>'delete'</CODE></B> <B><CODE>'['</CODE></B> <B><CODE>']'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_digit" NAME="digit">digit</A></TD>
+ <TD> <B><CODE>DIGIT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_digit_sequence" NAME="digit_sequence">digit_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#digit">digit</A></LI>
+<LI> <A HREF="#digit_sequence">digit_sequence</A> <A HREF="#digit">digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_direct_abstract_declarator" NAME="direct_abstract_declarator">direct_abstract_declarator</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> ] <B><CODE>'('</CODE></B> <A HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A> <B><CODE>')'</CODE></B> [ <A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> ] [ <A HREF="#exception_specification">exception_specification</A> ]</LI>
+<LI> [ <A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> ] <B><CODE>'['</CODE></B> [ <A HREF="#constant_expression">constant_expression</A> ] <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#abstract_declarator">abstract_declarator</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_direct_declarator" NAME="direct_declarator">direct_declarator</A></TD>
+ <TD><UL>
+<LI> <A HREF="#declarator_id">declarator_id</A></LI>
+<LI> <A HREF="#direct_declarator">direct_declarator</A> <B><CODE>'('</CODE></B> <A HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A> <B><CODE>')'</CODE></B> [ <A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> ] [ <A HREF="#exception_specification">exception_specification</A> ]</LI>
+<LI> <A HREF="#direct_declarator">direct_declarator</A> <B><CODE>'['</CODE></B> [ <A HREF="#constant_expression">constant_expression</A> ] <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#declarator">declarator</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_direct_new_declarator" NAME="direct_new_declarator">direct_new_declarator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'['</CODE></B> <A HREF="#expression">expression</A> <B><CODE>']'</CODE></B></LI>
+<LI> <A HREF="#direct_new_declarator">direct_new_declarator</A> <B><CODE>'['</CODE></B> <A HREF="#constant_expression">constant_expression</A> <B><CODE>']'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_elaborated_type_specifier" NAME="elaborated_type_specifier">elaborated_type_specifier</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_key">class_key</A> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#identifier">identifier</A></LI>
+<LI> <B><CODE>'enum'</CODE></B> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#identifier">identifier</A></LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <A HREF="#identifier">identifier</A></LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> [ <B><CODE>'template'</CODE></B> ] <A HREF="#template_id">template_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_elif_group" NAME="elif_group">elif_group</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'elif'</CODE></B> <A HREF="#constant_expression">constant_expression</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_elif_groups" NAME="elif_groups">elif_groups</A></TD>
+ <TD><UL>
+<LI> <A HREF="#elif_group">elif_group</A></LI>
+<LI> <A HREF="#elif_groups">elif_groups</A> <A HREF="#elif_group">elif_group</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_else_group" NAME="else_group">else_group</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'else'</CODE></B> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_endif_line" NAME="endif_line">endif_line</A></TD>
+ <TD> <B><CODE>'#'</CODE></B> <B><CODE>'endif'</CODE></B> <A HREF="#new_line">new_line</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_enum_name" NAME="enum_name">enum_name</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_enum_specifier" NAME="enum_specifier">enum_specifier</A></TD>
+ <TD> <B><CODE>'enum'</CODE></B> [ <A HREF="#identifier">identifier</A> ] <B><CODE>'{'</CODE></B> [ <A HREF="#enumerator_list">enumerator_list</A> ] <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_enumerator" NAME="enumerator">enumerator</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_enumerator_definition" NAME="enumerator_definition">enumerator_definition</A></TD>
+ <TD><UL>
+<LI> <A HREF="#enumerator">enumerator</A></LI>
+<LI> <A HREF="#enumerator">enumerator</A> <B><CODE>'='</CODE></B> <A HREF="#constant_expression">constant_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_enumerator_list" NAME="enumerator_list">enumerator_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#enumerator_definition">enumerator_definition</A></LI>
+<LI> <A HREF="#enumerator_list">enumerator_list</A> <B><CODE>','</CODE></B> <A HREF="#enumerator_definition">enumerator_definition</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_equality_expression" NAME="equality_expression">equality_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#relational_expression">relational_expression</A></LI>
+<LI> <A HREF="#equality_expression">equality_expression</A> <B><CODE>'=='</CODE></B> <A HREF="#relational_expression">relational_expression</A></LI>
+<LI> <A HREF="#equality_expression">equality_expression</A> <B><CODE>'!='</CODE></B> <A HREF="#relational_expression">relational_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_escape_sequence" NAME="escape_sequence">escape_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#simple_escape_sequence">simple_escape_sequence</A></LI>
+<LI> <A HREF="#octal_escape_sequence">octal_escape_sequence</A></LI>
+<LI> <A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exception_declatation" NAME="exception_declatation">exception_declatation</A></TD>
+ <TD><UL>
+<LI> <A HREF="#type_specifier_seq">type_specifier_seq</A> <A HREF="#declarator">declarator</A></LI>
+<LI> <A HREF="#type_specifier_seq">type_specifier_seq</A> <A HREF="#abstract_declarator">abstract_declarator</A></LI>
+<LI> <A HREF="#type_specifier_seq">type_specifier_seq</A></LI>
+<LI> <B><CODE>'...'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exception_specification" NAME="exception_specification">exception_specification</A></TD>
+ <TD> <B><CODE>'throw'</CODE></B> <B><CODE>'('</CODE></B> [ <A HREF="#type_id_list">type_id_list</A> ] <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exclusive_or_expression" NAME="exclusive_or_expression">exclusive_or_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#and_expression">and_expression</A></LI>
+<LI> <A HREF="#exclusive_or_expression">exclusive_or_expression</A> <B><CODE>'^'</CODE></B> <A HREF="#and_expression">and_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_explicit_instantiation" NAME="explicit_instantiation">explicit_instantiation</A></TD>
+ <TD> <B><CODE>'template'</CODE></B> <A HREF="#declaration">declaration</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_explicit_specialization" NAME="explicit_specialization">explicit_specialization</A></TD>
+ <TD> <B><CODE>'template'</CODE></B> <B><CODE>'&lt;'</CODE></B> <B><CODE>'&gt;'</CODE></B> <A HREF="#declaration">declaration</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_exponent_part" NAME="exponent_part">exponent_part</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'e'</CODE></B> [ <A HREF="#sign">sign</A> ] <A HREF="#digit_sequence">digit_sequence</A></LI>
+<LI> <B><CODE>'E'</CODE></B> [ <A HREF="#sign">sign</A> ] <A HREF="#digit_sequence">digit_sequence</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_expression" NAME="expression">expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <A HREF="#expression">expression</A> <B><CODE>','</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_expression_list" NAME="expression_list">expression_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <A HREF="#expression_list">expression_list</A> <B><CODE>','</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_expression_statement" NAME="expression_statement">expression_statement</A></TD>
+ <TD> [ <A HREF="#expression">expression</A> ] <B><CODE>';'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_extension_namespace_definition" NAME="extension_namespace_definition">extension_namespace_definition</A></TD>
+ <TD> <B><CODE>'namespace'</CODE></B> <A HREF="#original_namespace_name">original_namespace_name</A> <B><CODE>'{'</CODE></B> <A HREF="#namespace_body">namespace_body</A> <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_floating_literal" NAME="floating_literal">floating_literal</A></TD>
+ <TD><UL>
+<LI> <A HREF="#fractional_constant">fractional_constant</A> [ <A HREF="#exponent_part">exponent_part</A> ] [ <A HREF="#floating_suffix">floating_suffix</A> ]</LI>
+<LI> <A HREF="#digit_sequence">digit_sequence</A> <A HREF="#exponent_part">exponent_part</A> [ <A HREF="#floating_suffix">floating_suffix</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_floating_suffix" NAME="floating_suffix">floating_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'f'</CODE></B></LI>
+<LI> <B><CODE>'l'</CODE></B></LI>
+<LI> <B><CODE>'F'</CODE></B></LI>
+<LI> <B><CODE>'L'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_for_init_statement" NAME="for_init_statement">for_init_statement</A></TD>
+ <TD><UL>
+<LI> <A HREF="#expression_statement">expression_statement</A></LI>
+<LI> <A HREF="#simple_declaration">simple_declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_fractional_constant" NAME="fractional_constant">fractional_constant</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#digit_sequence">digit_sequence</A> ] <B><CODE>'.'</CODE></B> <A HREF="#digit_sequence">digit_sequence</A></LI>
+<LI> <A HREF="#digit_sequence">digit_sequence</A> <B><CODE>'.'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_function_body" NAME="function_body">function_body</A></TD>
+ <TD> <A HREF="#compound_statement">compound_statement</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_function_definition" NAME="function_definition">function_definition</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#decl_specifier_seq">decl_specifier_seq</A> ] <A HREF="#declarator">declarator</A> [ <A HREF="#ctor_initializer">ctor_initializer</A> ] <A HREF="#function_body">function_body</A></LI>
+<LI> [ <A HREF="#decl_specifier_seq">decl_specifier_seq</A> ] <A HREF="#declarator">declarator</A> <A HREF="#function_try_block">function_try_block</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_function_specifier" NAME="function_specifier">function_specifier</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'inline'</CODE></B></LI>
+<LI> <B><CODE>'virtual'</CODE></B></LI>
+<LI> <B><CODE>'explicit'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_function_try_block" NAME="function_try_block">function_try_block</A></TD>
+ <TD> <B><CODE>'try'</CODE></B> [ <A HREF="#ctor_initializer">ctor_initializer</A> ] <A HREF="#function_body">function_body</A> <A HREF="#handler_seq">handler_seq</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_group" NAME="group">group</A></TD>
+ <TD><UL>
+<LI> <A HREF="#group_part">group_part</A></LI>
+<LI> <A HREF="#group">group</A> <A HREF="#group_part">group_part</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_group_part" NAME="group_part">group_part</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#pp_tokens">pp_tokens</A> ] <A HREF="#new_line">new_line</A></LI>
+<LI> <A HREF="#if_section">if_section</A></LI>
+<LI> <A HREF="#control_line">control_line</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_h_char" NAME="h_char">h_char</A></TD>
+ <TD> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_h_char_sequence" NAME="h_char_sequence">h_char_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#h_char">h_char</A></LI>
+<LI> <A HREF="#h_char_sequence">h_char_sequence</A> <A HREF="#h_char">h_char</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_handler" NAME="handler">handler</A></TD>
+ <TD> <B><CODE>'catch'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#exception_declatation">exception_declatation</A> <B><CODE>')'</CODE></B> <A HREF="#compound_statement">compound_statement</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_handler_seq" NAME="handler_seq">handler_seq</A></TD>
+ <TD> <A HREF="#handler">handler</A> [ <A HREF="#handler_seq">handler_seq</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_header_name" NAME="header_name">header_name</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'&lt;'</CODE></B> <A HREF="#h_char_sequence">h_char_sequence</A> <B><CODE>'&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&quot;'</CODE></B> <A HREF="#q_char_sequence">q_char_sequence</A> <B><CODE>'&quot;'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hex_quad" NAME="hex_quad">hex_quad</A></TD>
+ <TD> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_digit" NAME="hexadecimal_digit">hexadecimal_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+<LI> <B><CODE>'8'</CODE></B></LI>
+<LI> <B><CODE>'9'</CODE></B></LI>
+<LI> <B><CODE>'a'</CODE></B></LI>
+<LI> <B><CODE>'b'</CODE></B></LI>
+<LI> <B><CODE>'c'</CODE></B></LI>
+<LI> <B><CODE>'d'</CODE></B></LI>
+<LI> <B><CODE>'e'</CODE></B></LI>
+<LI> <B><CODE>'f'</CODE></B></LI>
+<LI> <B><CODE>'A'</CODE></B></LI>
+<LI> <B><CODE>'B'</CODE></B></LI>
+<LI> <B><CODE>'C'</CODE></B></LI>
+<LI> <B><CODE>'D'</CODE></B></LI>
+<LI> <B><CODE>'E'</CODE></B></LI>
+<LI> <B><CODE>'F'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_escape_sequence" NAME="hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'\x'</CODE></B> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></LI>
+<LI> <A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_hexadecimal_literal" NAME="hexadecimal_literal">hexadecimal_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0x'</CODE></B> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></LI>
+<LI> <B><CODE>'0X'</CODE></B> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></LI>
+<LI> <A HREF="#hexadecimal_literal">hexadecimal_literal</A> <A HREF="#hexadecimal_digit">hexadecimal_digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_id_expression" NAME="id_expression">id_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#unqualified_id">unqualified_id</A></LI>
+<LI> <A HREF="#qualified_id">qualified_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_identifier" NAME="identifier">identifier</A></TD>
+ <TD><UL>
+<LI> <A HREF="#nondigit">nondigit</A></LI>
+<LI> <A HREF="#identifier">identifier</A> <A HREF="#nondigit">nondigit</A></LI>
+<LI> <A HREF="#identifier">identifier</A> <A HREF="#digit">digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_identifier_list" NAME="identifier_list">identifier_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <A HREF="#identifier_list">identifier_list</A> <B><CODE>','</CODE></B> <A HREF="#identifier">identifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_if_group" NAME="if_group">if_group</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'if'</CODE></B> <A HREF="#constant_expression">constant_expression</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifdef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+<LI> <B><CODE>'#'</CODE></B> <B><CODE>'ifndef'</CODE></B> <A HREF="#identifier">identifier</A> <A HREF="#new_line">new_line</A> [ <A HREF="#group">group</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_if_section" NAME="if_section">if_section</A></TD>
+ <TD> <A HREF="#if_group">if_group</A> [ <A HREF="#elif_groups">elif_groups</A> ] [ <A HREF="#else_group">else_group</A> ] <A HREF="#endif_line">endif_line</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_inclusive_or_expression" NAME="inclusive_or_expression">inclusive_or_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#exclusive_or_expression">exclusive_or_expression</A></LI>
+<LI> <A HREF="#inclusive_or_expression">inclusive_or_expression</A> <B><CODE>'|'</CODE></B> <A HREF="#exclusive_or_expression">exclusive_or_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_init_declarator" NAME="init_declarator">init_declarator</A></TD>
+ <TD> <A HREF="#declarator">declarator</A> [ <A HREF="#initializer">initializer</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_init_declarator_list" NAME="init_declarator_list">init_declarator_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#init_declarator">init_declarator</A></LI>
+<LI> <A HREF="#init_declarator_list">init_declarator_list</A> <B><CODE>','</CODE></B> <A HREF="#init_declarator">init_declarator</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_initializer" NAME="initializer">initializer</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'='</CODE></B> <A HREF="#initializer_clause">initializer_clause</A></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#expression_list">expression_list</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_initializer_clause" NAME="initializer_clause">initializer_clause</A></TD>
+ <TD><UL>
+<LI> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <B><CODE>'{'</CODE></B> <A HREF="#initializer_list">initializer_list</A> [ <B><CODE>','</CODE></B> ] <B><CODE>'}'</CODE></B></LI>
+<LI> <B><CODE>'{'</CODE></B> <B><CODE>'}'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_initializer_list" NAME="initializer_list">initializer_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#initializer_clause">initializer_clause</A></LI>
+<LI> <A HREF="#initializer_list">initializer_list</A> <B><CODE>','</CODE></B> <A HREF="#initializer_clause">initializer_clause</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_integer_literal" NAME="integer_literal">integer_literal</A></TD>
+ <TD><UL>
+<LI> <A HREF="#decimal_literal">decimal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+<LI> <A HREF="#octal_literal">octal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+<LI> <A HREF="#hexadecimal_literal">hexadecimal_literal</A> [ <A HREF="#integer_suffix">integer_suffix</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_integer_suffix" NAME="integer_suffix">integer_suffix</A></TD>
+ <TD><UL>
+<LI> <A HREF="#unsigned_suffix">unsigned_suffix</A> [ <A HREF="#long_suffix">long_suffix</A> ]</LI>
+<LI> <A HREF="#long_suffix">long_suffix</A> [ <A HREF="#unsigned_suffix">unsigned_suffix</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_iteration_statement" NAME="iteration_statement">iteration_statement</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'while'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#condition">condition</A> <B><CODE>')'</CODE></B> <A HREF="#statement">statement</A></LI>
+<LI> <B><CODE>'do'</CODE></B> <A HREF="#statement">statement</A> <B><CODE>'while'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>'for'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#for_init_statement">for_init_statement</A> [ <A HREF="#condition">condition</A> ] <B><CODE>';'</CODE></B> [ <A HREF="#expression">expression</A> ] <B><CODE>')'</CODE></B> <A HREF="#statement">statement</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_jump_statement" NAME="jump_statement">jump_statement</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'break'</CODE></B> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>'continue'</CODE></B> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>'return'</CODE></B> [ <A HREF="#expression">expression</A> ] <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>'goto'</CODE></B> <A HREF="#identifier">identifier</A> <B><CODE>';'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_labeled_statement" NAME="labeled_statement">labeled_statement</A></TD>
+ <TD><UL>
+<LI> <A HREF="#identifier">identifier</A> <B><CODE>':'</CODE></B> <A HREF="#statement">statement</A></LI>
+<LI> <B><CODE>'case'</CODE></B> <A HREF="#constant_expression">constant_expression</A> <B><CODE>':'</CODE></B> <A HREF="#statement">statement</A></LI>
+<LI> <B><CODE>'default'</CODE></B> <B><CODE>':'</CODE></B> <A HREF="#statement">statement</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_linkage_specification" NAME="linkage_specification">linkage_specification</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'extern'</CODE></B> <A HREF="#string_literal">string_literal</A> <B><CODE>'{'</CODE></B> [ <A HREF="#declaration_seq">declaration_seq</A> ] <B><CODE>'}'</CODE></B></LI>
+<LI> <B><CODE>'extern'</CODE></B> <A HREF="#string_literal">string_literal</A> <A HREF="#declaration">declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_literal" NAME="literal">literal</A></TD>
+ <TD><UL>
+<LI> <A HREF="#integer_literal">integer_literal</A></LI>
+<LI> <A HREF="#character_literal">character_literal</A></LI>
+<LI> <A HREF="#floating_literal">floating_literal</A></LI>
+<LI> <A HREF="#string_literal">string_literal</A></LI>
+<LI> <A HREF="#boolean_literal">boolean_literal</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_logical_and_expression" NAME="logical_and_expression">logical_and_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#inclusive_or_expression">inclusive_or_expression</A></LI>
+<LI> <A HREF="#logical_and_expression">logical_and_expression</A> <B><CODE>'&amp;&amp;'</CODE></B> <A HREF="#inclusive_or_expression">inclusive_or_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_logical_or_expression" NAME="logical_or_expression">logical_or_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#logical_and_expression">logical_and_expression</A></LI>
+<LI> <A HREF="#logical_or_expression">logical_or_expression</A> <B><CODE>'||'</CODE></B> <A HREF="#logical_and_expression">logical_and_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_long_suffix" NAME="long_suffix">long_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'l'</CODE></B></LI>
+<LI> <B><CODE>'L'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_lparen" NAME="lparen">lparen</A></TD>
+ <TD> <B><CODE>LEFT_PARENTHESIS_WITHOUT_LEADING_WS</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_mem_initializer" NAME="mem_initializer">mem_initializer</A></TD>
+ <TD> <A HREF="#mem_initializer_id">mem_initializer_id</A> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_mem_initializer_id" NAME="mem_initializer_id">mem_initializer_id</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#class_name">class_name</A></LI>
+<LI> <A HREF="#identifier">identifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_mem_initializer_list" NAME="mem_initializer_list">mem_initializer_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#mem_initializer">mem_initializer</A></LI>
+<LI> <A HREF="#mem_initializer">mem_initializer</A> <B><CODE>','</CODE></B> <A HREF="#mem_initializer_list">mem_initializer_list</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_member_declaration" NAME="member_declaration">member_declaration</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#decl_specifier_seq">decl_specifier_seq</A> ] [ <A HREF="#member_declarator_list">member_declarator_list</A> ] <B><CODE>';'</CODE></B></LI>
+<LI> <A HREF="#function_definition">function_definition</A> [ <B><CODE>';'</CODE></B> ]</LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> [ <B><CODE>'template'</CODE></B> ] <A HREF="#unqualified_id">unqualified_id</A> <B><CODE>';'</CODE></B></LI>
+<LI> <A HREF="#using_declaration">using_declaration</A></LI>
+<LI> <A HREF="#template_declaration">template_declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_member_declarator" NAME="member_declarator">member_declarator</A></TD>
+ <TD><UL>
+<LI> <A HREF="#declarator">declarator</A> [ <A HREF="#pure_specifier">pure_specifier</A> ]</LI>
+<LI> <A HREF="#declarator">declarator</A> [ <A HREF="#constant_initializer">constant_initializer</A> ]</LI>
+<LI> [ <A HREF="#identifier">identifier</A> ] <B><CODE>':'</CODE></B> <A HREF="#constant_expression">constant_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_member_declarator_list" NAME="member_declarator_list">member_declarator_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#member_declarator">member_declarator</A></LI>
+<LI> <A HREF="#member_declarator_list">member_declarator_list</A> <B><CODE>','</CODE></B> <A HREF="#member_declarator">member_declarator</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_member_specification" NAME="member_specification">member_specification</A></TD>
+ <TD><UL>
+<LI> <A HREF="#member_declaration">member_declaration</A> [ <A HREF="#member_specification">member_specification</A> ]</LI>
+<LI> <A HREF="#access_specifier">access_specifier</A> <B><CODE>':'</CODE></B> [ <A HREF="#member_specification">member_specification</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_multiplicative_expression" NAME="multiplicative_expression">multiplicative_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#pm_expression">pm_expression</A></LI>
+<LI> <A HREF="#multiplicative_expression">multiplicative_expression</A> <B><CODE>'*'</CODE></B> <A HREF="#pm_expression">pm_expression</A></LI>
+<LI> <A HREF="#multiplicative_expression">multiplicative_expression</A> <B><CODE>'/'</CODE></B> <A HREF="#pm_expression">pm_expression</A></LI>
+<LI> <A HREF="#multiplicative_expression">multiplicative_expression</A> <B><CODE>'%'</CODE></B> <A HREF="#pm_expression">pm_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_named_namespace_definition" NAME="named_namespace_definition">named_namespace_definition</A></TD>
+ <TD><UL>
+<LI> <A HREF="#original_namespace_definition">original_namespace_definition</A></LI>
+<LI> <A HREF="#extension_namespace_definition">extension_namespace_definition</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_alias" NAME="namespace_alias">namespace_alias</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_alias_definition" NAME="namespace_alias_definition">namespace_alias_definition</A></TD>
+ <TD> <B><CODE>'namespace'</CODE></B> <A HREF="#identifier">identifier</A> <B><CODE>'='</CODE></B> <A HREF="#qualified_namespace_specifier">qualified_namespace_specifier</A> <B><CODE>';'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_body" NAME="namespace_body">namespace_body</A></TD>
+ <TD> [ <A HREF="#declaration_seq">declaration_seq</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_definition" NAME="namespace_definition">namespace_definition</A></TD>
+ <TD><UL>
+<LI> <A HREF="#named_namespace_definition">named_namespace_definition</A></LI>
+<LI> <A HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_namespace_name" NAME="namespace_name">namespace_name</A></TD>
+ <TD><UL>
+<LI> <A HREF="#original_namespace_name">original_namespace_name</A></LI>
+<LI> <A HREF="#namespace_alias">namespace_alias</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nested_name_specifier" NAME="nested_name_specifier">nested_name_specifier</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_or_namespace_name">class_or_namespace_name</A> <B><CODE>'::'</CODE></B> [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ]</LI>
+<LI> <A HREF="#class_or_namespace_name">class_or_namespace_name</A> <B><CODE>'::'</CODE></B> <B><CODE>'template'</CODE></B> <A HREF="#nested_name_specifier">nested_name_specifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_declarator" NAME="new_declarator">new_declarator</A></TD>
+ <TD><UL>
+<LI> <A HREF="#ptr_operator">ptr_operator</A> [ <A HREF="#new_declarator">new_declarator</A> ]</LI>
+<LI> <A HREF="#direct_new_declarator">direct_new_declarator</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_expression" NAME="new_expression">new_expression</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] <B><CODE>'new'</CODE></B> [ <A HREF="#new_placement">new_placement</A> ] <A HREF="#new_type_id">new_type_id</A> [ <A HREF="#new_initializer">new_initializer</A> ]</LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <B><CODE>'new'</CODE></B> [ <A HREF="#new_placement">new_placement</A> ] <B><CODE>'('</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>')'</CODE></B> [ <A HREF="#new_initializer">new_initializer</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_initializer" NAME="new_initializer">new_initializer</A></TD>
+ <TD> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_line" NAME="new_line">new_line</A></TD>
+ <TD> <B><CODE>NEWLINE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_placement" NAME="new_placement">new_placement</A></TD>
+ <TD> <B><CODE>'('</CODE></B> <A HREF="#expression_list">expression_list</A> <B><CODE>')'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_new_type_id" NAME="new_type_id">new_type_id</A></TD>
+ <TD> <A HREF="#type_specifier_seq">type_specifier_seq</A> [ <A HREF="#new_declarator">new_declarator</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nondigit" NAME="nondigit">nondigit</A></TD>
+ <TD><UL>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+<LI> <B><CODE>ALPHA_CHARACTER</CODE></B></LI>
+<LI> <B><CODE>'_'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_nonzero_digit" NAME="nonzero_digit">nonzero_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+<LI> <B><CODE>'8'</CODE></B></LI>
+<LI> <B><CODE>'9'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_digit" NAME="octal_digit">octal_digit</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <B><CODE>'1'</CODE></B></LI>
+<LI> <B><CODE>'2'</CODE></B></LI>
+<LI> <B><CODE>'3'</CODE></B></LI>
+<LI> <B><CODE>'4'</CODE></B></LI>
+<LI> <B><CODE>'5'</CODE></B></LI>
+<LI> <B><CODE>'6'</CODE></B></LI>
+<LI> <B><CODE>'7'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_escape_sequence" NAME="octal_escape_sequence">octal_escape_sequence</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'\'</CODE></B> <A HREF="#octal_digit">octal_digit</A></LI>
+<LI> <B><CODE>'\'</CODE></B> <A HREF="#octal_digit">octal_digit</A> <A HREF="#octal_digit">octal_digit</A></LI>
+<LI> <B><CODE>'\'</CODE></B> <A HREF="#octal_digit">octal_digit</A> <A HREF="#octal_digit">octal_digit</A> <A HREF="#octal_digit">octal_digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_octal_literal" NAME="octal_literal">octal_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'0'</CODE></B></LI>
+<LI> <A HREF="#octal_literal">octal_literal</A> <A HREF="#octal_digit">octal_digit</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_operator" NAME="operator">operator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'new'</CODE></B></LI>
+<LI> <B><CODE>'delete'</CODE></B></LI>
+<LI> <B><CODE>'new[]'</CODE></B></LI>
+<LI> <B><CODE>'delete[]'</CODE></B></LI>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'/'</CODE></B></LI>
+<LI> <B><CODE>'%'</CODE></B></LI>
+<LI> <B><CODE>'^'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> <B><CODE>'|'</CODE></B></LI>
+<LI> <B><CODE>'~'</CODE></B></LI>
+<LI> <B><CODE>'!'</CODE></B></LI>
+<LI> <B><CODE>'='</CODE></B></LI>
+<LI> <B><CODE>'&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;'</CODE></B></LI>
+<LI> <B><CODE>'+='</CODE></B></LI>
+<LI> <B><CODE>'-='</CODE></B></LI>
+<LI> <B><CODE>'*='</CODE></B></LI>
+<LI> <B><CODE>'/='</CODE></B></LI>
+<LI> <B><CODE>'%='</CODE></B></LI>
+<LI> <B><CODE>'^='</CODE></B></LI>
+<LI> <B><CODE>'&amp;='</CODE></B></LI>
+<LI> <B><CODE>'|='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;='</CODE></B></LI>
+<LI> <B><CODE>'=='</CODE></B></LI>
+<LI> <B><CODE>'!='</CODE></B></LI>
+<LI> <B><CODE>'&lt;='</CODE></B></LI>
+<LI> <B><CODE>'&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&amp;&amp;'</CODE></B></LI>
+<LI> <B><CODE>'||'</CODE></B></LI>
+<LI> <B><CODE>'++'</CODE></B></LI>
+<LI> <B><CODE>'--'</CODE></B></LI>
+<LI> <B><CODE>','</CODE></B></LI>
+<LI> <B><CODE>'-&gt;*'</CODE></B></LI>
+<LI> <B><CODE>'-&gt;'</CODE></B></LI>
+<LI> <B><CODE>'()'</CODE></B></LI>
+<LI> <B><CODE>'[]'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_operator_function_id" NAME="operator_function_id">operator_function_id</A></TD>
+ <TD> <B><CODE>'operator'</CODE></B> <A HREF="#operator">operator</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_original_namespace_definition" NAME="original_namespace_definition">original_namespace_definition</A></TD>
+ <TD> <B><CODE>'namespace'</CODE></B> <A HREF="#identifier">identifier</A> <B><CODE>'{'</CODE></B> <A HREF="#namespace_body">namespace_body</A> <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_original_namespace_name" NAME="original_namespace_name">original_namespace_name</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_paramerter_declaration_clause" NAME="paramerter_declaration_clause">paramerter_declaration_clause</A></TD>
+ <TD><UL>
+<LI> [ <A HREF="#parameter_declaration_list">parameter_declaration_list</A> ] [ <B><CODE>'...'</CODE></B> ]</LI>
+<LI> <A HREF="#parameter_declaration_list">parameter_declaration_list</A> <B><CODE>','</CODE></B> <B><CODE>'...'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_parameter_declaration" NAME="parameter_declaration">parameter_declaration</A></TD>
+ <TD><UL>
+<LI> <A HREF="#decl_specifier_seq">decl_specifier_seq</A> <A HREF="#declarator">declarator</A></LI>
+<LI> <A HREF="#decl_specifier_seq">decl_specifier_seq</A> <A HREF="#declarator">declarator</A> <B><CODE>'='</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <A HREF="#decl_specifier_seq">decl_specifier_seq</A> [ <A HREF="#abstract_declarator">abstract_declarator</A> ]</LI>
+<LI> <A HREF="#decl_specifier_seq">decl_specifier_seq</A> [ <A HREF="#abstract_declarator">abstract_declarator</A> ] <B><CODE>'='</CODE></B> <A HREF="#assignment_expression">assignment_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_parameter_declaration_list" NAME="parameter_declaration_list">parameter_declaration_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#parameter_declaration">parameter_declaration</A></LI>
+<LI> <A HREF="#parameter_declaration_list">parameter_declaration_list</A> <B><CODE>','</CODE></B> <A HREF="#parameter_declaration">parameter_declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pm_expression" NAME="pm_expression">pm_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> <A HREF="#pm_expression">pm_expression</A> <B><CODE>'.*'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> <A HREF="#pm_expression">pm_expression</A> <B><CODE>'-&gt;*'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_postfix_expression" NAME="postfix_expression">postfix_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#primary_expression">primary_expression</A></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'['</CODE></B> <A HREF="#expression">expression</A> <B><CODE>']'</CODE></B></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#simple_type_specifier">simple_type_specifier</A> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <A HREF="#identifier">identifier</A> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> [ <B><CODE>'template'</CODE></B> ] <A HREF="#template_id">template_id</A> <B><CODE>'('</CODE></B> [ <A HREF="#expression_list">expression_list</A> ] <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'.'</CODE></B> [ <B><CODE>'template'</CODE></B> ] <A HREF="#id_expression">id_expression</A></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'-&gt;'</CODE></B> [ <B><CODE>'template'</CODE></B> ] <A HREF="#id_expression">id_expression</A></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'.'</CODE></B> <A HREF="#pseudo_destructor_name">pseudo_destructor_name</A></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'-&gt;'</CODE></B> <A HREF="#pseudo_destructor_name">pseudo_destructor_name</A></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'++'</CODE></B></LI>
+<LI> <A HREF="#postfix_expression">postfix_expression</A> <B><CODE>'--'</CODE></B></LI>
+<LI> <B><CODE>'dynamic_cast'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'static_cast'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'reinterpret_cast'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'const_cast'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'typeid'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'typeid'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>')'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pp_number" NAME="pp_number">pp_number</A></TD>
+ <TD><UL>
+<LI> <A HREF="#digit">digit</A></LI>
+<LI> <B><CODE>'.'</CODE></B> <A HREF="#digit">digit</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A> <A HREF="#digit">digit</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A> <A HREF="#nondigit">nondigit</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A> <B><CODE>'e'</CODE></B> <A HREF="#sign">sign</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A> <B><CODE>'E'</CODE></B> <A HREF="#sign">sign</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A> <B><CODE>'.'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pp_tokens" NAME="pp_tokens">pp_tokens</A></TD>
+ <TD><UL>
+<LI> <A HREF="#preprocessing_token">preprocessing_token</A></LI>
+<LI> <A HREF="#pp_tokens">pp_tokens</A> <A HREF="#preprocessing_token">preprocessing_token</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_file" NAME="preprocessing_file">preprocessing_file</A></TD>
+ <TD> [ <A HREF="#group">group</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_op_or_punc" NAME="preprocessing_op_or_punc">preprocessing_op_or_punc</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'{'</CODE></B></LI>
+<LI> <B><CODE>'}'</CODE></B></LI>
+<LI> <B><CODE>'['</CODE></B></LI>
+<LI> <B><CODE>']'</CODE></B></LI>
+<LI> <B><CODE>'#'</CODE></B></LI>
+<LI> <B><CODE>'##'</CODE></B></LI>
+<LI> <B><CODE>'('</CODE></B></LI>
+<LI> <B><CODE>')'</CODE></B></LI>
+<LI> <B><CODE>'&lt;:'</CODE></B></LI>
+<LI> <B><CODE>':&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&lt;%'</CODE></B></LI>
+<LI> <B><CODE>'%&gt;'</CODE></B></LI>
+<LI> <B><CODE>'%:'</CODE></B></LI>
+<LI> <B><CODE>'%:%:'</CODE></B></LI>
+<LI> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>':'</CODE></B></LI>
+<LI> <B><CODE>'...'</CODE></B></LI>
+<LI> <B><CODE>'new'</CODE></B></LI>
+<LI> <B><CODE>'delete'</CODE></B></LI>
+<LI> <B><CODE>'?'</CODE></B></LI>
+<LI> <B><CODE>'::'</CODE></B></LI>
+<LI> <B><CODE>'.'</CODE></B></LI>
+<LI> <B><CODE>'.*'</CODE></B></LI>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'/'</CODE></B></LI>
+<LI> <B><CODE>'%'</CODE></B></LI>
+<LI> <B><CODE>'^'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> <B><CODE>'|'</CODE></B></LI>
+<LI> <B><CODE>'~'</CODE></B></LI>
+<LI> <B><CODE>'!'</CODE></B></LI>
+<LI> <B><CODE>'='</CODE></B></LI>
+<LI> <B><CODE>'&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;'</CODE></B></LI>
+<LI> <B><CODE>'+='</CODE></B></LI>
+<LI> <B><CODE>'-='</CODE></B></LI>
+<LI> <B><CODE>'*='</CODE></B></LI>
+<LI> <B><CODE>'/='</CODE></B></LI>
+<LI> <B><CODE>'%='</CODE></B></LI>
+<LI> <B><CODE>'^='</CODE></B></LI>
+<LI> <B><CODE>'&amp;='</CODE></B></LI>
+<LI> <B><CODE>'|='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;'</CODE></B></LI>
+<LI> <B><CODE>'&gt;&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&lt;&lt;='</CODE></B></LI>
+<LI> <B><CODE>'=='</CODE></B></LI>
+<LI> <B><CODE>'!='</CODE></B></LI>
+<LI> <B><CODE>'&lt;='</CODE></B></LI>
+<LI> <B><CODE>'&gt;='</CODE></B></LI>
+<LI> <B><CODE>'&amp;&amp;'</CODE></B></LI>
+<LI> <B><CODE>'||'</CODE></B></LI>
+<LI> <B><CODE>'++'</CODE></B></LI>
+<LI> <B><CODE>'--'</CODE></B></LI>
+<LI> <B><CODE>','</CODE></B></LI>
+<LI> <B><CODE>'-&gt;*'</CODE></B></LI>
+<LI> <B><CODE>'-&gt;'</CODE></B></LI>
+<LI> <B><CODE>'and'</CODE></B></LI>
+<LI> <B><CODE>'and_eq'</CODE></B></LI>
+<LI> <B><CODE>'bitand'</CODE></B></LI>
+<LI> <B><CODE>'bitor'</CODE></B></LI>
+<LI> <B><CODE>'compl'</CODE></B></LI>
+<LI> <B><CODE>'not'</CODE></B></LI>
+<LI> <B><CODE>'not_eq'</CODE></B></LI>
+<LI> <B><CODE>'or'</CODE></B></LI>
+<LI> <B><CODE>'or_eq'</CODE></B></LI>
+<LI> <B><CODE>'xor'</CODE></B></LI>
+<LI> <B><CODE>'xor_eq'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_preprocessing_token" NAME="preprocessing_token">preprocessing_token</A></TD>
+ <TD><UL>
+<LI> <A HREF="#header_name">header_name</A></LI>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <A HREF="#pp_number">pp_number</A></LI>
+<LI> <A HREF="#character_literal">character_literal</A></LI>
+<LI> <A HREF="#string_literal">string_literal</A></LI>
+<LI> <A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></LI>
+<LI> <B><CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_primary_expression" NAME="primary_expression">primary_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#literal">literal</A></LI>
+<LI> <B><CODE>'this'</CODE></B></LI>
+<LI> <B><CODE>'('</CODE></B> <A HREF="#expression">expression</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#id_expression">id_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pseudo_destructor_name" NAME="pseudo_destructor_name">pseudo_destructor_name</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#type_name">type_name</A> <B><CODE>'::'</CODE></B> <B><CODE>'~'</CODE></B> <A HREF="#type_name">type_name</A></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <B><CODE>'template'</CODE></B> <A HREF="#template_id">template_id</A> <B><CODE>'::'</CODE></B> <B><CODE>'~'</CODE></B> <A HREF="#type_name">type_name</A></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <B><CODE>'~'</CODE></B> <A HREF="#type_name">type_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_ptr_operator" NAME="ptr_operator">ptr_operator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'*'</CODE></B> [ <A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> ]</LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <B><CODE>'*'</CODE></B> [ <A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> ]</LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_pure_specifier" NAME="pure_specifier">pure_specifier</A></TD>
+ <TD> <B><CODE>'='</CODE></B> <B><CODE>'0'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_q_char" NAME="q_char">q_char</A></TD>
+ <TD> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_q_char_sequence" NAME="q_char_sequence">q_char_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#q_char">q_char</A></LI>
+<LI> <A HREF="#q_char_sequence">q_char_sequence</A> <A HREF="#q_char">q_char</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_qualified_id" NAME="qualified_id">qualified_id</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> [ <B><CODE>'template'</CODE></B> ] <A HREF="#unqualified_id">unqualified_id</A></LI>
+<LI> <B><CODE>'::'</CODE></B> <A HREF="#identifier">identifier</A></LI>
+<LI> <B><CODE>'::'</CODE></B> <A HREF="#operator_function_id">operator_function_id</A></LI>
+<LI> <B><CODE>'::'</CODE></B> <A HREF="#template_id">template_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_qualified_namespace_specifier" NAME="qualified_namespace_specifier">qualified_namespace_specifier</A></TD>
+ <TD> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#namespace_name">namespace_name</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_relational_expression" NAME="relational_expression">relational_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#shift_expression">shift_expression</A></LI>
+<LI> <A HREF="#relational_expression">relational_expression</A> <B><CODE>'&lt;'</CODE></B> <A HREF="#shift_expression">shift_expression</A></LI>
+<LI> <A HREF="#relational_expression">relational_expression</A> <B><CODE>'&gt;'</CODE></B> <A HREF="#shift_expression">shift_expression</A></LI>
+<LI> <A HREF="#relational_expression">relational_expression</A> <B><CODE>'&lt;='</CODE></B> <A HREF="#shift_expression">shift_expression</A></LI>
+<LI> <A HREF="#relational_expression">relational_expression</A> <B><CODE>'&gt;='</CODE></B> <A HREF="#shift_expression">shift_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_replacement_list" NAME="replacement_list">replacement_list</A></TD>
+ <TD> [ <A HREF="#pp_tokens">pp_tokens</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_s_char" NAME="s_char">s_char</A></TD>
+ <TD><UL>
+<LI> <B><CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE></B></LI>
+<LI> <A HREF="#escape_sequence">escape_sequence</A></LI>
+<LI> <A HREF="#universal_character_name">universal_character_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_s_char_sequence" NAME="s_char_sequence">s_char_sequence</A></TD>
+ <TD><UL>
+<LI> <A HREF="#s_char">s_char</A></LI>
+<LI> <A HREF="#s_char_sequence">s_char_sequence</A> <A HREF="#s_char">s_char</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_selection_statement" NAME="selection_statement">selection_statement</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'if'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#condition">condition</A> <B><CODE>')'</CODE></B> <A HREF="#statement">statement</A></LI>
+<LI> <B><CODE>'if'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#condition">condition</A> <B><CODE>')'</CODE></B> <A HREF="#statement">statement</A> <B><CODE>'else'</CODE></B> <A HREF="#statement">statement</A></LI>
+<LI> <B><CODE>'switch'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#condition">condition</A> <B><CODE>')'</CODE></B> <A HREF="#statement">statement</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_shift_expression" NAME="shift_expression">shift_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#additive_expression">additive_expression</A></LI>
+<LI> <A HREF="#shift_expression">shift_expression</A> <B><CODE>'&lt;&lt;'</CODE></B> <A HREF="#additive_expression">additive_expression</A></LI>
+<LI> <A HREF="#shift_expression">shift_expression</A> <B><CODE>'&gt;&gt;'</CODE></B> <A HREF="#additive_expression">additive_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_sign" NAME="sign">sign</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_simple_declaration" NAME="simple_declaration">simple_declaration</A></TD>
+ <TD> [ <A HREF="#decl_specifier_seq">decl_specifier_seq</A> ] [ <A HREF="#init_declarator_list">init_declarator_list</A> ] <B><CODE>';'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_simple_escape_sequence" NAME="simple_escape_sequence">simple_escape_sequence</A></TD>
+ <TD><UL>
+<LI> <B><CODE>&quot;\'&quot;</CODE></B></LI>
+<LI> <B><CODE>'\&quot;'</CODE></B></LI>
+<LI> <B><CODE>'\?'</CODE></B></LI>
+<LI> <B><CODE>'\\'</CODE></B></LI>
+<LI> <B><CODE>'\a'</CODE></B></LI>
+<LI> <B><CODE>'\b'</CODE></B></LI>
+<LI> <B><CODE>'\f'</CODE></B></LI>
+<LI> <B><CODE>'\n'</CODE></B></LI>
+<LI> <B><CODE>'\r'</CODE></B></LI>
+<LI> <B><CODE>'\t'</CODE></B></LI>
+<LI> <B><CODE>'\v'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_simple_type_specifier" NAME="simple_type_specifier">simple_type_specifier</A></TD>
+ <TD><UL>
+<LI> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#type_name">type_name</A></LI>
+<LI> [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <B><CODE>'template'</CODE></B> <A HREF="#template_id">template_id</A></LI>
+<LI> <B><CODE>'char'</CODE></B></LI>
+<LI> <B><CODE>'wchar_t'</CODE></B></LI>
+<LI> <B><CODE>'bool'</CODE></B></LI>
+<LI> <B><CODE>'short'</CODE></B></LI>
+<LI> <B><CODE>'int'</CODE></B></LI>
+<LI> <B><CODE>'long'</CODE></B></LI>
+<LI> <B><CODE>'signed'</CODE></B></LI>
+<LI> <B><CODE>'unsigned'</CODE></B></LI>
+<LI> <B><CODE>'float'</CODE></B></LI>
+<LI> <B><CODE>'double'</CODE></B></LI>
+<LI> <B><CODE>'void'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_statement" NAME="statement">statement</A></TD>
+ <TD><UL>
+<LI> <A HREF="#labeled_statement">labeled_statement</A></LI>
+<LI> <A HREF="#expression_statement">expression_statement</A></LI>
+<LI> <A HREF="#compound_statement">compound_statement</A></LI>
+<LI> <A HREF="#selection_statement">selection_statement</A></LI>
+<LI> <A HREF="#iteration_statement">iteration_statement</A></LI>
+<LI> <A HREF="#jump_statement">jump_statement</A></LI>
+<LI> <A HREF="#declaration_statement">declaration_statement</A></LI>
+<LI> <A HREF="#try_block">try_block</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_statement_seq" NAME="statement_seq">statement_seq</A></TD>
+ <TD><UL>
+<LI> <A HREF="#statement">statement</A></LI>
+<LI> <A HREF="#statement_seq">statement_seq</A> <A HREF="#statement">statement</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_storage_class_specifier" NAME="storage_class_specifier">storage_class_specifier</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'auto'</CODE></B></LI>
+<LI> <B><CODE>'register'</CODE></B></LI>
+<LI> <B><CODE>'static'</CODE></B></LI>
+<LI> <B><CODE>'extern'</CODE></B></LI>
+<LI> <B><CODE>'mutable'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_string_literal" NAME="string_literal">string_literal</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'&quot;'</CODE></B> [ <A HREF="#s_char_sequence">s_char_sequence</A> ] <B><CODE>'&quot;'</CODE></B></LI>
+<LI> <B><CODE>'L&quot;'</CODE></B> [ <A HREF="#s_char_sequence">s_char_sequence</A> ] <B><CODE>'&quot;'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_syntax" NAME="syntax">syntax</A></TD>
+ <TD><UL>
+<LI> <I>cpp_syntax_</I><A HREF="#translation_unit">translation_unit</A></LI>
+<LI> <I>preprocessor_syntax_</I><A HREF="#preprocessing_file">preprocessing_file</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_argument" NAME="template_argument">template_argument</A></TD>
+ <TD><UL>
+<LI> <A HREF="#assignment_expression">assignment_expression</A></LI>
+<LI> <A HREF="#type_id">type_id</A></LI>
+<LI> <A HREF="#id_expression">id_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_argument_list" NAME="template_argument_list">template_argument_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#template_argument">template_argument</A></LI>
+<LI> <A HREF="#template_argument_list">template_argument_list</A> <B><CODE>','</CODE></B> <A HREF="#template_argument">template_argument</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_declaration" NAME="template_declaration">template_declaration</A></TD>
+ <TD> [ <B><CODE>'export'</CODE></B> ] <B><CODE>'template'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#template_parameter_list">template_parameter_list</A> <B><CODE>'&gt;'</CODE></B> <A HREF="#declaration">declaration</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_id" NAME="template_id">template_id</A></TD>
+ <TD> <A HREF="#template_name">template_name</A> <B><CODE>'&lt;'</CODE></B> [ <A HREF="#template_argument_list">template_argument_list</A> ] <B><CODE>'&gt;'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_name" NAME="template_name">template_name</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_parameter" NAME="template_parameter">template_parameter</A></TD>
+ <TD><UL>
+<LI> <A HREF="#type_parameter">type_parameter</A></LI>
+<LI> <A HREF="#parameter_declaration">parameter_declaration</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_template_parameter_list" NAME="template_parameter_list">template_parameter_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#template_parameter">template_parameter</A></LI>
+<LI> <A HREF="#template_parameter_list">template_parameter_list</A> <B><CODE>','</CODE></B> <A HREF="#template_parameter">template_parameter</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_throw_expression" NAME="throw_expression">throw_expression</A></TD>
+ <TD> <B><CODE>'throw'</CODE></B> [ <A HREF="#assignment_expression">assignment_expression</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_token" NAME="token">token</A> <I>(not used)</I></TD>
+ <TD><UL>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <B><CODE>KEYWORD</CODE></B></LI>
+<LI> <A HREF="#literal">literal</A></LI>
+<LI> <A HREF="#operator">operator</A></LI>
+<LI> <B><CODE>PUNCTUATOR</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_translation_unit" NAME="translation_unit">translation_unit</A></TD>
+ <TD> [ <A HREF="#declaration_seq">declaration_seq</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_try_block" NAME="try_block">try_block</A></TD>
+ <TD> <B><CODE>'try'</CODE></B> <A HREF="#compound_statement">compound_statement</A> <A HREF="#handler_seq">handler_seq</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_id" NAME="type_id">type_id</A></TD>
+ <TD> <A HREF="#type_specifier_seq">type_specifier_seq</A> [ <A HREF="#abstract_declarator">abstract_declarator</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_id_list" NAME="type_id_list">type_id_list</A></TD>
+ <TD><UL>
+<LI> <A HREF="#type_id">type_id</A></LI>
+<LI> <A HREF="#type_id_list">type_id_list</A> <B><CODE>','</CODE></B> <A HREF="#type_id">type_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_name" NAME="type_name">type_name</A></TD>
+ <TD><UL>
+<LI> <A HREF="#class_name">class_name</A></LI>
+<LI> <A HREF="#enum_name">enum_name</A></LI>
+<LI> <A HREF="#typedef_name">typedef_name</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_parameter" NAME="type_parameter">type_parameter</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'class'</CODE></B> [ <A HREF="#identifier">identifier</A> ]</LI>
+<LI> <B><CODE>'class'</CODE></B> [ <A HREF="#identifier">identifier</A> ] <B><CODE>'='</CODE></B> <A HREF="#type_id">type_id</A></LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <A HREF="#identifier">identifier</A> ]</LI>
+<LI> <B><CODE>'typename'</CODE></B> [ <A HREF="#identifier">identifier</A> ] <B><CODE>'='</CODE></B> <A HREF="#type_id">type_id</A></LI>
+<LI> <B><CODE>'template'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#template_parameter_list">template_parameter_list</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'class'</CODE></B> [ <A HREF="#identifier">identifier</A> ]</LI>
+<LI> <B><CODE>'template'</CODE></B> <B><CODE>'&lt;'</CODE></B> <A HREF="#template_parameter_list">template_parameter_list</A> <B><CODE>'&gt;'</CODE></B> <B><CODE>'class'</CODE></B> [ <A HREF="#identifier">identifier</A> ] <B><CODE>'='</CODE></B> <A HREF="#id_expression">id_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_specifier" NAME="type_specifier">type_specifier</A></TD>
+ <TD><UL>
+<LI> <A HREF="#simple_type_specifier">simple_type_specifier</A></LI>
+<LI> <A HREF="#class_specifier">class_specifier</A></LI>
+<LI> <A HREF="#enum_specifier">enum_specifier</A></LI>
+<LI> <A HREF="#elaborated_type_specifier">elaborated_type_specifier</A></LI>
+<LI> <A HREF="#cv_qualifier">cv_qualifier</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_type_specifier_seq" NAME="type_specifier_seq">type_specifier_seq</A></TD>
+ <TD> <A HREF="#type_specifier">type_specifier</A> [ <A HREF="#type_specifier_seq">type_specifier_seq</A> ]</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_typedef_name" NAME="typedef_name">typedef_name</A></TD>
+ <TD> <A HREF="#identifier">identifier</A></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unary_expression" NAME="unary_expression">unary_expression</A></TD>
+ <TD><UL>
+<LI> <A HREF="#postfix_expression">postfix_expression</A></LI>
+<LI> <B><CODE>'++'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> <B><CODE>'--'</CODE></B> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> <A HREF="#unary_operator">unary_operator</A> <A HREF="#cast_expression">cast_expression</A></LI>
+<LI> <B><CODE>'sizeof'</CODE></B> <A HREF="#unary_expression">unary_expression</A></LI>
+<LI> <B><CODE>'sizeof'</CODE></B> <B><CODE>'('</CODE></B> <A HREF="#type_id">type_id</A> <B><CODE>')'</CODE></B></LI>
+<LI> <A HREF="#new_expression">new_expression</A></LI>
+<LI> <A HREF="#delete_expression">delete_expression</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unary_operator" NAME="unary_operator">unary_operator</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'*'</CODE></B></LI>
+<LI> <B><CODE>'&amp;'</CODE></B></LI>
+<LI> <B><CODE>'+'</CODE></B></LI>
+<LI> <B><CODE>'-'</CODE></B></LI>
+<LI> <B><CODE>'!'</CODE></B></LI>
+<LI> <B><CODE>'~'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_universal_character_name" NAME="universal_character_name">universal_character_name</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'\u'</CODE></B> <A HREF="#hex_quad">hex_quad</A></LI>
+<LI> <B><CODE>'\U'</CODE></B> <A HREF="#hex_quad">hex_quad</A> <A HREF="#hex_quad">hex_quad</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unnamed_namespace_definition" NAME="unnamed_namespace_definition">unnamed_namespace_definition</A></TD>
+ <TD> <B><CODE>'namespace'</CODE></B> <B><CODE>'{'</CODE></B> <A HREF="#namespace_body">namespace_body</A> <B><CODE>'}'</CODE></B></TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unqualified_id" NAME="unqualified_id">unqualified_id</A></TD>
+ <TD><UL>
+<LI> <A HREF="#identifier">identifier</A></LI>
+<LI> <A HREF="#operator_function_id">operator_function_id</A></LI>
+<LI> <A HREF="#conversion_function_id">conversion_function_id</A></LI>
+<LI> <B><CODE>'~'</CODE></B> <A HREF="#class_name">class_name</A></LI>
+<LI> <A HREF="#template_id">template_id</A></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_unsigned_suffix" NAME="unsigned_suffix">unsigned_suffix</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'u'</CODE></B></LI>
+<LI> <B><CODE>'U'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_using_declaration" NAME="using_declaration">using_declaration</A></TD>
+ <TD><UL>
+<LI> <B><CODE>'using'</CODE></B> [ <B><CODE>'typename'</CODE></B> ] [ <B><CODE>'::'</CODE></B> ] <A HREF="#nested_name_specifier">nested_name_specifier</A> <A HREF="#unqualified_id">unqualified_id</A> <B><CODE>';'</CODE></B></LI>
+<LI> <B><CODE>'using'</CODE></B> <B><CODE>'::'</CODE></B> <A HREF="#unqualified_id">unqualified_id</A> <B><CODE>';'</CODE></B></LI>
+</UL>
+</TD>
+</TR><TR>
+ <TD VALIGN=TOP><A HREF="#xref_using_directive" NAME="using_directive">using_directive</A></TD>
+ <TD> <B><CODE>'using'</CODE></B> <B><CODE>'namespace'</CODE></B> [ <B><CODE>'::'</CODE></B> ] [ <A HREF="#nested_name_specifier">nested_name_specifier</A> ] <A HREF="#namespace_name">namespace_name</A> <B><CODE>';'</CODE></B></TD>
+</TR></TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_variants">Variants</A></H2>none
+<HR WIDTH="100%">
+<H2><A NAME="toc_term">Terminals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Terminal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>ALPHA_CHARACTER</CODE>
+</TD><TD><A HREF="#nondigit">nondigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE</CODE>
+</TD><TD><A HREF="#q_char">q_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH</CODE>
+</TD><TD><A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_GT</CODE>
+</TD><TD><A HREF="#h_char">h_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH</CODE>
+</TD><TD><A HREF="#c_char">c_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ANY_NOT_YET_COVERED_NON_WS_CHARACTER</CODE>
+</TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>DIGIT</CODE>
+</TD><TD><A HREF="#digit">digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>KEYWORD</CODE>
+</TD><TD><A HREF="#token">token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>LEFT_PARENTHESIS_WITHOUT_LEADING_WS</CODE>
+</TD><TD><A HREF="#lparen">lparen</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>NEWLINE</CODE>
+</TD><TD><A HREF="#new_line">new_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>PUNCTUATOR</CODE>
+</TD><TD><A HREF="#token">token</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_lit">Literals</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Literal</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<CODE>!</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>!=</CODE>
+</TD><TD><A HREF="#equality_expression">equality_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&quot;</CODE>
+</TD><TD><A HREF="#header_name">header_name</A> /
+<A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>#</CODE>
+</TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#endif_line">endif_line</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>##</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%:%:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>%&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;</CODE>
+</TD><TD><A HREF="#and_expression">and_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#ptr_operator">ptr_operator</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;&amp;</CODE>
+</TD><TD><A HREF="#logical_and_expression">logical_and_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&amp;=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>'</CODE>
+</TD><TD><A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>(</CODE>
+</TD><TD><A HREF="#asm_definition">asm_definition</A> /
+<A HREF="#cast_expression">cast_expression</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#exception_specification">exception_specification</A> /
+<A HREF="#handler">handler</A> /
+<A HREF="#initializer">initializer</A> /
+<A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#mem_initializer">mem_initializer</A> /
+<A HREF="#new_expression">new_expression</A> /
+<A HREF="#new_initializer">new_initializer</A> /
+<A HREF="#new_placement">new_placement</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#primary_expression">primary_expression</A> /
+<A HREF="#selection_statement">selection_statement</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>()</CODE>
+</TD><TD><A HREF="#operator">operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>)</CODE>
+</TD><TD><A HREF="#asm_definition">asm_definition</A> /
+<A HREF="#cast_expression">cast_expression</A> /
+<A HREF="#control_line">control_line</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#exception_specification">exception_specification</A> /
+<A HREF="#handler">handler</A> /
+<A HREF="#initializer">initializer</A> /
+<A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#mem_initializer">mem_initializer</A> /
+<A HREF="#new_expression">new_expression</A> /
+<A HREF="#new_initializer">new_initializer</A> /
+<A HREF="#new_placement">new_placement</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#primary_expression">primary_expression</A> /
+<A HREF="#selection_statement">selection_statement</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>*</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#ptr_operator">ptr_operator</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>*=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>+</CODE>
+</TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#sign">sign</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>++</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>+=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>,</CODE>
+</TD><TD><A HREF="#base_specifier_list">base_specifier_list</A> /
+<A HREF="#enumerator_list">enumerator_list</A> /
+<A HREF="#expression">expression</A> /
+<A HREF="#expression_list">expression_list</A> /
+<A HREF="#identifier_list">identifier_list</A> /
+<A HREF="#init_declarator_list">init_declarator_list</A> /
+<A HREF="#initializer_clause">initializer_clause</A> /
+<A HREF="#initializer_list">initializer_list</A> /
+<A HREF="#mem_initializer_list">mem_initializer_list</A> /
+<A HREF="#member_declarator_list">member_declarator_list</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A> /
+<A HREF="#parameter_declaration_list">parameter_declaration_list</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#template_argument_list">template_argument_list</A> /
+<A HREF="#template_parameter_list">template_parameter_list</A> /
+<A HREF="#type_id_list">type_id_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-</CODE>
+</TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#sign">sign</A> /
+<A HREF="#unary_operator">unary_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>--</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-&gt;</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>-&gt;*</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#pm_expression">pm_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.</CODE>
+</TD><TD><A HREF="#fractional_constant">fractional_constant</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#pp_number">pp_number</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>.*</CODE>
+</TD><TD><A HREF="#pm_expression">pm_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>...</CODE>
+</TD><TD><A HREF="#exception_declatation">exception_declatation</A> /
+<A HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>/</CODE>
+</TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>/=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:</CODE>
+</TD><TD><A HREF="#base_clause">base_clause</A> /
+<A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#ctor_initializer">ctor_initializer</A> /
+<A HREF="#labeled_statement">labeled_statement</A> /
+<A HREF="#member_declarator">member_declarator</A> /
+<A HREF="#member_specification">member_specification</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>::</CODE>
+</TD><TD><A HREF="#base_specifier">base_specifier</A> /
+<A HREF="#declarator_id">declarator_id</A> /
+<A HREF="#delete_expression">delete_expression</A> /
+<A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#mem_initializer_id">mem_initializer_id</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#nested_name_specifier">nested_name_specifier</A> /
+<A HREF="#new_expression">new_expression</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#ptr_operator">ptr_operator</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#qualified_namespace_specifier">qualified_namespace_specifier</A> /
+<A HREF="#simple_type_specifier">simple_type_specifier</A> /
+<A HREF="#using_declaration">using_declaration</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>:&gt;</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>;</CODE>
+</TD><TD><A HREF="#asm_definition">asm_definition</A> /
+<A HREF="#expression_statement">expression_statement</A> /
+<A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#jump_statement">jump_statement</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#namespace_alias_definition">namespace_alias_definition</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#simple_declaration">simple_declaration</A> /
+<A HREF="#using_declaration">using_declaration</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;</CODE>
+</TD><TD><A HREF="#explicit_specialization">explicit_specialization</A> /
+<A HREF="#header_name">header_name</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A> /
+<A HREF="#template_declaration">template_declaration</A> /
+<A HREF="#template_id">template_id</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;%</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;:</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;&lt;</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;&lt;=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&lt;=</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#condition">condition</A> /
+<A HREF="#constant_initializer">constant_initializer</A> /
+<A HREF="#enumerator_definition">enumerator_definition</A> /
+<A HREF="#initializer">initializer</A> /
+<A HREF="#namespace_alias_definition">namespace_alias_definition</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#parameter_declaration">parameter_declaration</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#pure_specifier">pure_specifier</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>==</CODE>
+</TD><TD><A HREF="#equality_expression">equality_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;</CODE>
+</TD><TD><A HREF="#explicit_specialization">explicit_specialization</A> /
+<A HREF="#header_name">header_name</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A> /
+<A HREF="#template_declaration">template_declaration</A> /
+<A HREF="#template_id">template_id</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;=</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;&gt;</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>&gt;&gt;=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>?</CODE>
+</TD><TD><A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>[</CODE>
+</TD><TD><A HREF="#delete_expression">delete_expression</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#direct_new_declarator">direct_new_declarator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>[]</CODE>
+</TD><TD><A HREF="#operator">operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\</CODE>
+</TD><TD><A HREF="#octal_escape_sequence">octal_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\&quot;</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\'</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\?</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\U</CODE>
+</TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\\</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\a</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\b</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\f</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\n</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\r</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\t</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\u</CODE>
+</TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\v</CODE>
+</TD><TD><A HREF="#simple_escape_sequence">simple_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>\x</CODE>
+</TD><TD><A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>]</CODE>
+</TD><TD><A HREF="#delete_expression">delete_expression</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#direct_new_declarator">direct_new_declarator</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>^</CODE>
+</TD><TD><A HREF="#exclusive_or_expression">exclusive_or_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>^=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>_</CODE>
+</TD><TD><A HREF="#nondigit">nondigit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>{</CODE>
+</TD><TD><A HREF="#class_specifier">class_specifier</A> /
+<A HREF="#compound_statement">compound_statement</A> /
+<A HREF="#enum_specifier">enum_specifier</A> /
+<A HREF="#extension_namespace_definition">extension_namespace_definition</A> /
+<A HREF="#initializer_clause">initializer_clause</A> /
+<A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#original_namespace_definition">original_namespace_definition</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>|</CODE>
+</TD><TD><A HREF="#inclusive_or_expression">inclusive_or_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>|=</CODE>
+</TD><TD><A HREF="#assignment_operator">assignment_operator</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>||</CODE>
+</TD><TD><A HREF="#logical_or_expression">logical_or_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>}</CODE>
+</TD><TD><A HREF="#class_specifier">class_specifier</A> /
+<A HREF="#compound_statement">compound_statement</A> /
+<A HREF="#enum_specifier">enum_specifier</A> /
+<A HREF="#extension_namespace_definition">extension_namespace_definition</A> /
+<A HREF="#initializer_clause">initializer_clause</A> /
+<A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#original_namespace_definition">original_namespace_definition</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>~</CODE>
+</TD><TD><A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#unary_operator">unary_operator</A> /
+<A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#octal_digit">octal_digit</A> /
+<A HREF="#octal_literal">octal_literal</A> /
+<A HREF="#pure_specifier">pure_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0X</CODE>
+</TD><TD><A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>0x</CODE>
+</TD><TD><A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>1</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>2</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>3</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>4</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>5</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>6</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>7</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A> /
+<A HREF="#octal_digit">octal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>8</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>9</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#nonzero_digit">nonzero_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>a</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>A</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>and</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>and_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>asm</CODE>
+</TD><TD><A HREF="#asm_definition">asm_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>auto</CODE>
+</TD><TD><A HREF="#storage_class_specifier">storage_class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>b</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>B</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bitand</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bitor</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>bool</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>break</CODE>
+</TD><TD><A HREF="#jump_statement">jump_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>C</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>c</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>case</CODE>
+</TD><TD><A HREF="#labeled_statement">labeled_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>catch</CODE>
+</TD><TD><A HREF="#handler">handler</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>char</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>class</CODE>
+</TD><TD><A HREF="#class_key">class_key</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>compl</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>const</CODE>
+</TD><TD><A HREF="#cv_qualifier">cv_qualifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>const_cast</CODE>
+</TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>continue</CODE>
+</TD><TD><A HREF="#jump_statement">jump_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>d</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>D</CODE>
+</TD><TD><A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>default</CODE>
+</TD><TD><A HREF="#labeled_statement">labeled_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>define</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>delete</CODE>
+</TD><TD><A HREF="#delete_expression">delete_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>delete[]</CODE>
+</TD><TD><A HREF="#operator">operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>do</CODE>
+</TD><TD><A HREF="#iteration_statement">iteration_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>double</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>dynamic_cast</CODE>
+</TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>E</CODE>
+</TD><TD><A HREF="#exponent_part">exponent_part</A> /
+<A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>e</CODE>
+</TD><TD><A HREF="#exponent_part">exponent_part</A> /
+<A HREF="#hexadecimal_digit">hexadecimal_digit</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>elif</CODE>
+</TD><TD><A HREF="#elif_group">elif_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>else</CODE>
+</TD><TD><A HREF="#else_group">else_group</A> /
+<A HREF="#selection_statement">selection_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>endif</CODE>
+</TD><TD><A HREF="#endif_line">endif_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>enum</CODE>
+</TD><TD><A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#enum_specifier">enum_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>error</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>explicit</CODE>
+</TD><TD><A HREF="#function_specifier">function_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>export</CODE>
+</TD><TD><A HREF="#template_declaration">template_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>extern</CODE>
+</TD><TD><A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#storage_class_specifier">storage_class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>F</CODE>
+</TD><TD><A HREF="#floating_suffix">floating_suffix</A> /
+<A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>f</CODE>
+</TD><TD><A HREF="#floating_suffix">floating_suffix</A> /
+<A HREF="#hexadecimal_digit">hexadecimal_digit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>false</CODE>
+</TD><TD><A HREF="#boolean_literal">boolean_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>float</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>for</CODE>
+</TD><TD><A HREF="#iteration_statement">iteration_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>friend</CODE>
+</TD><TD><A HREF="#decl_specifier">decl_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>goto</CODE>
+</TD><TD><A HREF="#jump_statement">jump_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>if</CODE>
+</TD><TD><A HREF="#if_group">if_group</A> /
+<A HREF="#selection_statement">selection_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ifdef</CODE>
+</TD><TD><A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>ifndef</CODE>
+</TD><TD><A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>include</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>inline</CODE>
+</TD><TD><A HREF="#function_specifier">function_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>int</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L</CODE>
+</TD><TD><A HREF="#floating_suffix">floating_suffix</A> /
+<A HREF="#long_suffix">long_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>l</CODE>
+</TD><TD><A HREF="#floating_suffix">floating_suffix</A> /
+<A HREF="#long_suffix">long_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L&quot;</CODE>
+</TD><TD><A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>L'</CODE>
+</TD><TD><A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>line</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>long</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>mutable</CODE>
+</TD><TD><A HREF="#storage_class_specifier">storage_class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>namespace</CODE>
+</TD><TD><A HREF="#extension_namespace_definition">extension_namespace_definition</A> /
+<A HREF="#namespace_alias_definition">namespace_alias_definition</A> /
+<A HREF="#original_namespace_definition">original_namespace_definition</A> /
+<A HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>new</CODE>
+</TD><TD><A HREF="#new_expression">new_expression</A> /
+<A HREF="#operator">operator</A> /
+<A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>new[]</CODE>
+</TD><TD><A HREF="#operator">operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>not</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>not_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>operator</CODE>
+</TD><TD><A HREF="#conversion_function_id">conversion_function_id</A> /
+<A HREF="#operator_function_id">operator_function_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>or</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>or_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>pragma</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>private</CODE>
+</TD><TD><A HREF="#access_specifier">access_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>protected</CODE>
+</TD><TD><A HREF="#access_specifier">access_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>public</CODE>
+</TD><TD><A HREF="#access_specifier">access_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>register</CODE>
+</TD><TD><A HREF="#storage_class_specifier">storage_class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>reinterpret_cast</CODE>
+</TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>return</CODE>
+</TD><TD><A HREF="#jump_statement">jump_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>short</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>signed</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>sizeof</CODE>
+</TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>static</CODE>
+</TD><TD><A HREF="#storage_class_specifier">storage_class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>static_cast</CODE>
+</TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>struct</CODE>
+</TD><TD><A HREF="#class_key">class_key</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>switch</CODE>
+</TD><TD><A HREF="#selection_statement">selection_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>template</CODE>
+</TD><TD><A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#explicit_instantiation">explicit_instantiation</A> /
+<A HREF="#explicit_specialization">explicit_specialization</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#nested_name_specifier">nested_name_specifier</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#simple_type_specifier">simple_type_specifier</A> /
+<A HREF="#template_declaration">template_declaration</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>this</CODE>
+</TD><TD><A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>throw</CODE>
+</TD><TD><A HREF="#exception_specification">exception_specification</A> /
+<A HREF="#throw_expression">throw_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>true</CODE>
+</TD><TD><A HREF="#boolean_literal">boolean_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>try</CODE>
+</TD><TD><A HREF="#function_try_block">function_try_block</A> /
+<A HREF="#try_block">try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>typedef</CODE>
+</TD><TD><A HREF="#decl_specifier">decl_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>typeid</CODE>
+</TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>typename</CODE>
+</TD><TD><A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#type_parameter">type_parameter</A> /
+<A HREF="#using_declaration">using_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>u</CODE>
+</TD><TD><A HREF="#unsigned_suffix">unsigned_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>U</CODE>
+</TD><TD><A HREF="#unsigned_suffix">unsigned_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>undef</CODE>
+</TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>union</CODE>
+</TD><TD><A HREF="#class_key">class_key</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>unsigned</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>using</CODE>
+</TD><TD><A HREF="#using_declaration">using_declaration</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>virtual</CODE>
+</TD><TD><A HREF="#base_specifier">base_specifier</A> /
+<A HREF="#function_specifier">function_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>void</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>volatile</CODE>
+</TD><TD><A HREF="#cv_qualifier">cv_qualifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>wchar_t</CODE>
+</TD><TD><A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>while</CODE>
+</TD><TD><A HREF="#iteration_statement">iteration_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>xor</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<CODE>xor_eq</CODE>
+</TD><TD><A HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A>
+</TD></TR>
+</TBODY>
+</TABLE>
+<HR WIDTH="100%">
+<H2><A NAME="toc_xref">Production Cross Reference</A></H2><TABLE BORDER=1 CELLPADDING=2 CLASS="data">
+<THEAD>
+<TR>
+ <TH>Production</TH>
+ <TH>Used in</TH>
+</TR>
+</THEAD>
+<TBODY>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_abstract_declarator" HREF="#abstract_declarator">abstract_declarator</A></TD><TD><A HREF="#abstract_declarator">abstract_declarator</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#exception_declatation">exception_declatation</A> /
+<A HREF="#parameter_declaration">parameter_declaration</A> /
+<A HREF="#type_id">type_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_access_specifier" HREF="#access_specifier">access_specifier</A></TD><TD><A HREF="#base_specifier">base_specifier</A> /
+<A HREF="#member_specification">member_specification</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_additive_expression" HREF="#additive_expression">additive_expression</A></TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_and_expression" HREF="#and_expression">and_expression</A></TD><TD><A HREF="#and_expression">and_expression</A> /
+<A HREF="#exclusive_or_expression">exclusive_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_asm_definition" HREF="#asm_definition">asm_definition</A></TD><TD><A HREF="#block_declaration">block_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assignment_expression" HREF="#assignment_expression">assignment_expression</A></TD><TD><A HREF="#assignment_expression">assignment_expression</A> /
+<A HREF="#condition">condition</A> /
+<A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#expression">expression</A> /
+<A HREF="#expression_list">expression_list</A> /
+<A HREF="#initializer_clause">initializer_clause</A> /
+<A HREF="#parameter_declaration">parameter_declaration</A> /
+<A HREF="#template_argument">template_argument</A> /
+<A HREF="#throw_expression">throw_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_assignment_operator" HREF="#assignment_operator">assignment_operator</A></TD><TD><A HREF="#assignment_expression">assignment_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_base_clause" HREF="#base_clause">base_clause</A></TD><TD><A HREF="#class_head">class_head</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_base_specifier" HREF="#base_specifier">base_specifier</A></TD><TD><A HREF="#base_specifier_list">base_specifier_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_base_specifier_list" HREF="#base_specifier_list">base_specifier_list</A></TD><TD><A HREF="#base_clause">base_clause</A> /
+<A HREF="#base_specifier_list">base_specifier_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_block_declaration" HREF="#block_declaration">block_declaration</A></TD><TD><A HREF="#declaration">declaration</A> /
+<A HREF="#declaration_statement">declaration_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_boolean_literal" HREF="#boolean_literal">boolean_literal</A></TD><TD><A HREF="#literal">literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_c_char" HREF="#c_char">c_char</A></TD><TD><A HREF="#c_char_sequence">c_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_c_char_sequence" HREF="#c_char_sequence">c_char_sequence</A></TD><TD><A HREF="#c_char_sequence">c_char_sequence</A> /
+<A HREF="#character_literal">character_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_cast_expression" HREF="#cast_expression">cast_expression</A></TD><TD><A HREF="#cast_expression">cast_expression</A> /
+<A HREF="#delete_expression">delete_expression</A> /
+<A HREF="#pm_expression">pm_expression</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_character_literal" HREF="#character_literal">character_literal</A></TD><TD><A HREF="#literal">literal</A> /
+<A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_head" HREF="#class_head">class_head</A></TD><TD><A HREF="#class_specifier">class_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_key" HREF="#class_key">class_key</A></TD><TD><A HREF="#class_head">class_head</A> /
+<A HREF="#elaborated_type_specifier">elaborated_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_name" HREF="#class_name">class_name</A></TD><TD><A HREF="#base_specifier">base_specifier</A> /
+<A HREF="#class_or_namespace_name">class_or_namespace_name</A> /
+<A HREF="#mem_initializer_id">mem_initializer_id</A> /
+<A HREF="#type_name">type_name</A> /
+<A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_or_namespace_name" HREF="#class_or_namespace_name">class_or_namespace_name</A></TD><TD><A HREF="#nested_name_specifier">nested_name_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_class_specifier" HREF="#class_specifier">class_specifier</A></TD><TD><A HREF="#type_specifier">type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_compound_statement" HREF="#compound_statement">compound_statement</A></TD><TD><A HREF="#function_body">function_body</A> /
+<A HREF="#handler">handler</A> /
+<A HREF="#statement">statement</A> /
+<A HREF="#try_block">try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_condition" HREF="#condition">condition</A></TD><TD><A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#selection_statement">selection_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_conditional_expression" HREF="#conditional_expression">conditional_expression</A></TD><TD><A HREF="#assignment_expression">assignment_expression</A> /
+<A HREF="#constant_expression">constant_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_constant_expression" HREF="#constant_expression">constant_expression</A></TD><TD><A HREF="#constant_initializer">constant_initializer</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#direct_new_declarator">direct_new_declarator</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#enumerator_definition">enumerator_definition</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#labeled_statement">labeled_statement</A> /
+<A HREF="#member_declarator">member_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_constant_initializer" HREF="#constant_initializer">constant_initializer</A></TD><TD><A HREF="#member_declarator">member_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_control_line" HREF="#control_line">control_line</A></TD><TD><A HREF="#group_part">group_part</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_conversion_declarator" HREF="#conversion_declarator">conversion_declarator</A></TD><TD><A HREF="#conversion_declarator">conversion_declarator</A> /
+<A HREF="#conversion_type_id">conversion_type_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_conversion_function_id" HREF="#conversion_function_id">conversion_function_id</A></TD><TD><A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_conversion_type_id" HREF="#conversion_type_id">conversion_type_id</A></TD><TD><A HREF="#conversion_function_id">conversion_function_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_ctor_initializer" HREF="#ctor_initializer">ctor_initializer</A></TD><TD><A HREF="#function_definition">function_definition</A> /
+<A HREF="#function_try_block">function_try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_cv_qualifier" HREF="#cv_qualifier">cv_qualifier</A></TD><TD><A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> /
+<A HREF="#type_specifier">type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_cv_qualifier_seq" HREF="#cv_qualifier_seq">cv_qualifier_seq</A></TD><TD><A HREF="#cv_qualifier_seq">cv_qualifier_seq</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#ptr_operator">ptr_operator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decimal_literal" HREF="#decimal_literal">decimal_literal</A></TD><TD><A HREF="#decimal_literal">decimal_literal</A> /
+<A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decl_specifier" HREF="#decl_specifier">decl_specifier</A></TD><TD><A HREF="#decl_specifier_seq">decl_specifier_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_decl_specifier_seq" HREF="#decl_specifier_seq">decl_specifier_seq</A></TD><TD><A HREF="#decl_specifier_seq">decl_specifier_seq</A> /
+<A HREF="#function_definition">function_definition</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#parameter_declaration">parameter_declaration</A> /
+<A HREF="#simple_declaration">simple_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_declaration" HREF="#declaration">declaration</A></TD><TD><A HREF="#declaration_seq">declaration_seq</A> /
+<A HREF="#explicit_instantiation">explicit_instantiation</A> /
+<A HREF="#explicit_specialization">explicit_specialization</A> /
+<A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#template_declaration">template_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_declaration_seq" HREF="#declaration_seq">declaration_seq</A></TD><TD><A HREF="#declaration_seq">declaration_seq</A> /
+<A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#namespace_body">namespace_body</A> /
+<A HREF="#translation_unit">translation_unit</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_declaration_statement" HREF="#declaration_statement">declaration_statement</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_declarator" HREF="#declarator">declarator</A></TD><TD><A HREF="#condition">condition</A> /
+<A HREF="#declarator">declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A> /
+<A HREF="#exception_declatation">exception_declatation</A> /
+<A HREF="#function_definition">function_definition</A> /
+<A HREF="#init_declarator">init_declarator</A> /
+<A HREF="#member_declarator">member_declarator</A> /
+<A HREF="#parameter_declaration">parameter_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_declarator_id" HREF="#declarator_id">declarator_id</A></TD><TD><A HREF="#direct_declarator">direct_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_delete_expression" HREF="#delete_expression">delete_expression</A></TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_digit" HREF="#digit">digit</A></TD><TD><A HREF="#decimal_literal">decimal_literal</A> /
+<A HREF="#digit_sequence">digit_sequence</A> /
+<A HREF="#identifier">identifier</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_digit_sequence" HREF="#digit_sequence">digit_sequence</A></TD><TD><A HREF="#digit_sequence">digit_sequence</A> /
+<A HREF="#exponent_part">exponent_part</A> /
+<A HREF="#floating_literal">floating_literal</A> /
+<A HREF="#fractional_constant">fractional_constant</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_direct_abstract_declarator" HREF="#direct_abstract_declarator">direct_abstract_declarator</A></TD><TD><A HREF="#abstract_declarator">abstract_declarator</A> /
+<A HREF="#direct_abstract_declarator">direct_abstract_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_direct_declarator" HREF="#direct_declarator">direct_declarator</A></TD><TD><A HREF="#declarator">declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_direct_new_declarator" HREF="#direct_new_declarator">direct_new_declarator</A></TD><TD><A HREF="#direct_new_declarator">direct_new_declarator</A> /
+<A HREF="#new_declarator">new_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_elaborated_type_specifier" HREF="#elaborated_type_specifier">elaborated_type_specifier</A></TD><TD><A HREF="#type_specifier">type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_elif_group" HREF="#elif_group">elif_group</A></TD><TD><A HREF="#elif_groups">elif_groups</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_elif_groups" HREF="#elif_groups">elif_groups</A></TD><TD><A HREF="#elif_groups">elif_groups</A> /
+<A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_else_group" HREF="#else_group">else_group</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_endif_line" HREF="#endif_line">endif_line</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_enum_name" HREF="#enum_name">enum_name</A></TD><TD><A HREF="#type_name">type_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_enum_specifier" HREF="#enum_specifier">enum_specifier</A></TD><TD><A HREF="#type_specifier">type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_enumerator" HREF="#enumerator">enumerator</A></TD><TD><A HREF="#enumerator_definition">enumerator_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_enumerator_definition" HREF="#enumerator_definition">enumerator_definition</A></TD><TD><A HREF="#enumerator_list">enumerator_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_enumerator_list" HREF="#enumerator_list">enumerator_list</A></TD><TD><A HREF="#enum_specifier">enum_specifier</A> /
+<A HREF="#enumerator_list">enumerator_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_equality_expression" HREF="#equality_expression">equality_expression</A></TD><TD><A HREF="#and_expression">and_expression</A> /
+<A HREF="#equality_expression">equality_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_escape_sequence" HREF="#escape_sequence">escape_sequence</A></TD><TD><A HREF="#c_char">c_char</A> /
+<A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exception_declatation" HREF="#exception_declatation">exception_declatation</A></TD><TD><A HREF="#handler">handler</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exception_specification" HREF="#exception_specification">exception_specification</A></TD><TD><A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exclusive_or_expression" HREF="#exclusive_or_expression">exclusive_or_expression</A></TD><TD><A HREF="#exclusive_or_expression">exclusive_or_expression</A> /
+<A HREF="#inclusive_or_expression">inclusive_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_explicit_instantiation" HREF="#explicit_instantiation">explicit_instantiation</A></TD><TD><A HREF="#declaration">declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_explicit_specialization" HREF="#explicit_specialization">explicit_specialization</A></TD><TD><A HREF="#declaration">declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_exponent_part" HREF="#exponent_part">exponent_part</A></TD><TD><A HREF="#floating_literal">floating_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_expression" HREF="#expression">expression</A></TD><TD><A HREF="#condition">condition</A> /
+<A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#direct_new_declarator">direct_new_declarator</A> /
+<A HREF="#expression">expression</A> /
+<A HREF="#expression_statement">expression_statement</A> /
+<A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#jump_statement">jump_statement</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#primary_expression">primary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_expression_list" HREF="#expression_list">expression_list</A></TD><TD><A HREF="#expression_list">expression_list</A> /
+<A HREF="#initializer">initializer</A> /
+<A HREF="#mem_initializer">mem_initializer</A> /
+<A HREF="#new_initializer">new_initializer</A> /
+<A HREF="#new_placement">new_placement</A> /
+<A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_expression_statement" HREF="#expression_statement">expression_statement</A></TD><TD><A HREF="#for_init_statement">for_init_statement</A> /
+<A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_extension_namespace_definition" HREF="#extension_namespace_definition">extension_namespace_definition</A></TD><TD><A HREF="#named_namespace_definition">named_namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_floating_literal" HREF="#floating_literal">floating_literal</A></TD><TD><A HREF="#literal">literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_floating_suffix" HREF="#floating_suffix">floating_suffix</A></TD><TD><A HREF="#floating_literal">floating_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_for_init_statement" HREF="#for_init_statement">for_init_statement</A></TD><TD><A HREF="#iteration_statement">iteration_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_fractional_constant" HREF="#fractional_constant">fractional_constant</A></TD><TD><A HREF="#floating_literal">floating_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_function_body" HREF="#function_body">function_body</A></TD><TD><A HREF="#function_definition">function_definition</A> /
+<A HREF="#function_try_block">function_try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_function_definition" HREF="#function_definition">function_definition</A></TD><TD><A HREF="#declaration">declaration</A> /
+<A HREF="#member_declaration">member_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_function_specifier" HREF="#function_specifier">function_specifier</A></TD><TD><A HREF="#decl_specifier">decl_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_function_try_block" HREF="#function_try_block">function_try_block</A></TD><TD><A HREF="#function_definition">function_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_group" HREF="#group">group</A></TD><TD><A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#group">group</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#preprocessing_file">preprocessing_file</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_group_part" HREF="#group_part">group_part</A></TD><TD><A HREF="#group">group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_h_char" HREF="#h_char">h_char</A></TD><TD><A HREF="#h_char_sequence">h_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_h_char_sequence" HREF="#h_char_sequence">h_char_sequence</A></TD><TD><A HREF="#h_char_sequence">h_char_sequence</A> /
+<A HREF="#header_name">header_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_handler" HREF="#handler">handler</A></TD><TD><A HREF="#handler_seq">handler_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_handler_seq" HREF="#handler_seq">handler_seq</A></TD><TD><A HREF="#function_try_block">function_try_block</A> /
+<A HREF="#handler_seq">handler_seq</A> /
+<A HREF="#try_block">try_block</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_header_name" HREF="#header_name">header_name</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hex_quad" HREF="#hex_quad">hex_quad</A></TD><TD><A HREF="#universal_character_name">universal_character_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_digit" HREF="#hexadecimal_digit">hexadecimal_digit</A></TD><TD><A HREF="#hex_quad">hex_quad</A> /
+<A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A> /
+<A HREF="#hexadecimal_literal">hexadecimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_escape_sequence" HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A> /
+<A HREF="#hexadecimal_escape_sequence">hexadecimal_escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_hexadecimal_literal" HREF="#hexadecimal_literal">hexadecimal_literal</A></TD><TD><A HREF="#hexadecimal_literal">hexadecimal_literal</A> /
+<A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_id_expression" HREF="#id_expression">id_expression</A></TD><TD><A HREF="#declarator_id">declarator_id</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#primary_expression">primary_expression</A> /
+<A HREF="#template_argument">template_argument</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_identifier" HREF="#identifier">identifier</A></TD><TD><A HREF="#class_head">class_head</A> /
+<A HREF="#class_name">class_name</A> /
+<A HREF="#control_line">control_line</A> /
+<A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#enum_name">enum_name</A> /
+<A HREF="#enum_specifier">enum_specifier</A> /
+<A HREF="#enumerator">enumerator</A> /
+<A HREF="#identifier">identifier</A> /
+<A HREF="#identifier_list">identifier_list</A> /
+<A HREF="#if_group">if_group</A> /
+<A HREF="#jump_statement">jump_statement</A> /
+<A HREF="#labeled_statement">labeled_statement</A> /
+<A HREF="#mem_initializer_id">mem_initializer_id</A> /
+<A HREF="#member_declarator">member_declarator</A> /
+<A HREF="#namespace_alias">namespace_alias</A> /
+<A HREF="#namespace_alias_definition">namespace_alias_definition</A> /
+<A HREF="#original_namespace_definition">original_namespace_definition</A> /
+<A HREF="#original_namespace_name">original_namespace_name</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#preprocessing_token">preprocessing_token</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#template_name">template_name</A> /
+<A HREF="#token">token</A> /
+<A HREF="#type_parameter">type_parameter</A> /
+<A HREF="#typedef_name">typedef_name</A> /
+<A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_identifier_list" HREF="#identifier_list">identifier_list</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#identifier_list">identifier_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_if_group" HREF="#if_group">if_group</A></TD><TD><A HREF="#if_section">if_section</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_if_section" HREF="#if_section">if_section</A></TD><TD><A HREF="#group_part">group_part</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_inclusive_or_expression" HREF="#inclusive_or_expression">inclusive_or_expression</A></TD><TD><A HREF="#inclusive_or_expression">inclusive_or_expression</A> /
+<A HREF="#logical_and_expression">logical_and_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_init_declarator" HREF="#init_declarator">init_declarator</A></TD><TD><A HREF="#init_declarator_list">init_declarator_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_init_declarator_list" HREF="#init_declarator_list">init_declarator_list</A></TD><TD><A HREF="#init_declarator_list">init_declarator_list</A> /
+<A HREF="#simple_declaration">simple_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_initializer" HREF="#initializer">initializer</A></TD><TD><A HREF="#init_declarator">init_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_initializer_clause" HREF="#initializer_clause">initializer_clause</A></TD><TD><A HREF="#initializer">initializer</A> /
+<A HREF="#initializer_list">initializer_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_initializer_list" HREF="#initializer_list">initializer_list</A></TD><TD><A HREF="#initializer_clause">initializer_clause</A> /
+<A HREF="#initializer_list">initializer_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_integer_literal" HREF="#integer_literal">integer_literal</A></TD><TD><A HREF="#literal">literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_integer_suffix" HREF="#integer_suffix">integer_suffix</A></TD><TD><A HREF="#integer_literal">integer_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_iteration_statement" HREF="#iteration_statement">iteration_statement</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_jump_statement" HREF="#jump_statement">jump_statement</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_labeled_statement" HREF="#labeled_statement">labeled_statement</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_linkage_specification" HREF="#linkage_specification">linkage_specification</A></TD><TD><A HREF="#declaration">declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_literal" HREF="#literal">literal</A></TD><TD><A HREF="#primary_expression">primary_expression</A> /
+<A HREF="#token">token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_logical_and_expression" HREF="#logical_and_expression">logical_and_expression</A></TD><TD><A HREF="#logical_and_expression">logical_and_expression</A> /
+<A HREF="#logical_or_expression">logical_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_logical_or_expression" HREF="#logical_or_expression">logical_or_expression</A></TD><TD><A HREF="#assignment_expression">assignment_expression</A> /
+<A HREF="#conditional_expression">conditional_expression</A> /
+<A HREF="#logical_or_expression">logical_or_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_long_suffix" HREF="#long_suffix">long_suffix</A></TD><TD><A HREF="#integer_suffix">integer_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_lparen" HREF="#lparen">lparen</A></TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_mem_initializer" HREF="#mem_initializer">mem_initializer</A></TD><TD><A HREF="#mem_initializer_list">mem_initializer_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_mem_initializer_id" HREF="#mem_initializer_id">mem_initializer_id</A></TD><TD><A HREF="#mem_initializer">mem_initializer</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_mem_initializer_list" HREF="#mem_initializer_list">mem_initializer_list</A></TD><TD><A HREF="#ctor_initializer">ctor_initializer</A> /
+<A HREF="#mem_initializer_list">mem_initializer_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_member_declaration" HREF="#member_declaration">member_declaration</A></TD><TD><A HREF="#member_specification">member_specification</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_member_declarator" HREF="#member_declarator">member_declarator</A></TD><TD><A HREF="#member_declarator_list">member_declarator_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_member_declarator_list" HREF="#member_declarator_list">member_declarator_list</A></TD><TD><A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#member_declarator_list">member_declarator_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_member_specification" HREF="#member_specification">member_specification</A></TD><TD><A HREF="#class_specifier">class_specifier</A> /
+<A HREF="#member_specification">member_specification</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_multiplicative_expression" HREF="#multiplicative_expression">multiplicative_expression</A></TD><TD><A HREF="#additive_expression">additive_expression</A> /
+<A HREF="#multiplicative_expression">multiplicative_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_named_namespace_definition" HREF="#named_namespace_definition">named_namespace_definition</A></TD><TD><A HREF="#namespace_definition">namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_alias" HREF="#namespace_alias">namespace_alias</A></TD><TD><A HREF="#namespace_name">namespace_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_alias_definition" HREF="#namespace_alias_definition">namespace_alias_definition</A></TD><TD><A HREF="#block_declaration">block_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_body" HREF="#namespace_body">namespace_body</A></TD><TD><A HREF="#extension_namespace_definition">extension_namespace_definition</A> /
+<A HREF="#original_namespace_definition">original_namespace_definition</A> /
+<A HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_definition" HREF="#namespace_definition">namespace_definition</A></TD><TD><A HREF="#declaration">declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_namespace_name" HREF="#namespace_name">namespace_name</A></TD><TD><A HREF="#class_or_namespace_name">class_or_namespace_name</A> /
+<A HREF="#qualified_namespace_specifier">qualified_namespace_specifier</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nested_name_specifier" HREF="#nested_name_specifier">nested_name_specifier</A></TD><TD><A HREF="#base_specifier">base_specifier</A> /
+<A HREF="#class_head">class_head</A> /
+<A HREF="#declarator_id">declarator_id</A> /
+<A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#mem_initializer_id">mem_initializer_id</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#nested_name_specifier">nested_name_specifier</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#ptr_operator">ptr_operator</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#qualified_namespace_specifier">qualified_namespace_specifier</A> /
+<A HREF="#simple_type_specifier">simple_type_specifier</A> /
+<A HREF="#using_declaration">using_declaration</A> /
+<A HREF="#using_directive">using_directive</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_declarator" HREF="#new_declarator">new_declarator</A></TD><TD><A HREF="#new_declarator">new_declarator</A> /
+<A HREF="#new_type_id">new_type_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_expression" HREF="#new_expression">new_expression</A></TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_initializer" HREF="#new_initializer">new_initializer</A></TD><TD><A HREF="#new_expression">new_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_line" HREF="#new_line">new_line</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#elif_group">elif_group</A> /
+<A HREF="#else_group">else_group</A> /
+<A HREF="#endif_line">endif_line</A> /
+<A HREF="#group_part">group_part</A> /
+<A HREF="#if_group">if_group</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_placement" HREF="#new_placement">new_placement</A></TD><TD><A HREF="#new_expression">new_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_new_type_id" HREF="#new_type_id">new_type_id</A></TD><TD><A HREF="#new_expression">new_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nondigit" HREF="#nondigit">nondigit</A></TD><TD><A HREF="#identifier">identifier</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_nonzero_digit" HREF="#nonzero_digit">nonzero_digit</A></TD><TD><A HREF="#decimal_literal">decimal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_digit" HREF="#octal_digit">octal_digit</A></TD><TD><A HREF="#octal_escape_sequence">octal_escape_sequence</A> /
+<A HREF="#octal_literal">octal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_escape_sequence" HREF="#octal_escape_sequence">octal_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_octal_literal" HREF="#octal_literal">octal_literal</A></TD><TD><A HREF="#integer_literal">integer_literal</A> /
+<A HREF="#octal_literal">octal_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_operator" HREF="#operator">operator</A></TD><TD><A HREF="#operator_function_id">operator_function_id</A> /
+<A HREF="#token">token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_operator_function_id" HREF="#operator_function_id">operator_function_id</A></TD><TD><A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_original_namespace_definition" HREF="#original_namespace_definition">original_namespace_definition</A></TD><TD><A HREF="#named_namespace_definition">named_namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_original_namespace_name" HREF="#original_namespace_name">original_namespace_name</A></TD><TD><A HREF="#extension_namespace_definition">extension_namespace_definition</A> /
+<A HREF="#namespace_name">namespace_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_paramerter_declaration_clause" HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A></TD><TD><A HREF="#direct_abstract_declarator">direct_abstract_declarator</A> /
+<A HREF="#direct_declarator">direct_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_parameter_declaration" HREF="#parameter_declaration">parameter_declaration</A></TD><TD><A HREF="#parameter_declaration_list">parameter_declaration_list</A> /
+<A HREF="#template_parameter">template_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_parameter_declaration_list" HREF="#parameter_declaration_list">parameter_declaration_list</A></TD><TD><A HREF="#paramerter_declaration_clause">paramerter_declaration_clause</A> /
+<A HREF="#parameter_declaration_list">parameter_declaration_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pm_expression" HREF="#pm_expression">pm_expression</A></TD><TD><A HREF="#multiplicative_expression">multiplicative_expression</A> /
+<A HREF="#pm_expression">pm_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_postfix_expression" HREF="#postfix_expression">postfix_expression</A></TD><TD><A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pp_number" HREF="#pp_number">pp_number</A></TD><TD><A HREF="#pp_number">pp_number</A> /
+<A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pp_tokens" HREF="#pp_tokens">pp_tokens</A></TD><TD><A HREF="#control_line">control_line</A> /
+<A HREF="#group_part">group_part</A> /
+<A HREF="#pp_tokens">pp_tokens</A> /
+<A HREF="#replacement_list">replacement_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_file" HREF="#preprocessing_file">preprocessing_file</A></TD><TD><A HREF="#syntax">syntax</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_op_or_punc" HREF="#preprocessing_op_or_punc">preprocessing_op_or_punc</A></TD><TD><A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_preprocessing_token" HREF="#preprocessing_token">preprocessing_token</A></TD><TD><A HREF="#pp_tokens">pp_tokens</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_primary_expression" HREF="#primary_expression">primary_expression</A></TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pseudo_destructor_name" HREF="#pseudo_destructor_name">pseudo_destructor_name</A></TD><TD><A HREF="#postfix_expression">postfix_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_ptr_operator" HREF="#ptr_operator">ptr_operator</A></TD><TD><A HREF="#abstract_declarator">abstract_declarator</A> /
+<A HREF="#conversion_declarator">conversion_declarator</A> /
+<A HREF="#declarator">declarator</A> /
+<A HREF="#new_declarator">new_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_pure_specifier" HREF="#pure_specifier">pure_specifier</A></TD><TD><A HREF="#member_declarator">member_declarator</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_q_char" HREF="#q_char">q_char</A></TD><TD><A HREF="#q_char_sequence">q_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_q_char_sequence" HREF="#q_char_sequence">q_char_sequence</A></TD><TD><A HREF="#header_name">header_name</A> /
+<A HREF="#q_char_sequence">q_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_qualified_id" HREF="#qualified_id">qualified_id</A></TD><TD><A HREF="#id_expression">id_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_qualified_namespace_specifier" HREF="#qualified_namespace_specifier">qualified_namespace_specifier</A></TD><TD><A HREF="#namespace_alias_definition">namespace_alias_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_relational_expression" HREF="#relational_expression">relational_expression</A></TD><TD><A HREF="#equality_expression">equality_expression</A> /
+<A HREF="#relational_expression">relational_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_replacement_list" HREF="#replacement_list">replacement_list</A></TD><TD><A HREF="#control_line">control_line</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_s_char" HREF="#s_char">s_char</A></TD><TD><A HREF="#s_char_sequence">s_char_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_s_char_sequence" HREF="#s_char_sequence">s_char_sequence</A></TD><TD><A HREF="#s_char_sequence">s_char_sequence</A> /
+<A HREF="#string_literal">string_literal</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_selection_statement" HREF="#selection_statement">selection_statement</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_shift_expression" HREF="#shift_expression">shift_expression</A></TD><TD><A HREF="#relational_expression">relational_expression</A> /
+<A HREF="#shift_expression">shift_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_sign" HREF="#sign">sign</A></TD><TD><A HREF="#exponent_part">exponent_part</A> /
+<A HREF="#pp_number">pp_number</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_simple_declaration" HREF="#simple_declaration">simple_declaration</A></TD><TD><A HREF="#block_declaration">block_declaration</A> /
+<A HREF="#for_init_statement">for_init_statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_simple_escape_sequence" HREF="#simple_escape_sequence">simple_escape_sequence</A></TD><TD><A HREF="#escape_sequence">escape_sequence</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_simple_type_specifier" HREF="#simple_type_specifier">simple_type_specifier</A></TD><TD><A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#type_specifier">type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_statement" HREF="#statement">statement</A></TD><TD><A HREF="#iteration_statement">iteration_statement</A> /
+<A HREF="#labeled_statement">labeled_statement</A> /
+<A HREF="#selection_statement">selection_statement</A> /
+<A HREF="#statement_seq">statement_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_statement_seq" HREF="#statement_seq">statement_seq</A></TD><TD><A HREF="#compound_statement">compound_statement</A> /
+<A HREF="#statement_seq">statement_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_storage_class_specifier" HREF="#storage_class_specifier">storage_class_specifier</A></TD><TD><A HREF="#decl_specifier">decl_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_string_literal" HREF="#string_literal">string_literal</A></TD><TD><A HREF="#asm_definition">asm_definition</A> /
+<A HREF="#linkage_specification">linkage_specification</A> /
+<A HREF="#literal">literal</A> /
+<A HREF="#preprocessing_token">preprocessing_token</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_syntax" HREF="#syntax">syntax</A></TD><TD>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_argument" HREF="#template_argument">template_argument</A></TD><TD><A HREF="#template_argument_list">template_argument_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_argument_list" HREF="#template_argument_list">template_argument_list</A></TD><TD><A HREF="#template_argument_list">template_argument_list</A> /
+<A HREF="#template_id">template_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_declaration" HREF="#template_declaration">template_declaration</A></TD><TD><A HREF="#declaration">declaration</A> /
+<A HREF="#member_declaration">member_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_id" HREF="#template_id">template_id</A></TD><TD><A HREF="#class_head">class_head</A> /
+<A HREF="#class_name">class_name</A> /
+<A HREF="#elaborated_type_specifier">elaborated_type_specifier</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#simple_type_specifier">simple_type_specifier</A> /
+<A HREF="#unqualified_id">unqualified_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_name" HREF="#template_name">template_name</A></TD><TD><A HREF="#template_id">template_id</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_parameter" HREF="#template_parameter">template_parameter</A></TD><TD><A HREF="#template_parameter_list">template_parameter_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_template_parameter_list" HREF="#template_parameter_list">template_parameter_list</A></TD><TD><A HREF="#template_declaration">template_declaration</A> /
+<A HREF="#template_parameter_list">template_parameter_list</A> /
+<A HREF="#type_parameter">type_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_throw_expression" HREF="#throw_expression">throw_expression</A></TD><TD><A HREF="#assignment_expression">assignment_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_translation_unit" HREF="#translation_unit">translation_unit</A></TD><TD><A HREF="#syntax">syntax</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_try_block" HREF="#try_block">try_block</A></TD><TD><A HREF="#statement">statement</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_id" HREF="#type_id">type_id</A></TD><TD><A HREF="#cast_expression">cast_expression</A> /
+<A HREF="#new_expression">new_expression</A> /
+<A HREF="#postfix_expression">postfix_expression</A> /
+<A HREF="#template_argument">template_argument</A> /
+<A HREF="#type_id_list">type_id_list</A> /
+<A HREF="#type_parameter">type_parameter</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_id_list" HREF="#type_id_list">type_id_list</A></TD><TD><A HREF="#exception_specification">exception_specification</A> /
+<A HREF="#type_id_list">type_id_list</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_name" HREF="#type_name">type_name</A></TD><TD><A HREF="#declarator_id">declarator_id</A> /
+<A HREF="#pseudo_destructor_name">pseudo_destructor_name</A> /
+<A HREF="#simple_type_specifier">simple_type_specifier</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_parameter" HREF="#type_parameter">type_parameter</A></TD><TD><A HREF="#template_parameter">template_parameter</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_specifier" HREF="#type_specifier">type_specifier</A></TD><TD><A HREF="#decl_specifier">decl_specifier</A> /
+<A HREF="#type_specifier_seq">type_specifier_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_type_specifier_seq" HREF="#type_specifier_seq">type_specifier_seq</A></TD><TD><A HREF="#condition">condition</A> /
+<A HREF="#conversion_type_id">conversion_type_id</A> /
+<A HREF="#exception_declatation">exception_declatation</A> /
+<A HREF="#new_type_id">new_type_id</A> /
+<A HREF="#type_id">type_id</A> /
+<A HREF="#type_specifier_seq">type_specifier_seq</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_typedef_name" HREF="#typedef_name">typedef_name</A></TD><TD><A HREF="#type_name">type_name</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unary_expression" HREF="#unary_expression">unary_expression</A></TD><TD><A HREF="#cast_expression">cast_expression</A> /
+<A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unary_operator" HREF="#unary_operator">unary_operator</A></TD><TD><A HREF="#unary_expression">unary_expression</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_universal_character_name" HREF="#universal_character_name">universal_character_name</A></TD><TD><A HREF="#c_char">c_char</A> /
+<A HREF="#nondigit">nondigit</A> /
+<A HREF="#s_char">s_char</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unnamed_namespace_definition" HREF="#unnamed_namespace_definition">unnamed_namespace_definition</A></TD><TD><A HREF="#namespace_definition">namespace_definition</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unqualified_id" HREF="#unqualified_id">unqualified_id</A></TD><TD><A HREF="#id_expression">id_expression</A> /
+<A HREF="#member_declaration">member_declaration</A> /
+<A HREF="#qualified_id">qualified_id</A> /
+<A HREF="#using_declaration">using_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_unsigned_suffix" HREF="#unsigned_suffix">unsigned_suffix</A></TD><TD><A HREF="#integer_suffix">integer_suffix</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_using_declaration" HREF="#using_declaration">using_declaration</A></TD><TD><A HREF="#block_declaration">block_declaration</A> /
+<A HREF="#member_declaration">member_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_using_directive" HREF="#using_directive">using_directive</A></TD><TD><A HREF="#block_declaration">block_declaration</A>
+</TD></TR>
+<TR><TD VALIGN=TOP>
+<A NAME="xref_token" HREF="#token">token</A></TD><TD><I>Not used in any production</I></TD></TR>
+</TBODY>
+</TABLE>
+<HR>
+<FONT SIZE=-2>Created with ebnf2html.pl (<a href="mailto:andreas.gieriet@externsoft.ch?subject=Request:%20EBNF%20Tools">andreas.gieriet@externsoft.ch</a>)</Font>
+</BODY>
+</HTML>

@@ -1,0 +1,158 @@
+preprocessing_file	 : [group].
+group			 : { group_part }.
+group_part		 : [pp_tokens] new_line
+			 | if_section
+			 | control_line
+			 .
+if_section		 : if_group {elif_group} [else_group] endif_line .
+if_group		 : '#' 'if' pp_expression new_line [group]
+			 | '#' 'ifdef' identifier new_line [group]
+			 | '#' 'ifndef' identifier new_line [group]
+			 .
+elif_group		 : '#' 'elif' pp_expression new_line [group] .
+else_group		 : '#' 'else' new_line [group] .
+endif_line		 : '#' 'endif' new_line .
+
+control_line		: '#' 'include' pp_tokens                    new_line
+			| '#' 'define'  identifier replacement_list  new_line
+			| '#' 'define'  lparen [identifier_list] ')'
+						   replacement_list  new_line
+			| '#' 'undef'   identifier                   new_line
+			| '#' 'line'    pp_tokens                    new_line
+			| '#' 'error'   [pp_tokens]                  new_line
+			| '#' 'pragma'  [pp_tokens]                  new_line
+			| '#'                                        new_line
+			.
+lparen			: LEFT_PARENTHESIS_WITHOUT_LEADING_WS .
+replacement_list	: [pp_tokens].
+pp_tokens		: { preprocessing_token } .
+new_line		: NEWLINE .
+
+identifier_list		: identifier {',' identifier}.
+
+
+hex_quad		 : hexadecimal_digit hexadecimal_digit
+			   hexadecimal_digit hexadecimal_digit
+			 .
+universal_character_name : '\u' hex_quad
+			 | '\U' hex_quad hex_quad
+			 .
+
+preprocessing_token	 : header_name
+			 | identifier
+			 | pp_number
+			 | character_literal
+			 | string_literal
+			 | preprocessing_op_or_punc
+			 | ANY_NOT_YET_COVERED_NON_WS_CHARACTER
+			 .
+header_name		 : '<' h_char_sequence '>'
+			 | '"' q_char_sequence '"'
+			 .
+h_char_sequence		 : h_char { h_char } .
+h_char			 : ANY_CHARACTER_EXCEPT_NEWLINE_GT .
+q_char_sequence		 : q_char { q_char } .
+q_char			 : ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE .
+pp_number		 : ['.'] digit {digit|nondigit|('e'|'E')sign|'.'}.
+sign			 : '+'|'-'.
+identifier		 : nondigit { nondigit | digit } .
+nondigit		 : universal_character_name
+			 | ALPHA_CHARACTER
+			 | '_'
+			 .
+digit			 : DIGIT .
+
+
+preprocessing_op_or_punc :'{'|'}'|'['|']'|'#'|'##'|'('|')'
+			 |'<:'|':>'|'<%'|'%>'|'%:'|'%:%:'|';'|':'|'...'
+			 |'new'|'delete'|'?'|'::'|'.'|'.*'
+			 |'+'|'-'|'*'|'/'|'%'|'^'|'&'|'|'|'~'
+			 |'!'|'='|'<'|'>'|'+='|'-='|'*='|'/='|'%='
+			 |'^='|'&='|'|='|'<<'|'>>'|'>>='|'<<='|'=='|'!='
+			 |'<='|'>='|'&&'|'||'|'++'|'--'|','|'->*'|'->'
+			 |'and'|'and_eq'|'bitand'|'bitor'|'compl'|'not'
+			 |'not_eq'|'or'|'or_eq'|'xor'|'xor_eq'
+			 .
+integer_literal		 : decimal_literal [ integer_suffix ]
+			 | octal_literal [ integer_suffix ]
+			 | hexadecimal_literal [ integer_suffix ]
+			 .
+decimal_literal		 : nonzero_digit { digit } .
+octal_literal		 : '0' { octal_digit } .
+hexadecimal_literal	 : ('0x'|'0X') hexadecimal_digit {hexadecimal_digit} .
+nonzero_digit		 : '1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'.
+octal_digit		 : '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'.
+hexadecimal_digit	 : '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
+			 | 'a'|'b'|'c'|'d'|'e'|'f'
+			 | 'A'|'B'|'C'|'D'|'E'|'F'
+			 .
+integer_suffix		 : unsigned_suffix [ long_suffix ]
+			 | long_suffix [ unsigned_suffix ]
+			 .
+unsigned_suffix		 : 'u' | 'U' .
+long_suffix		 : 'l' | 'L' .
+
+
+character_literal	 : "'" c_char_sequence "'"
+			 | "L'" c_char_sequence "'"
+			 .
+c_char_sequence		 : c_char { c_char } .
+c_char			 : ANY_CHARACTER_EXCEPT_NEWLINE_SQUOTE_BACKSLASH
+			 | escape_sequence
+			 | universal_character_name
+			 .
+escape_sequence		 : simple_escape_sequence
+			 | octal_escape_sequence
+			 | hexadecimal_escape_sequence
+			 .
+simple_escape_sequence	 : "\'"|'\"'|'\?'|'\\'
+			 | '\a'|'\b'|'\f'|'\n'|'\r'|'\t'|'\v'
+			 .
+octal_escape_sequence	 : '\' octal_digit [ octal_digit [ octal_digit ]] .
+hexadecimal_escape_sequence : '\x' hexadecimal_digit { hexadecimal_digit } .
+string_literal		 : '"' [s_char_sequence] '"'
+			 | 'L"' [s_char_sequence] '"'
+			 .
+
+
+s_char_sequence		 : s_char { s_char } .
+s_char			 : ANY_CHARACTER_EXCEPT_NEWLINE_DQUOTE_BACKSLASH
+			 | escape_sequence
+			 | universal_character_name
+			 .
+boolean_literal		 : 'false'|'true'.
+
+
+primary_expression	 : integer_literal
+			 | character_literal
+			 | '(' pp_expression ')'
+			 | identifier
+			 .
+unary_expression	 : [unary_operator] primary_expression .
+unary_operator		 : '+'|'-'|'!'|'~'.
+multiplicative_expression : unary_expression {('*'|'/'|'%') unary_expression}.
+additive_expression	 : multiplicative_expression
+                           {('+'|'-') multiplicative_expression}
+			 .
+shift_expression	 : additive_expression
+			   {('<<'|'>>') additive_expression}
+			 .
+relational_expression	 : shift_expression
+			   {('<'|'>'|'<='|'>=') shift_expression}
+			 .
+equality_expression	 : relational_expression
+			   {('=='|'!=') relational_expression}
+			 .
+and_expression		 : equality_expression {'&' equality_expression}.
+exclusive_or_expression	 : and_expression {'^' and_expression}.
+inclusive_or_expression	 : exclusive_or_expression{'|'exclusive_or_expression}.
+logical_and_expression	 : inclusive_or_expression
+			   {'&&' inclusive_or_expression}
+			 .
+
+
+logical_or_expression	 : logical_and_expression{'||' logical_and_expression}.
+conditional_expression	 : logical_or_expression
+			   [ '?' pp_expression ':' pp_expression ]
+			 .
+pp_expression		 : conditional_expression .

@@ -1,0 +1,537 @@
+# start token
+syntax           : program .
+
+# lexical tokens
+# data type nonterminals
+base_id          : C_STYLE_IDENTIFIER .
+qstring          : C_STYLE_QUOTED_STRING_LITERAL .
+sqstring         : C_STYLE_SINGLE_QUOTED_STRING_LITERAL .
+int64bit         : C_STYLE_64_BIT_INTEGER_LITERAL .
+float64bit       : C_STYLE_FLOATING_POINT_LITERAL .
+hexbyte          : hexdigit hexdigit .
+hexdigit         : '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+                 | 'a' | 'b' | 'c' | 'd' | 'e' | 'f'
+                 | 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
+                 .
+comp_qstring     : qstring { '+' qstring } .
+int32            : int64bit .
+int64            : int64bit .
+float64          : float64bit
+                 | 'float32' '(' int32 ')'
+                 | 'float64' '(' int64 ')'
+                 .
+bytes            : { hexbyte } .
+truefalse        : 'true' | 'false' .
+
+# identifier nonterminsals
+id               : base_id | sqstring .
+comp_name        : id { '.' id } .
+
+# module-level declarations
+program          : decls .
+decls            : { decl } .
+decl             : class_head          '{' class_decls '}'
+                 | namespace_head      '{' decls '}'
+                 | method_head         '{' method_decls '}'
+                 | assembly_head       '{' assembly_decls '}'
+                 | assemblyref_head    '{' assemblyref_decls '}'
+                 | exptype_head        '{' exptype_decls '}'
+                 | manifestres_head    '{' manifestres_decls '}'
+                 | field_decl
+                 | data_decl
+                 | vtfixup_decl
+                 | file_decl
+                 | module_head
+                 | sec_decl
+                 | customattr_decl
+                 | language_decl
+                 | extsource_spec
+                 | '.subsystem' int32
+                 | '.corflags' int32
+                 | '.file' 'alignment' int32
+                 | '.imagebase' int64
+                 .
+
+# external source declarations 
+extsource_spec   : '.line' int32 [ ':' int32 ] [ sqstring ] .
+language_decl    : '.language' sqstring [ ',' sqstring [ ',' sqstring ] ] .
+
+# v-table fixup declaration
+vtfixup_decl     : '.vtfixup' '[' int32 ']' { vtfixup_attr } 'at' id .
+vtfixup_attr     : 'int32' | 'int64' | 'fromunmanagd' | 'callmostderived' .
+
+# namespace and type declarations
+namespace_head   : '.namespace' comp_name .
+class_head       : '.class' { class_attr } id [ extends_clause ] [ impl_clause ] .
+class_attr       : 'public'
+                 | 'private'
+                 | 'nested' nested_access
+                 | 'value'
+                 | 'enum'
+                 | 'interface'
+                 | 'sealed'
+                 | 'abstract'
+                 | 'auto'
+                 | 'sequential'
+                 | 'explicit'
+                 | 'ansi'
+                 | 'unicode'
+                 | 'autochar'
+                 | 'import'
+                 | 'serializable'
+                 | 'beforefieldinit'
+                 | 'specialname'
+                 | 'rtspecialname'
+                 .
+nested_access	 : 'public'
+				 | 'private'
+				 | 'family'
+				 | 'assembly'
+				 | 'famandassem'
+				 | 'famorassem'
+				 .
+extends_clause   : 'extends' class_ref .
+impl_clause      : 'implements' class_ref { ',' class_ref } .
+class_ref        : slashed_name
+				 | '[' class_ref_prefix ']' slashed_name .
+class_ref_prefix : [ '.module' ] comp_name .
+slashed_name     : comp_name { '/' comp_name } .
+class_decls      : { class_decl } .
+class_decl       : method_head         '{' method_decls '}'
+                 | class_head          '{' class_decls '}'
+                 | event_head          '{' event_decls '}'
+                 | property_head       '{' property_decls '}'
+                 | field_decl
+                 | data_decl
+                 | sec_decl
+                 | customattr_decl
+                 | language_decl
+                 | extsource_spec
+                 | '.size' int32
+                 | '.pack' int32
+                 | '.override' type_spec '::' method_name 'with' call_conv type type_spec '::' method_name '(' sig_args ')'
+                 .
+
+# signature type specifications
+type             : type_prefix { type_suffix } .
+type_prefix      : 'class' class_ref
+                 | 'object'
+                 | 'string'
+                 | 'value' 'class' class_ref
+                 | 'valuetype' class_ref
+                 | 'method' call_conv type '*' '(' sig_args ')'
+                 | 'typedref'
+                 | 'char'
+                 | 'void'
+                 | 'bool'
+				 | sized_float
+                 | sized_int
+                 | 'unsigned' sized_int
+                 | 'native' [ 'unsigned' ] 'int'
+                 .
+sized_int		 : 'int8'
+				 | 'int16'
+				 | 'int32'
+				 | 'int64'
+				 .
+int				 : sized_int
+				 | 'int'
+				 .
+sized_float		 : 'float32'
+                 | 'float64'
+				 .
+type_suffix      : '[' bounds ']'
+                 | '&'
+                 | '*'
+                 | 'pinned'
+                 | 'modreq' '(' class_ref ')'
+                 | 'modopt' '(' class_ref ')'
+                 .
+
+bounds           : bound { ',' bound } .
+bound            : [ int32 ] [ '...' [ int32 ] ].
+call_conv        : { 'instance' | 'explicit' } [ call_kind ] .
+call_kind        : 'default'
+				 | 'vararg'
+				 | 'unmanaged' unmanaged_kind
+				 .
+unmanaged_kind	 : 'cdecl'
+				 | 'stdcall'
+				 | 'thiscall'
+				 | 'fastcall'
+				 .
+
+# native type declarations
+native_type		 : [ native_prefix { native_suffix } ] .
+native_prefix	 : 'custom' '(' comp_qstring ',' comp_qstring ')'
+				 | 'fixed' fixed_spec '[' int32 ']'
+				 | 'variant' [ 'bool' ]
+				 | 'error'
+				 | 'currency'
+				 | 'syschar'
+				 | 'void'
+				 | 'bool'
+				 | sized_float
+				 | int
+                 | 'unsigned' int
+				 | 'decimal'
+				 | 'date'
+				 | 'bstr'
+				 | 'lpstr'
+				 | 'lpwstr'
+				 | 'lptstr'
+				 | 'objectref'
+				 | 'iunknown'
+				 | 'idispatch'
+				 | 'struct'
+				 | 'interface'
+				 | 'safearray' variant_type [ ',' comp_qstring ]
+				 | 'nested' 'struct'
+				 | 'byvalstr'
+				 | 'ansi' 'bstr'
+				 | 'tbstr'
+				 | 'method'
+				 | 'as' 'any'
+				 | 'lpstruct'
+				 .
+fixed_spec		 : 'sysstring'
+				 | 'array'
+				 .
+native_suffix	 : '*' | '[' native_bound ']' .
+native_bound	 : [ int32 ] [ '+' [ int32 ] ] .
+variant_type	 : [ variant_prefix { variant_suffix } ] .
+variant_prefix	 : 'null'
+				 | 'variant'
+				 | 'currency'
+				 | 'void'
+				 | 'bool'
+				 | sized_float
+				 | sized_int
+                 | 'unsigned' int
+				 | 'decimal'
+				 | 'data'
+				 | 'bstr'
+				 | 'lpstr'
+				 | 'lpwstr'
+				 | 'iunknown'
+				 | 'idispatch'
+				 | 'safearray'
+				 | 'int'
+				 | 'error'
+				 | 'hresult'
+				 | 'carray'
+				 | 'userdefined'
+				 | 'record'
+				 | 'filetime'
+				 | 'blob'
+				 | 'stream'
+				 | 'storage'
+				 | 'streamed_object'
+				 | 'stored_object'
+				 | 'blob_object'
+				 | 'cf'
+				 | 'clsid'
+				 .
+variant_suffix	 : '*'
+				 | '[' ']'
+				 | 'vector'
+				 | '&'
+				 .
+
+# field declarations
+field_decl		 : '.field' [ repeat_opt ] { field_attr } type id [ at_opt ] [ init_opt ] .
+repeat_opt		 : '[' int32 ']' .
+field_attr		 : 'public'
+				 | 'private'
+				 | 'family'
+				 | 'assembly'
+				 | 'famandassem'
+				 | 'famorassem'
+				 | 'privatescope'
+				 | 'static'
+				 | 'initonly'
+				 | 'rtspecialname'
+				 | 'specialname'
+				 | marshal_spec
+				 | 'literal'
+				 | 'notserialized'
+				 .
+marshal_spec	 : 'marshal' '(' native_type ')' .
+at_opt			 : 'at' id .
+init_opt		 : '=' field_init .
+field_init		 : sized_float '(' num64 ')'
+				 | sized_int '(' int64 ')'
+				 | 'char' '(' int64 ')'
+				 | 'bool' '(' truefalse ')'
+				 | comp_qstring
+				 | 'bytearray' arrayvalue
+				 | 'nullref'
+				 .
+arrayvalue		 : '(' bytes ')' .
+num64			 : int64
+				 | float64
+				 .
+
+# data declarations
+data_decl		 : data_head data_body .
+data_head		 : '.data' [ 'tls' ] [ id '=' ] .
+data_body		 : '{' data_items '}'
+				 | data_item
+				 .
+data_items		 : data_item { ',' data_item }.
+data_item		 : 'char' '*' '(' comp_qstring ')'
+				 | '&' '(' id ')'
+				 | 'bytearray' '=' arrayvalue
+				 | sized_float [ '(' float64 ')' ] [ repeat_opt ]
+				 | sized_int [ '(' int64 ')' ] [ repeat_opt ]
+				 .
+
+# method header declarations
+method_head		 : '.method' { method_attr } call_conv { param_attr } type [ marshal_spec ] method_name '(' sig_args ')' { impl_attr } .
+method_attr		 : 'static'
+				 | 'public'
+				 | 'private'
+				 | 'family'
+				 | 'assembly'
+				 | 'famandassem'
+				 | 'famorassem'
+				 | 'privatescope'
+				 | 'final'
+				 | 'virtual'
+				 | 'abstract'
+				 | 'hidebysig'
+				 | 'newslot'
+				 | 'reqsecobj'
+				 | 'specialname'
+				 | 'rtspecialname'
+				 | 'unmanagedexp'
+				 | 'pinvokeimpl' '(' [ comp_qstring [ 'as' comp_qstring ] ] { pinv_attr } ')'
+				 .
+pinv_attr		 : 'nomangle'
+				 | 'ansi'
+				 | 'unicode'
+				 | 'autochar'
+				 | 'lasterr'
+				 | 'winapi'
+				 | unmanaged_kind
+				 .
+method_name		 : '.ctor'
+				 | '.cctor'
+				 | comp_name
+				 .
+param_attr		 : '[' param_spec ']' .
+param_spec		 : 'in'
+				 | 'out'
+				 | 'opt'
+				 .
+impl_attr 		 : 'native'
+				 | 'cil'
+				 | 'optil'
+				 | 'managed'
+				 | 'unmanaged'
+				 | 'forwardref'
+				 | 'preservesig'
+				 | 'runtime'
+				 | 'internalcall'
+				 | 'synchronized'
+				 | 'noinlining'
+				 .
+sig_args		 : [ sig_arg { ',' sig_arg } ] .
+sig_arg			 : '...'
+				 | { param_attr } type [ marshal_spec ] [ id ]
+				 .
+
+# method body declarations
+method_decls     : { method_decl } .
+method_decl		 : '.emitbyte' int32
+				 | '.maxstack' int32
+				 | '.locals' [ 'init' ] '(' sig_args ')'
+				 | '.entrypoint'
+				 | '.zeroinit'
+				 | '.export' '[' int32 ']' [ 'as' id ]
+				 | '.vtentry' int32 ':' int32
+				 | '.override' type_spec '::' method_name
+				 | '.param' '[' int32 ']' [ init_opt ]
+				 | sec_decl
+				 | customattr_decl
+				 | data_decl
+				 | language_decl
+				 | extsource_spec
+				 | scope_block
+				 | seh_block
+				 | instr
+				 | id ':'
+				 .
+type_spec		 : class_ref
+				 | '[' class_ref_prefix ']'
+				 | type
+				 .
+scope_block		 : '{' method_decls '}' .
+seh_block		 : try_block { seh_clause } .
+try_block		 : '.try' try_spec .
+try_spec		 : scope_block
+				 | id 'to' id
+				 | int32 'to' int32
+				 .
+seh_clause		 : 'catch' class_ref handler_block
+				 | 'finally' handler_block
+				 | 'fault' handler_block
+				 | filter_clause handler_block
+				 .
+filter_clause	 : 'filter' filter_spec .
+filter_spec		 : scope_block
+				 | id
+				 | int32
+				 .
+handler_block	 : scope_block
+				 | 'handler' handler_spec
+				 .
+handler_spec	 : id 'to' id
+				 | int32 'to' int32
+				 .
+instr			 : INSTR . #XXX to be enhanced
+
+#instr			 : instr_nop
+#				 | instr_var ( id | int32 )
+#				 | instr_i int32
+#				 | instr_i8 int64
+#				 | instr_r ( float64 | int64 | arrayvalue )
+#				 | instr_brtarget ( id | int32 )
+#				 | instr_method method_ref
+#				 | instr_field type id
+#				 | instr_type type_spec
+#				 | instr_string ( comp_qstring | 'bytearray' '=' arrayvalue )
+#				 | instr_sig call_conv type '(' sig_args ')'
+#				 | instr_tok owner_type
+#				 | instr_switch ( '(' [ labels ] ')' | (+unsigned int32) { int32 } )
+#				 | instr_op_arg0
+#				 | instr_op_arg1 number
+#				 | instr_op_arg2 number number
+#				 | instr_check
+#				 .
+
+method_ref		 : call_conv type [ type_spec '::' ] method_name '(' sig_args ')' .
+labels			 : label { ',' label } [ ',' ] .
+label			 : id | int32 .
+owner_type		 : type_spec | member_ref .
+member_ref		 : 'method' method_ref
+				 | 'field' type [ type_spec '::' ] id
+				 .
+
+# event declarations
+event_head		 : '.event' { event_attr } [ type_spec ] id .
+event_attr		 : 'rtspecialname' | 'specialname' .
+event_decls		 : { event_decl } .
+event_decl		 : '.addon' method_ref
+				 | '.removeon' method_ref
+				 | '.fire' method_ref
+				 | '.other' method_ref
+				 | customattr_decl
+				 | language_decl
+				 | extsource_spec
+				 .
+
+# property declations
+property_head	 : '.property' { property_attr } type id '('  sig_args ')' [ init_opt ] .
+property_attr	 : 'rtspecialname' | 'specialname' .
+property_decls	 : { property_decl } .
+property_decl	 : '.set' method_ref
+				 | '.get' method_ref
+				 | '.other' method_ref
+				 | customattr_decl
+				 | language_decl
+				 | extsource_spec
+				 .
+
+# custom attribute declartions
+customattr_decl	 : '.custom' [ '(' owner_type ')' ] custom_type [ '=' string_or_bytes ] .
+custom_type		 : call_conv type [ type_spec '::' ] '.ctor' '(' sig_args ')' .
+string_or_bytes	 : comp_qstring
+				 | arrayvalue
+				 .
+ 
+# security declarations
+sec_decl		 : '.permission' sec_action sec_spec .
+sec_spec		 : type_spec [ '(' name_value_pairs ')' ]
+				 | '=' arrayvalue
+				 .
+name_value_pairs : name_value_pair { name_value_pair } .
+name_value_pair	 : comp_qstring '=' cavalue .
+cavalue			 : truefalse
+				 | int32 '(' int32 ')'
+				 | comp_qstring
+				 | class_ref '(' [ va_spec ] int32 ')'
+				 .
+va_spec			 : 'int8' ':'
+				 | 'int16' ':'
+				 | 'int32' ':'
+				 .
+sec_action		 : 'request'
+				 | 'demand'
+				 | 'assert'
+				 | 'deny'
+				 | 'permitonly'
+				 | 'linkcheck'
+				 | 'inheritcheck'
+				 | 'reqmin'
+				 | 'reqopt'
+				 | 'reqrefuse'
+				 | 'prejitgrant'
+				 | 'prejitdeny'
+				 | 'noncasdemand'
+				 | 'noncaslinkdemand'
+				 | 'noncasinheritance'
+				 .
+
+# mainfest declarations
+module_head		 : '.module' [ [ 'extern' ] comp_name ] .
+file_decl		 : '.file' { file_attr } comp_name [ file_entry ] [ '.hash' '=' arrayvalue [ file_entry ] ] .
+file_attr		 : 'nometadata' .
+file_entry		 : '.entrypoint' .
+assembly_head	 : '.assembly' { assembly_attr } comp_name .
+assembly_attr	 : 'noappdomain'
+				 | 'noprocess'
+				 | 'nomachine'
+				 .
+assembly_decls	 : { assembly_decl } .
+assembly_decl	 : '.hash' 'algorithm' int32
+				 | sec_decl
+				 | asm_or_ref_decl
+				 .
+asm_or_ref_decl	 : '.publickey' '=' arrayvalue
+				 | '.ver' int32 ':' int32 ':' int32 ':' int32
+				 | '.locale' local_spec
+				 | customattr_decl
+				 .
+local_spec		 : comp_qstring
+				 | '=' arrayvalue
+				 .
+assemblyref_head : '.assembly' 'extern' comp_name [ 'as' comp_name ] .
+assemblyref_decls: { assemblyref_decl } .
+assemblyref_decl : '.hash' '=' arrayvalue
+				 | '.publickeytoken' '=' arrayvalue
+				 | asm_or_ref_decl
+				 .
+exptype_head	 : '.class' 'extern' { expt_attr } comp_name .
+expt_attr		 : 'private'
+				 | 'public'
+				 | 'nested' nested_access
+				 .
+exptype_decls	 : { exptype_decl } .
+exptype_decl	 : '.file' comp_name
+				 | '.class' exptype_spec
+				 | customattr_decl
+				 .
+exptype_spec	 : 'extern' comp_name
+				 | int32
+				 .
+manifestres_head : '.mresource' { manifestres_attr } comp_name .
+manifestres_attr : 'public'
+				 | 'private'
+				 .
+manifestres_decls: { manifestres_decl } .
+manifestres_decl : '.file' comp_name 'at' int32
+				 | '.assembly' 'extern' comp_name
+				 | customattr_decl
+				 .
+

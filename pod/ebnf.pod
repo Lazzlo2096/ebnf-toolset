@@ -1,0 +1,132 @@
+=head1 NAME
+
+ebnf2annot.pl,ebnf2first.pl,ebnf2html.pl,ebnf2list.pl,ebnf2lit.pl - EBNF Tools
+
+
+=head1 SYNOPSIS
+
+source /config/ebnf.cshrc (csh)
+. /config/ebnf.bash       (bash)
+
+ebnf2annot.pl ebnf.txt > ebnf.html
+
+ebnf2first.pl ebnf.txt > ebnf.html
+
+ebnf2html.pl  ebnf.txt > ebnf.html
+
+ebnf2list.pl  ebnf.txt > ebnf.list
+
+ebnf2lit.pl   ebnf.txt > ebnf.lit
+
+
+=head1 DESCRIPTION
+
+B<ebnf2annot.pl>,B<ebnf2first.pl>,B<ebnf2html.pl> create html representations of
+EBNF descriptions given in text format.
+
+B<ebnf2list.pl>,B<ebnf2lit.pl> are provided for debugging purposes only.
+
+=over 16
+
+=item B<ebnf2annot.pl>
+
+creates a full-blown html description of the ebnf file. The html file
+includes all productions, all literals, all terminals, a crossref,
+annotation of lookahead-one ambiguities
+
+=item B<ebnf2first.pl>
+
+creates a reduced html description of the ebnf file. The html file
+includes the start tokens per production.
+
+=item B<ebnf2html.pl>
+
+creates a html description of the ebnf file. The html file is the same as
+the one created by B<ebnf2annot> without the annotated ambiguities.
+
+=back
+
+
+=head1 OPTIONS
+
+None.
+
+=head1 ERRORS
+
+The tools are written in perl5. Since the C<-w> switch is on, you may get
+messages like "Use of uninitialized value in...". This is usually the case
+when you run the tools without file argument.
+
+Other errors are related to file access violations, e.g., wrong file name.
+
+A third category of error are EBNF syntax errors, e.g., missing '.' at the
+end of a production.
+
+All the errors (maybe except the first category errors) are self explaining
+and one should be able to resolve them without problem ;-)
+
+=head1 DIAGNOSTICS
+
+Possible exit status values:
+
+=over 8
+
+=item Exit == 0
+
+Successful completion
+
+=item Exit != 0
+
+An error occured (e.g., "No such file or directory").
+
+=back
+
+
+=head1 FILE FORMAT
+
+	# a comment starts with a '#' and ends with
+	# the end-of-line character
+	file    : { prod } .
+	prod    : lhs ":" expr "." .
+	lhs     : NAME .
+	expr    : term { "|" term } .
+	term    : factor { factor } .
+	factor  : TERMINAL
+		| LITERAL
+		| [ '<' ATTR '>' ] NAME
+		| "[" expr "]"			# optional expressions
+		| "{" expr "}"			# 0... expressions
+		| "(" expr ")"			# grouped expression
+		| "(+" NAME expr ")"    	# named expr (V2)
+		.
+
+
+
+	NAME	 is defined by the following regexp: [a-zA-Z0-9_]+ .
+	TERMINAL is defined as UPPERCASE name.
+	LITERAL  is a string enclosed in single quotes or double quotes.
+
+
+=head1 EXAMPLES
+
+ebnf2annot.pl vhdl.txt > vhdl.html
+
+
+=head1 SEE ALSO
+
+perl
+
+=head1 BUGS
+
+No known bugs so far ;-)
+
+=head1 COPYRIGHT
+
+    This toolset is Copyright (c) 2000-2003 by Andreas Gieriet.
+    This toolset is released under the same license as Perl itself.
+    See the Perl README for details.
+
+=head1 AUTHOR
+
+Andreas Gieriet (andreas.gieriet@externsoft.ch)
+
